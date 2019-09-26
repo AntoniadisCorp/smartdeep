@@ -1,0 +1,30 @@
+<div class="subpage-panel">
+        <div class="container">
+                <div class="row ">
+                        <div class="col-sm-12 searchpage">
+                                <h1>
+                                        <strong>
+                                                <a name="" id="smartshop" class="" href="/smartengine" (click)="showTasks()" role="button"></a>
+                                        </strong>
+                                </h1>            
+                        </div>
+                </div>   
+        </div>
+
+        <div class="container-fluid">
+                <div class="justify-content-md-center justify-searchbar">
+                        <div class="searchbar">
+                                <div class="input-group">
+                                <input type="text" id="input1-group2" name="input1-group2" class="form-control" placeholder="looking for..">
+                                <span class="input-group-btn">
+                                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                                </span>
+                                </div>
+                        </div>
+                </div>
+        </div>
+</div>
+
+<ng-template ngFor let-catitem [ngForOf]="category">
+        <app-page-card [categories]= 'catitem' [products]='product'></app-page-card>
+</ng-template>

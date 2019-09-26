@@ -1,0 +1,103 @@
+<div class="card-toolbar">
+        <mat-menu #itemMenu="matMenu">
+            <button mat-menu-item>Settings</button>
+            <button mat-menu-item>Help</button>
+        </mat-menu>
+        <button mat-button class="first-child" [matMenuTriggerFor]="itemMenu">
+            <mat-icon>more_vert</mat-icon>
+            Menu
+            <mat-icon>arrow_drop_down</mat-icon>
+        </button>
+
+        <button mat-button>
+            <mat-icon>add</mat-icon>
+            Create Transfer Order
+        </button>
+
+        <button mat-button>
+            <mat-icon>filter_list</mat-icon>
+            Filters
+        </button>
+
+        <!-- <form class="form-inline">
+            <div class="form-group">
+                <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd"
+                            name="dp" [(ngModel)]="datePickerFrom" ngbDatepicker #d="ngbDatepicker">
+                    <div class="input-group-append">
+                        <button mat-mini-fab class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><mat-icon>calendar_today</mat-icon></button>
+                    </div>
+                </div>
+            </div>
+        </form> -->
+</div>
+
+<div class="card-extra-toolbar">
+        <mat-form-field>
+    <span class="card-table-search-icon" mat-button matPrefix mat-icon-button aria-label="Search" (click)="value=''">
+        <mat-icon>search</mat-icon>
+    </span>
+    <input matInput [(ngModel)]="value" (keyup)="applyFilter($event.target.value)" placeholder="Search..">
+    <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+        <mat-icon>close</mat-icon>
+    </button>
+    </mat-form-field>
+</div>
+
+
+<div class="card-table mat-elevation-z8">
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    <table mat-table [dataSource]="dataSource" matSort >
+    
+
+    <!-- Transfer Order Column -->
+    <ng-container matColumnDef="order_id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Transfer Order # </th>
+        <td mat-cell *matCellDef="let element"> {{element.order_id }} </td>
+    </ng-container>
+
+    <!-- Source Column -->
+    <ng-container matColumnDef="source">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Source </th>
+        <td mat-cell *matCellDef="let element"> {{element.source}} </td>
+    </ng-container>
+
+     <!-- Destination Column -->
+     <ng-container matColumnDef="destination">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Destination </th>
+        <td mat-cell *matCellDef="let element"> {{element.destination}} </td>
+    </ng-container>
+
+
+    <!-- Created Column -->
+    <ng-container matColumnDef="created">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Created at </th>
+        <td mat-cell *matCellDef="let element"> {{element.created.toDateString()}} </td>
+    </ng-container>
+
+    <!-- Creator Column -->
+    <ng-container matColumnDef="creator">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Creator </th>
+        <td mat-cell *matCellDef="let element"> {{element.creator.name}} </td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions" stickyEnd>
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element">
+            <button type="button" mat-icon-button >
+                <mat-icon>more_vert</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

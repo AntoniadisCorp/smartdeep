@@ -1,0 +1,148 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        
+        <div class="card-body">
+            <div class="mat-container">
+              <mat-form-field appearance="outline">
+                <mat-label>search for</mat-label>
+                <input matInput placeholder="Πέργολες.." [(ngModel)]="value">
+                <mat-icon (click)="value? reset() : add()" matSuffix><a mat-icon-button *ngIf="!value" class="btn-icon-small" color="primary" ><i class="fa fa-search" aria-hidden="true"></i></a>{{value? 'close': ''}}</mat-icon>
+                <mat-hint>type a word</mat-hint>
+              </mat-form-field>
+            </div>
+        </div>
+
+      </div>
+    </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-9">
+        <form class="add-category-form">
+          <mat-form-field class="add-category-name">
+           <input matInput placeholder="Add a category" [(ngModel)]="catInput.name" [ngModelOptions]="{standalone: true}">
+          </mat-form-field>
+
+          <mat-form-field class="pick-category-icon">
+            <i class="obs-no-matches fa fa-{{iconCtrl.value}}"></i>
+            <input type="text" placeholder="Pick a Category Icon" aria-label="Number" matInput [formControl]="iconCtrl" [matAutocomplete]="autoIcon">
+            <mat-autocomplete autoActiveFirstOption #autoIcon="matAutocomplete">
+              <mat-option *ngFor="let ic of filteredOptions | async" [value]="ic.name">
+                <span class="input-option-img"><i class="{{ic.iconclass}}{{ic.name}}" aria-hidden="true"></i></span>
+                <span>{{ic.name}}</span>|<small>{{ic.type}}</small>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field class="add-category-parent">
+              <mat-spinner class="obs-mat-spinner"
+                  *ngIf="isProcessing"
+                  [diameter]="20"
+                  [strokeWidth]="3"></mat-spinner>
+                <i class="obs-no-matches" *ngIf="emptyText && empty | async">{{emptyText}}</i>
+              <input matInput placeholder="type a parent category" [formControl]="cateCtrl" [matAutocomplete]="autoParent">
+              <mat-autocomplete autoActiveFirstOption #autoParent="matAutocomplete">
+                  <mat-option *ngFor="let par of ParentfilteredOption | async" [value]="par.name">
+                    <span class="input-option-img"><i class="{{par.icon}}" aria-hidden="true"></i></span>
+                    <span>{{par.name}}</span>
+                  </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+        </form>
+      </div>
+
+      <div class="col-sm-3">
+          <mat-menu #appMenu="matMenu">
+              <button mat-menu-item (click)="edit()">
+                  <mat-icon>edit</mat-icon>
+                  <span>Edit</span>
+                </button>
+                <button mat-menu-item>
+                  <mat-icon>notifications_off</mat-icon>
+                  <span>Disable alerts</span>
+                </button>
+          </mat-menu>
+          <div class="addCategory"> <a mat-icon-button [matMenuTriggerFor]="appMenu"><i class="icon-options-vertical" aria-hidden="true"></i></a> </div>
+          <div class="addCategory"> <a (click)="refreshData()" mat-icon-button><i class="fa fa-refresh" aria-hidden="true"></i></a></div>
+          <div class="addCategory"> <a (click)="openAction()" mat-icon-button><i class="fa fa-{{act.iconclass}}" aria-hidden="true"></i></a></div>
+      </div>
+    </div>
+
+    
+    <br>
+
+    <p>Qeury results: {{ cateCtrl.value | json}}, loading: {{ isProcessing }} </p>
+
+  
+
+  <mat-spinner class="category-buffer"
+                  *ngIf="refreshing; else droplist"
+                  [diameter]="70"
+                  [strokeWidth]="5"></mat-spinner>
+<br>
+  <ng-template #droplist><app-prodcategory-list [action]='act' [categories]="cateObj"></app-prodcategory-list></ng-template>
+
+  
+
+ 
+   
+
+   <!-- /.row -->
+   <!-- <div class="row">
+     <div class="col-lg-12">
+        <div class="data-explorer-results-subheader">
+          <div class="data-explorer-results-label">Query Results</div>
+          <div class="data-explorer-results-value">&nbsp;1-2 of 2</div>
+        </div>
+        <div class="data-explorer-results-card">
+          <div class="document" data-test-id="editable-document">
+            <div class="document-contents">
+              <ol class="document-elements">
+                <li class="editable-element" style="padding-left: 0px;">
+                  <div class="editable-element-field">_id</div>
+                  <span class="element-separator">:</span><span class="editable-element-value-wrapper">
+                    <div class="element-value element-value-is-objectid" title="5d370a301c9d4400002d39fb">5d370a301c9d4400002d39fb</div>
+                  </span>
+                </li>
+                <li class="editable-element" style="padding-left: 0px;">
+                  <div class="editable-element-field">name</div>
+                  <span class="element-separator">:</span>
+                  <span class="editable-element-value-wrapper">
+                    <div class="element-value element-value-is-string" title="T-shirts">"T-shirts"</div>
+                  </span>
+                </li>
+                <li class="editable-element" style="padding-left: 0px;">
+                  <div class="editable-element-field">category</div><span class="element-separator">:</span>
+                  <span class="editable-element-value-wrapper">
+                    <div class="element-value element-value-is-string" title="Ρουχα">"Ρουχα"</div>
+                  </span>
+                </li>
+              </ol>
+              <div class="expansion-bar"></div>
+              <div class="document-actions">
+                <div class="document-actions-left">
+                  <button type="button" title="Expand All" data-test-id="expand-all-button" class="document-actions-button document-actions-expand-button btn btn-default btn-xs">
+                    <i class="document-actions-button-icon fa fa-angle-right" aria-hidden="true"></i></button>
+                  </div>
+                <div class="document-actions-right">
+                  <button type="button" title="Edit Document" data-test-id="edit-document-button" class="document-actions-button btn btn-default btn-xs">
+                    <i class="document-actions-button-icon fa fa-pencil" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" title="Copy Document" data-test-id="copy-document-button" class="document-actions-button document-actions-button-copy btn btn-default btn-xs">
+                    <i class="document-actions-button-icon fa fa-copy" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" title="Clone Document" data-test-id="clone-document-button" class="document-actions-button btn btn-default btn-xs"><i class="document-actions-button-icon fa fa-clone" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" title="Delete Document" data-test-id="delete-document-button" class="document-actions-button btn btn-default btn-xs">
+                    <i class="document-actions-button-icon fa fa-trash-o" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+     </div>
+   </div>
+</div> -->

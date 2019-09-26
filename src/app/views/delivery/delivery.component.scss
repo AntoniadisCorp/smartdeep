@@ -1,0 +1,177 @@
+
+//
+.a-btn-action {
+
+    margin-left: 4px;
+    text-decoration: underline !important;
+    cursor: pointer;
+    bottom: 3px;
+    position: relative;
+}      
+.divider {
+    border-bottom: 1px solid #dcdcdc;
+}
+.delcontent {
+    position: relative;
+    display: block;
+    padding: 30px;
+
+    .example-form {
+        min-width: 150px;
+        max-width: 500px;
+        width: 100%;
+        }
+
+        .example-full-width {
+        width: 100%;
+        }
+
+        .reload-spin {
+            float: right;
+        }
+
+    .tabs {
+        position: absolute;
+        width: calc(100% - 40px);
+        background: transparent;
+        left: 20px;
+        border: 1px solid rgba(26, 171, 240, 0.35);
+        top: -26px;
+        box-shadow: 0px -5px 16px 0px rgba(26, 171, 240, 0.35);
+        transition: all 0.5s ease-in-out;
+        border-bottom: 0;
+
+        
+        li {
+
+            &.nav-item {
+                position: relative;
+                flex: 0 0 50%;
+                background: #fff;
+                width: 100px;
+                height: 40px;
+            }
+
+            > a:not(.active) {
+                cursor: pointer;
+            }
+
+            > a.nav-link {
+                text-align: center;
+                text-align: -webkit-center;
+                border-radius: 3px;
+                margin: 0;
+                padding: 0;
+                padding-top: 7px;
+
+                &.active {
+                    background: #2bbd73b5;
+                    color: #fff;
+                    font-weight: 500;
+                    transition: background 0.35s ease-out;
+                    height: 100%;
+                    border-bottom: 2px solid #3eb4de;
+
+                    &:after {
+
+                        border: 12px solid transparent;
+                        content: "";
+                        position: absolute;
+                        right: 124px;
+                        top: calc(50% - -18px);
+                        z-index: 0;
+                        left: 45%;
+                        border-top-color: #68d09b;
+                        transition: border-color 0.35s ease-out;
+                    }
+                }
+            }
+        }
+    }
+
+    .order {
+        flex: 0 0 15%;
+        min-width: 200px;
+        position: relative;
+        width: 100%;
+        border-right: 0;
+        left: 15px;
+        z-index: 2;
+
+        &.fa {
+            display: inherit;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            -webkit-transition: -webkit-filter 500ms ease-out;
+            transition: filter 500ms ease-out;
+            background: no-repeat;
+            background-size: 191% 100%;
+            z-index: -1;
+
+            
+
+            &.blur {
+                -webkit-filter: blur(10px);
+                filter: blur(10px);
+                transition: filter 1ms ease-out;
+            }
+        }
+        
+        &.blur.fa-pencil:before {
+
+            -webkit-filter: blur(10px);
+            filter: blur(10px);
+        }
+
+        &:after, &:before, fa-pencil:before {
+            position: absolute;
+            left: 95%;
+            -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+            bottom: 63%;
+            color: #50b64a;
+        }
+
+        
+        &.card:before, fa-pencil:before {
+            width: 8px;
+            height: 8px;
+            color: #3c8aa9;
+            border-radius: 50%;
+            font-size: 25px;
+
+        }
+    }
+    
+    .btn-submit {
+        padding: 13px;
+        font-weight: 500;
+        -webkit-box-shadow: 0 3px 6px 0 rgba(27,25,95,0.14);
+        box-shadow: 0 3px 6px 0 rgba(27,25,95,0.14);
+    }
+
+    .btn-delivery {
+        background: #3c8aa9a8;
+        color: #fff;
+        line-height: 0px;
+        float: right;
+
+        &:active {
+            background: #19c1e7;
+        }
+        
+        &:hover {
+            background: #20a8d8;
+        }
+    }
+    
+    .btn, [class*="btn"] {
+        border-color: #dcdcdc;
+        border-radius: 4px;
+    }
+}
+
+

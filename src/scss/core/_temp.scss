@@ -1,0 +1,71 @@
+.pagination-datatables, .pagination {
+  li {
+    @extend .page-item;
+
+    a {
+      @extend .page-link;
+    }
+  }
+}
+
+.label-pill {
+  border-radius: 1rem !important;
+}
+
+// temp fix for Vue & React
+
+// Open state for the dropdown
+.open, .show {
+  // Remove the outline when :focus is triggered
+  > a {
+    outline: 0;
+  }
+}
+
+// navbar dropdown fix
+.navbar .dropdown-toggle {
+  @extend .nav-link;
+
+  .img-avatar {
+    height: $navbar-height - 20px;
+    margin: 0 10px;
+  }
+}
+
+.card-block {
+  @extend .card-body;
+}
+
+span.mat-option-text {
+
+  right: 6px;
+  position: relative;
+
+  .input-option-img {
+
+      margin-right: 3px;
+  }
+}
+
+.obs-no-matches {
+    &.fa {
+      font-size: large;
+    }
+    position: absolute;
+    color: #3ba3cd;
+    right: 0px;
+}
+
+mat-spinner.obs-mat-spinner {
+  position: absolute;
+  right: 5px;
+}
+
+.mat-tab-link:hover {
+  text-decoration: none;
+}
+
+
+button:focus {
+  outline: none;
+}

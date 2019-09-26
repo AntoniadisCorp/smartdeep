@@ -1,0 +1,60 @@
+<div class="delcontent">
+    <h5> Πού θέλεις να αποσταλεί η παραγγελία; </h5>
+    <br>
+    <div class="row">
+        <div [ngClass]="AnonymousUser && AnonymousUser.class ? AnonymousUser.class + ' fa fa-pencil ' : ''" class="order card">
+            <img [ngClass]="AnonymousUser && AnonymousUser.class ? AnonymousUser.class : ''" class="order-card-img"
+            alt="" sizes="" srcset="" [ngStyle]="{'background-image': AnonymousUser && AnonymousUser.img ? 'url(' + AnonymousUser.img + ')' : 'linear-gradient(#9ca7aa, #c1cde0)' }">
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                
+                <div class="tabs">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="setObtn()" [ngClass]="tglBtn.OrderClass" >
+                                    <i class="fa fa-bicycle fa-lg" aria-hidden="true"></i>
+                                 Δώσε Παραγγελία
+                            </a>   
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"  (click)="setDbtn()" [ngClass]="tglBtn.DeliveryClass">
+                                <i class="fa fa-motorcycle fa-lg" aria-hidden="true"></i>
+                                Γίνε Διανομέας
+                            </a> 
+                        </li>
+                    </ul>
+                </div>
+                <ng-container *ngIf="tglBtn.DeliveryClass.active; else ordertmp">
+                        <div class="card-body">
+                                <div class="row">
+                                    <form class="form-group col-sm-12">
+                                        <mat-form-field class="example-full-width">
+                                                <div class="d-flex align-items-center">
+                                                    <strong><input  matInput placeholder="Προσθεσε τη τοποθεσία σου" value=""></strong>
+                                                    <div class="spinner-grow text-primary spinner-grow-sm reload-spin spinner-border ml-auto" role="status" aria-hidden="true"></div>
+                                                </div>
+                                        </mat-form-field>
+                                        <label class="btn btn-outline-success">
+                                            <i class="mdi mdi-google-maps"></i>
+                                            <a class="a-btn-action">Βρες τη θέση μου!</a>
+                                        </label>
+                                    </form>
+                                </div>
+                                <mat-divider></mat-divider>
+                        </div>
+                </ng-container>
+                <ng-template #ordertmp>
+                    <app-order-signin ></app-order-signin>
+                </ng-template>
+                <div class="card-footer">
+                    <ul>
+                        <li><a mat-button class="btn btn-delivery btn-submit" role="button">Βρες Διανομέα 
+                            <i class="fa fa-arrow-circle-right" aria-hidden="true">
+                        </i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

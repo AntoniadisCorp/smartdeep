@@ -1,0 +1,49 @@
+<div class="card-toolbar">
+    <mat-menu #itemMenu="matMenu">
+        <button mat-menu-item matTooltip="{{mitems.desc}}" *ngFor="let mitems of MenuTools">{{mitems.title}}</button>
+    </mat-menu>
+
+    <mat-menu #actionMenu="matMenu">
+        <button mat-menu-item matTooltip="{{mitems.desc}}" *ngFor="let mitems of ActionBtn">{{mitems.title}}</button>
+    </mat-menu>
+
+    <mat-menu restoreFocus="true" #columnsMenu="matMenu">
+        <li *ngFor="let item of btnCheckboxCol" mat-menu-item role="menuitemcheckbox" 
+            class="">
+            <mat-checkbox [(ngModel)]="item.checked" (ngModelChange)="setTableColumns(item)">{{item.tbcolumn}}</mat-checkbox>
+        </li>
+    </mat-menu>
+
+    <button mat-button class="first-child" [matMenuTriggerFor]="itemMenu">
+        <mat-icon>more_vert</mat-icon>
+        Menu
+        <mat-icon>arrow_drop_down</mat-icon>
+    </button>
+            
+    <button mat-button [matMenuTriggerFor]="actionMenu">
+        <mat-icon>menu</mat-icon>
+        Actions
+        <mat-icon>arrow_drop_down</mat-icon>
+    </button>
+
+    <button mat-button>
+        <mat-icon>add</mat-icon>
+        Create manual order
+    </button>
+
+    <button mat-button>
+        <mat-icon>filter_list</mat-icon>
+        Filters
+    </button>
+
+    <button mat-button [matMenuTriggerFor]="columnsMenu">
+        <mat-icon>view_week</mat-icon>
+        Columns
+    </button>
+
+    <button mat-button>
+        <i class="fa fa-tags" aria-hidden="true"></i>
+        Tags
+        <mat-icon>arrow_drop_down</mat-icon>
+    </button>
+</div>

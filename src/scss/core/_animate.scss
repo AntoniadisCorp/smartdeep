@@ -1,0 +1,57 @@
+// scss-lint:disable all
+.animated {
+  animation-duration: 1s;
+  // animation-fill-mode: both;
+}
+
+.animated.infinite {
+  animation-iteration-count: infinite;
+}
+
+.animated.hinge {
+  animation-duration: 2s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+}
+
+.animated-background {
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: #f6f7f8;
+  background: linear-gradient(to right,#eee 8%,#ddd 18%,#eee 33%);
+  background-size: 800px 104px;
+  -webkit-backface-visibility: hidden;
+}
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes placeHolderShimmer {
+0% {
+  background-position: 0px 0;
+}
+100% {
+  background-position: 100em 0;
+}
+}
+
+@keyframes placeHolderShimmer {
+0% {
+  background-position: 0px 0;
+}
+100% {
+  background-position: 100em 0;
+}
+}
