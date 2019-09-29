@@ -10,6 +10,8 @@
 # dependencies
 /node_modules
 /dist
+# package lock
+package-lock.json
 
 # files
 *.key
