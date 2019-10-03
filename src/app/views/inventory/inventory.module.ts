@@ -7,10 +7,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
-    declarations: [ routedComponents.others ],
+    declarations: [ routedComponents.app ],
     imports: [ CommonModule, FormsModule, ReactiveFormsModule,
          HttpClientModule, MaterialsModule, InventoryRoutingModule, NgBootstrapModule ],
-    exports: [],
+    exports: [routedComponents.app],
     providers: [],
     schemas: []
 })

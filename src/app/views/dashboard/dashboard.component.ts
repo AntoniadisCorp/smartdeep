@@ -33,9 +33,10 @@ export class DashboardComponent implements OnInit {
     public filteredOptions: Observable<Iconfonts[]>;
     public ParentfilteredOption: Observable<Category[]>;
 
-    protected isProcessing: boolean;
-    protected refreshing: boolean;
-    protected act: MenuAction;
+    isProcessing: boolean;
+    refreshing: boolean;
+    act: MenuAction;
+    emptyText: string;
 
     constructor(private httpService: SmartEngineService, private modalService: BsModalService) { }
 
@@ -88,7 +89,7 @@ export class DashboardComponent implements OnInit {
         this.value = '';
     }
 
-    protected edit() {
+    public edit() {
 
       this.act.status = !this.act.status;
       this.act.iconclass = !this.act.status ? 'trash' : 'plus';
@@ -101,7 +102,7 @@ export class DashboardComponent implements OnInit {
             apiUrl + middlebar + 'categories' + middlebar + 'search');
     }
 
-    protected openAction(): void {
+    public openAction(): void {
 
       this.act.actionfun();
       this.refreshData();
@@ -148,6 +149,7 @@ export class DashboardComponent implements OnInit {
       // category list initialize
       this.cateObj = [];
       this.refreshing = true;
+      this.emptyText = 'loading...';
 
       // get Http Request call,
       this.httpService.getTasks(apiUrl + middlebar + 'categories')
@@ -158,12 +160,13 @@ export class DashboardComponent implements OnInit {
 
           this.cateObj = data;
           this.refreshing = false;
+          this.emptyText = '';
         });
     }
 
     public isEmpty(obj: any) {
 
-      return obj && obj.length > 0 ? false : true;
+      return !(obj && obj.length > 0);
     }
 
     private removeElementsByClass(className: string) {
@@ -177,6 +180,7 @@ export class DashboardComponent implements OnInit {
     private VarsInit(): void {
 
       this.isProcessing = this.refreshing = false;
+      this.emptyText = '';
 
       this.act = {
         status: true,

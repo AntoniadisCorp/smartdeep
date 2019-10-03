@@ -8,7 +8,8 @@
               <mat-form-field appearance="outline">
                 <mat-label>search for</mat-label>
                 <input matInput placeholder="Πέργολες.." [(ngModel)]="value">
-                <mat-icon (click)="value? reset() : add()" matSuffix><a mat-icon-button *ngIf="!value" class="btn-icon-small" color="primary" ><i class="fa fa-search" aria-hidden="true"></i></a>{{value? 'close': ''}}</mat-icon>
+                <!-- (click)="value? reset() : add()" -->
+                <mat-icon  matSuffix><a mat-icon-button *ngIf="!value" class="btn-icon-small" color="primary" ><i class="fa fa-search" aria-hidden="true"></i></a>{{value? 'close': ''}}</mat-icon>
                 <mat-hint>type a word</mat-hint>
               </mat-form-field>
             </div>
@@ -41,7 +42,7 @@
                   *ngIf="isProcessing"
                   [diameter]="20"
                   [strokeWidth]="3"></mat-spinner>
-                <i class="obs-no-matches" *ngIf="emptyText && empty | async">{{emptyText}}</i>
+                <!-- <i class="obs-no-matches" *ngIf="emptyText && isEmpty(emptyText) | async">{{emptyText}}</i> -->
               <input matInput placeholder="type a parent category" [formControl]="cateCtrl" [matAutocomplete]="autoParent">
               <mat-autocomplete autoActiveFirstOption #autoParent="matAutocomplete">
                   <mat-option *ngFor="let par of ParentfilteredOption | async" [value]="par.name">

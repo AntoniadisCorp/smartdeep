@@ -1,5 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, Inject, APP_ID, PLATFORM_ID } from '@angular/core';
 
 /* Import Noop Animations Module Js */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,15 +12,13 @@ import { AppRoutingModule,
 
 /* Import Material design Module */
 import { MaterialsModule, AppNgModules, DropdownModule } from './modules';
-
 import { HttpClientModule } from '@angular/common/http';
 
 // Import Modules
 const APP_MODULES = [
 
-  BrowserModule,
-  AppRoutingModule,
   BrowserAnimationsModule,
+  AppRoutingModule,
   MaterialsModule,
   AppNgModules,
   HttpClientModule,
@@ -41,8 +38,7 @@ const APP_CONTAINERS = [
 
   FullLayoutComponent,
   ExternLayoutComponent,
-  routedComponents.app,
-  ...routedComponents.others
+  routedComponents.others
 ];
 
 // Import components
@@ -73,7 +69,7 @@ const APP_COMPONENTS = [
   AppSidebarHeaderComponent,
   AppSidebarMinimizerComponent,
   APP_SIDEBAR_NAV,
-  APP_PRODUCT_CARD
+
 ];
 
 // Import directives
@@ -82,27 +78,52 @@ import {
   ReplaceDirective,
   SIDEBAR_TOGGLE_DIRECTIVES
 } from './directives';
+// import { APP_DELIVERY_COMPONENT } from './components/app-components';
 
 const APP_DIRECTIVES = [
 
+  // ...APP_DELIVERY_COMPONENT,
   AsideToggleDirective,
   ReplaceDirective,
   SIDEBAR_TOGGLE_DIRECTIVES
 ];
 
+// import Global Services
+import { EventsService, Logger } from './services';
+import { isPlatformBrowser } from '@angular/common';
+import { AppComponent } from './app.component';
+import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
+
+const APP_SERVICES = [
+
+  Logger,
+  EventsService,
+];
+
 @NgModule({
   declarations: [
 
+    AppComponent,
     ...APP_CONTAINERS,
     ...APP_DIRECTIVES,
     ...APP_COMPONENTS
   ],
   imports: [
-
+    BrowserModule.withServerTransition({ appId: 'SECRET-APP-ID' }),
+    BrowserTransferStateModule,
+    // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ...APP_MODULES,
   ],
-  providers: [],
+  providers: [ ...APP_SERVICES  ],
   schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA ],
-  bootstrap: [ routedComponents.app ]
+  bootstrap: [ AppComponent ]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: object,
+    @Inject(APP_ID) private appId: string) {
+    const platform = isPlatformBrowser(platformId) ?
+      'in the browser' : 'on the server';
+    console.log(`Running ${platform} with appId=${appId}`);
+  }
+}

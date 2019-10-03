@@ -28,15 +28,17 @@ import { ReeDirective } from '../../directives';
     ],
     declarations: [
 
-        ...routedComponents.others,
         ...routedComponents.app,
         ...APP_CATEGORY_COMPONENT,
         ReeDirective,
     ],
     entryComponents: [
-        ...routedComponents.app
     ],
-    exports: [],
+    exports: [
+        ...routedComponents.app,
+        ...APP_CATEGORY_COMPONENT,
+        ReeDirective
+    ],
     providers: [],
 })
 export class DashboardModule {}

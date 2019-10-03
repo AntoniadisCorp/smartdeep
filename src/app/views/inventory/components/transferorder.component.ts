@@ -19,7 +19,8 @@ export class TransferOrderComponent implements OnInit {
     selection = new SelectionModel<TransferOrder>(true, []);
     btnCheckboxCol: InventoryTableColumns[];
     datePickerFrom: Date;
-
+    value: string;
+    
     constructor() { }
 
     ngOnInit(): void {

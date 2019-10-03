@@ -23,9 +23,7 @@ export class DashboardRoutingModule { }
 
 export const routedComponents = {
 
-    app: [  ],
-
-    others: [
+    app: [
       DashboardComponent
     ]
 } ;

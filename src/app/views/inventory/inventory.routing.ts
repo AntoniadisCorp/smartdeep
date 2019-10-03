@@ -32,9 +32,7 @@ export class InventoryRoutingModule {}
 
 export const routedComponents = {
 
-    app: [  ],
-
-    others: [
+    app: [
         InventoryComponent,
         ItemComponent,
         KitComponent,

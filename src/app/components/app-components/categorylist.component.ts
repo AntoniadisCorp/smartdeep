@@ -70,7 +70,7 @@ export class InnerCategoryComponent implements OnInit {
     @Input() item: any;
     @Input() @Output() selectaction: MenuAction;
 
-    private selectedItem: boolean;
+     selectedItem: boolean;
 
     constructor(private router: Router) {}
 
@@ -150,10 +150,10 @@ export class CategoryLinkComponent implements OnInit {
   @Input() @Output() link: any;
   @Input() @Output() selectlink: MenuAction;
 
-  private selection: boolean;
-  private indeterminate = false;
-  private labelPosition = 'before';
-  private disabled = false;
+   selection: boolean;
+   indeterminate = false;
+   labelPosition = 'before';
+   disabled = false;
 
   onChange(event: any): void {
 
@@ -233,10 +233,10 @@ export class CategoryLinkComponent implements OnInit {
     @Input() @Output() link: any;
     @Input() @Output() selectdropdown: MenuAction;
 
-    private selection: boolean;
-    private indeterminate = false;
-    private labelPosition = 'before';
-    private disabled = false;
+     selection: boolean;
+     indeterminate = false;
+     labelPosition = 'before';
+     disabled = false;
 
     public isBadge() {
       return this.link && this.link.badge ? true : false;

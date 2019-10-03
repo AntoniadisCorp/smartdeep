@@ -8,20 +8,21 @@ import { EngineRoutingModule
 import { MaterialsModule, AppNgModules } from '../../modules';
 
 import { ReDirective } from '../../directives';
-
-
+import { APP_PRODUCT_CARD } from 'src/app/components';
 
 const APP_DIRECTIVES = [
     ReDirective,
-]
+    APP_PRODUCT_CARD,
+];
 
 @NgModule({
     declarations: [
 
-        ...routedComponents.others,
+        routedComponents.others,
         ...APP_DIRECTIVES,
     ],
-    imports: [ AppNgModules,
+    imports: [
+        AppNgModules,
         EngineRoutingModule,
         MaterialsModule,
     ],

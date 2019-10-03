@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, Renderer2, Output, EventEmitter, forwardRef } from '@angular/core';
+/* import { Component, ElementRef, Input, OnInit, Renderer2, Output, EventEmitter, forwardRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 
@@ -70,7 +70,7 @@ export class DeliveryFilterItemComponent implements OnInit {
     <ul>
     <li class="selected">
       <a class="icon" *ngIf="isTitle()" title="" [href]="{{}}" rel="nofollow">
-      {{list.title}} <small>(item.count)</small></a>
+      {{list.title}} <small>{{item.count}}</small></a>
     </li>
     </ul>
   `,
@@ -116,3 +116,4 @@ export const APP_DELIVERY_COMPONENT = [
   DeliveryFilterListComponent,
   DeliveryFilterFormComponent
 ];
+ */

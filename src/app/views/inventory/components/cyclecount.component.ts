@@ -19,6 +19,7 @@ export class CycleCountComponent implements OnInit {
     selection = new SelectionModel<CycleCount>(true, []);
     btnCheckboxCol: InventoryTableColumns[];
     datePickerFrom: Date;
+    value: string;
 
     constructor() { }
 

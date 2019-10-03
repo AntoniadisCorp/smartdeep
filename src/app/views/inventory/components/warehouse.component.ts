@@ -17,7 +17,8 @@ export class WarehouseComponent implements OnInit {
     dataSource = new MatTableDataSource<Warehouse>(WAREHOUSES_DATA);
     selection = new SelectionModel<Warehouse>(true, []);
     btnCheckboxCol: InventoryTableColumns[];
-
+    value: string;
+    
     constructor() { }
 
     ngOnInit(): void {

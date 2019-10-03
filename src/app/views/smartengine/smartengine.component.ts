@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SmartEngineService } from '../../services';
 import { Tasks } from '../../interfaces';
 @Component({
-    selector: 'app-engine',
+    selector: 'app-smartengine',
     templateUrl: './smartengine.component.html',
     styleUrls: ['./smartengine.component.scss']
 })

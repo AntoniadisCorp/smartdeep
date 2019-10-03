@@ -1,0 +1,23 @@
+Package                            Current   Wanted   Latest  Location
+angular-in-memory-web-api          MISSING      git      git  smartdeep
+@angular-devkit/build-angular      0.800.6  0.800.6  0.803.6  smartdeep
+@angular/animations                  8.2.7    8.2.9    8.2.9  smartdeep
+@angular/cdk                         8.2.0    8.2.2    8.2.2  smartdeep
+@angular/cli                         8.0.6    8.3.6    8.3.6  smartdeep
+@angular/common                      8.0.2    8.2.9    8.2.9  smartdeep
+@angular/compiler                    8.0.2    8.2.9    8.2.9  smartdeep
+@angular/compiler-cli                8.0.2    8.0.3    8.2.9  smartdeep
+@angular/core                        8.0.2    8.2.9    8.2.9  smartdeep
+@angular/forms                       8.0.2    8.2.9    8.2.9  smartdeep
+@angular/language-service            8.0.2    8.0.3    8.2.9  smartdeep
+@angular/material                    8.2.0    8.2.2    8.2.2  smartdeep
+@angular/platform-browser            8.0.2    8.2.9    8.2.9  smartdeep
+@angular/platform-browser-dynamic    8.0.2    8.2.9    8.2.9  smartdeep
+@angular/platform-server             8.2.8    8.2.9    8.2.9  smartdeep
+@angular/router                      8.0.2    8.2.9    8.2.9  smartdeep
+@mdi/font                           4.0.96   4.4.95   4.4.95  smartdeep
+@ng-bootstrap/ng-bootstrap           5.1.0    5.1.1    5.1.1  smartdeep
+@types/jasmine                      3.3.13   3.3.16    3.4.2  smartdeep
+@types/jasminewd2                    2.0.6    2.0.8    2.0.8  smartdeep
+@types/mongoose                     5.5.11   5.5.18   5.5.18  smartdeep
+

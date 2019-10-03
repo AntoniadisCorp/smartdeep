@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './containers';
 
 import { HomeRoutes, ExternRoutes } from './routes';
@@ -20,11 +19,10 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 
+//, {initialNavigation: 'enabled'}
+
 export class AppRoutingModule { }
 
 export const routedComponents = {
-
-    app: AppComponent,
-
     others: [ PageNotFoundComponent ]
 };

@@ -8,4 +8,13 @@ export class Logger {
     this.logs.push(message);
     console.log(message);
   }
+
+  error(message: string) {
+    console.error(message);
+  }
+
+  warn(message: string)  {
+    this.logs.push(message);
+    console.warn(message);
+  }
 }

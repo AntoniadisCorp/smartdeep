@@ -22,7 +22,8 @@ export class ItemComponent implements OnInit {
     dataSource = new MatTableDataSource<Item>(ITEM_DATA);
     selection = new SelectionModel<Item>(true, []);
     btnCheckboxCol: InventoryTableColumns[];
-
+    value: string;
+    
     MenuTools: IDropDownMenu[];
     ActionBtn: IDropDownMenu[];
 

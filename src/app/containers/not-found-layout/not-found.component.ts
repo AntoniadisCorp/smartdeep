@@ -1,7 +1,8 @@
 
 import { Component } from '@angular/core';
-/* import { EventsService }    from '../services'
- */
+import { EventsService } from 'src/app/services';
+import { Router } from '@angular/router';
+
 @Component({
 
   template: `
@@ -44,11 +45,12 @@ import { Component } from '@angular/core';
 })
 export class PageNotFoundComponent {
 
-    constructor(/* private eS: EventsService */) {}
+    constructor(private eS: EventsService, private router: Router) {}
 
     public goHome() {
 
-        // this.eS.broadcast('routerLink', '/')
+        // this.eS.broadcast('routerLink', '/dashboard');
+        this.router.navigate(['/dashboard']);
     }
     public goContact() {
 

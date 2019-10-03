@@ -11,6 +11,11 @@ const inputtype = 'textquery';
 const language = 'el';
 const auto = 'autocomplete';
 
+interface AnonymousInterface {
+  class: string;
+  img: string;
+}
+
 @Component({
     selector: 'app-delivery',
     templateUrl: './delivery.component.html',
@@ -21,7 +26,7 @@ export class DeliveryComponent implements OnInit, OnDestroy {
     public Placetext: string;
     public deliveryFilters: DlvryFilters;
     subscription: Subscription;
-    AnonymousUser: {};
+    AnonymousUser: AnonymousInterface;
 
     public tglBtn: MainPageTabIndex;
 
@@ -37,9 +42,9 @@ export class DeliveryComponent implements OnInit, OnDestroy {
 
       // Manual subscription handling
       this.subscription = this.getDeliveryImage(1500, 'blur', '')
-          .subscribe(u => {this.AnonymousUser = u, console.log(this.AnonymousUser); } );
+          .subscribe( (u: AnonymousInterface) => {this.AnonymousUser = u, console.log(this.AnonymousUser); } );
       this.subscription = this.getDeliveryImage(2000, ' ', '//localhost:4200/assets/img/c/delivery-4.jpg')
-          .subscribe(u => {this.AnonymousUser = u, console.log(this.AnonymousUser); } );
+          .subscribe( (u: AnonymousInterface) => {this.AnonymousUser = u, console.log(this.AnonymousUser); } );
 
       console.log(requrl);
       // this.httpReq.getPlaces(requrl).subscribe(r => console.log(r));
@@ -51,7 +56,7 @@ export class DeliveryComponent implements OnInit, OnDestroy {
     }
 
     setdel(cl: string) {
-        this.AnonymousUser = {class: cl};
+        this.AnonymousUser = {class: cl, img: null};
     }
 
     setDeliveryVars(): void {

@@ -60,7 +60,7 @@ export const HomeRoutes: Routes = [
       children: [
         {
             path: '',
-            loadChildren: () => import('../views/smartengine/SmartEngine.module').then(mod => mod.SearchModule),
+            loadChildren: () => import('../views/smartengine/smartengine.module').then(mod => mod.SearchModule),
         }
       ]
     },

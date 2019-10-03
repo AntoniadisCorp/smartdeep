@@ -18,7 +18,7 @@ export class KitComponent implements OnInit {
     dataSource = new MatTableDataSource<Kit>(KIT_DATA);
     selection = new SelectionModel<Kit>(true, []);
     btnCheckboxCol: InventoryTableColumns[];
-
+    value: string;
     constructor() { }
 
     ngOnInit(): void {

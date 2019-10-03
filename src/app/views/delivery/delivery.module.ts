@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 
 import { DeliveryRoutingModule, routedComponents } from './delivery.routing';
 import { HttpClientModule } from '@angular/common/http';
@@ -16,6 +15,7 @@ import { APP_ORDER_COMPONENT } from 'src/app/components/app-components';
         HttpClientModule,
         MaterialsModule,
         DeliveryRoutingModule, CommonModule ],
-    providers: []
+    providers: [],
+    exports: [routedComponents, APP_ORDER_COMPONENT]
 })
 export class DeliveryModule {}
