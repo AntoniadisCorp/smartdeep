@@ -13,6 +13,7 @@ import { AppRoutingModule,
 /* Import Material design Module */
 import { MaterialsModule, AppNgModules, DropdownModule } from './modules';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthModule } from 'src/app/auth/auth.module';
 
 // Import Modules
 const APP_MODULES = [
@@ -23,6 +24,7 @@ const APP_MODULES = [
   AppNgModules,
   HttpClientModule,
   DropdownModule,
+  AuthModule.forRoot(),
   // MDBBootstrapModule.forRoot()
 ];
 

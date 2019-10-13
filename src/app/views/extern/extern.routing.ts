@@ -3,6 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { LoginComponent } from './login.component';
 import { RegisterComponent } from './register.component';
+import { RandomNumberComponent } from './random-number.component';
+import { RandomGuard } from 'src/app/auth/guard/random.guard';
+import { AuthGuard } from 'src/app/auth/guard/auth.guard';
 
 const routes: Routes = [
   {
@@ -16,7 +19,8 @@ const routes: Routes = [
         component: LoginComponent,
         data: {
           title: 'Login Page'
-        }
+        },
+        canActivate: [AuthGuard]
       },
       {
         path: 'register',
@@ -24,6 +28,12 @@ const routes: Routes = [
         data: {
           title: 'Register Page'
         }
+      },
+      {
+        path: 'secret-random-number',
+        component: RandomNumberComponent,
+        canActivate: [RandomGuard],
+        canLoad: [RandomGuard]
       }
     ]
   }
@@ -38,5 +48,6 @@ export class PagesRoutingModule {}
 export const routedComponents = [
 
   LoginComponent,
-  RegisterComponent
+  RegisterComponent,
+  RandomNumberComponent
 ];

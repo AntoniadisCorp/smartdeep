@@ -245,6 +245,15 @@ export interface Kit {
   status: string;
 }
 
+export class RandomNumber {
+  value: number;
+}
+
+export class Tokens {
+  jwt: string;
+  refreshToken: string;
+}
+
 export interface GoogleApiFindPlaceFromText {
   'geometry': {
     'location': {

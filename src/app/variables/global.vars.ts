@@ -12,6 +12,10 @@ export let middlebar = '/',
             qport = ':',
             port = 8080;
 
+export const config = {
+  apiUrl: 'https://localhost:8080'
+};
+
 export const WAREHOUSES_DATA: Warehouse[] = [
   {name: 'Store1', type: 'Store'},
   {name: 'Warehouse1', type: 'local'},
@@ -134,7 +138,7 @@ export const MENUBTN_ORDER_PROCESS: IDropDownMenu[] = [
   You can see a summary for a group of orders by selecting those orders first.`, cmd: () => {}},
   {title: 'Metadata summary', desc: `This tool can show you an overview of your order items' option selections at a glance.
    You can see a summary for a group of orders by selecting those orders first.`, cmd: () => {}},
-  {title: 'Order notes summary', desc: `This tool can show you an overview of your orders' customer notes. 
+  {title: 'Order notes summary', desc: `This tool can show you an overview of your orders' customer notes.
   You can see a summary for a group of orders by selecting those orders first.`, cmd: () => {}},
   {title: 'Scan packing slips', desc: `This tool can help you start
   a batch by scanning packing slips for the orders you would like to fulfill together.`, cmd: () => {}},
@@ -155,7 +159,7 @@ export const ACTIONBTN_ORDER_PROCESS: IDropDownMenu[] = [
    details the items needed for each of the selected orders.`, cmd: () => {}},
   {title: 'Print grouped pick list', desc: `This will quickly print out a pick list that details
    the items needed for each of the selected orders, with the items to pick separated by order.`, cmd: () => {}},
-  {title: 'Print invoices', desc: `This will quickly print out an invoice for each of the selected orders. 
+  {title: 'Print invoices', desc: `This will quickly print out an invoice for each of the selected orders.
   Each invoice will detail the order information,
   such as the shipping and return address and the items ordered,
   as well as the price per item and the total order costs.
