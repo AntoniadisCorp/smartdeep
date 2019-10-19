@@ -28,7 +28,6 @@
     "@angular/pwa": "^0.803.7",
     "@angular/router": "^8.2.9",
     "@angular/service-worker": "^8.2.9",
-    "@fortawesome/fontawesome-free": "^5.11.2",
     "@ng-bootstrap/ng-bootstrap": "^5.1.1",
     "@nguniversal/express-engine": "^8.1.1",
     "@nguniversal/module-map-ngfactory-loader": "^8.1.1",
@@ -45,6 +44,7 @@
     "ngx-bootstrap": "^5.1.2",
     "ngx-perfect-scrollbar": "^8.0.0",
     "rxjs": "~6.5.3",
+    "rxjs-compat": "^6.5.3",
     "simple-line-icons": "^2.4.1",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
@@ -54,6 +54,7 @@
     "@angular/cli": "^8.3.7",
     "@angular/compiler-cli": "^8.2.9",
     "@angular/language-service": "^8.2.9",
+    "@fortawesome/fontawesome-free": "^5.11.2",
     "@mdi/font": "^4.4.95",
     "@types/compression": "^1.0.1",
     "@types/jasmine": "^3.4.2",

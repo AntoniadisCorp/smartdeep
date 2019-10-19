@@ -37,7 +37,8 @@ export class LoginComponent implements OnInit {
       }
     });
   }
-  authorizeclient() {
+
+  private authorizeclient() {
     this.authService.authorizeuser('http://localhost:4200/extern/login');
   }
 

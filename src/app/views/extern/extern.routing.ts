@@ -4,8 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login.component';
 import { RegisterComponent } from './register.component';
 import { RandomNumberComponent } from './random-number.component';
-import { RandomGuard } from 'src/app/auth/guard/random.guard';
-import { AuthGuard } from 'src/app/auth/guard/auth.guard';
+import { AuthGuard, GlobalGuard } from 'src/app/auth/guard';
 
 const routes: Routes = [
   {
@@ -26,14 +25,14 @@ const routes: Routes = [
         path: 'register',
         component: RegisterComponent,
         data: {
-          title: 'Register Page'
+          title: 'Sign Up Page'
         }
       },
       {
         path: 'secret-random-number',
         component: RandomNumberComponent,
-        canActivate: [RandomGuard],
-        canLoad: [RandomGuard]
+        canActivate: [GlobalGuard],
+        canLoad: [GlobalGuard]
       }
     ]
   }

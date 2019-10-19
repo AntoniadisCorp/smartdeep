@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app-header.component.scss'],
   templateUrl: './app-header.component.html'
 })
-export class AppHeaderComponent { 
+export class AppHeaderComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 

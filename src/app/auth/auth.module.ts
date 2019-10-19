@@ -1,11 +1,9 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { TokenInterceptor } from './token.interceptor';
-import { AuthGuard } from './guard/auth.guard';
 import { AuthService } from '../services';
-import { RandomGuard } from './guard/random.guard';
+import { GlobalGuard, AuthGuard } from './guard';
 
 
 @NgModule({
@@ -20,7 +18,7 @@ export class AuthModule {
       providers: [
         AuthGuard,
         AuthService,
-        RandomGuard,
+        GlobalGuard,
         {
           provide: HTTP_INTERCEPTORS,
           useClass: TokenInterceptor,

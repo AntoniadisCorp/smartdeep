@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/services';
 @Injectable({
   providedIn: 'root'
 })
-export class RandomGuard implements CanActivate, CanLoad {
+export class GlobalGuard implements CanActivate, CanLoad {
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -16,7 +16,6 @@ export class RandomGuard implements CanActivate, CanLoad {
 
   canLoad() {
     if (!this.authService.isLoggedIn()) {
-      console.log('test loggedin');
       this.router.navigate(['/extern/login']);
     }
     return this.authService.isLoggedIn();
