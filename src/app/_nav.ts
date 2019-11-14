@@ -1,6 +1,6 @@
 export const navigation = [
   {
-    name: 'Dashboard',
+    name: 'Αρχική Σελίδα',
     url: '/dashboard',
     icon: 'icon-speedometer',
   },
@@ -8,27 +8,32 @@ export const navigation = [
     divider: true,
   },
   {
-    name: 'Inventory',
-    url: '/inventory',
-    icon: 'icon-drawer',
+    name: 'Βιβλιοθήκη',
+    url: '/library',
+    icon: 'icon-book-open',
   },
   {
-    name: 'Orders',
-    url: '/orders',
-    icon: 'icon-drawer',
+    name: 'Αναζήτηση',
+    url: '/smartengine',
+    icon: 'icon-magnifier',
+    badge: {
+      variant: 'info',
+      text: 'NEW'
+    }
   },
   {
-    name: 'Shipments',
-    url: '/shipments',
-    icon: 'icon-drawer',
+    name: 'Αναλυτικά',
+    url: '/charts',
+    icon: 'icon-pie-chart'
   },
-  {
-    divider: true,
-  },
-  {
-    name: 'Purchase Orders',
-    url: '/purchase_orders',
-    icon: 'icon-drawer',
+  /* {
+    name: 'Delivery',
+    url: '/delivery',
+    icon: 'fa fa-delicious',
+    badge: {
+      variant: 'info',
+      text: 'NEW'
+    }
   },
   {
     divider: true,
@@ -109,84 +114,34 @@ export const navigation = [
         name: 'Simple Line Icons',
         url: '/icons/simple-line-icons',
         icon: 'icon-star',
-        children: [
-          {
-            name: 'Fonts v5',
-            url: '/icons/font-awesomev3',
-            icon: 'icon-star',
-            badge: {
-              variant: 'secondary',
-              text: '5'
-            }
-          }
-        ]
       }
     ]
-  },
-  {
-    name: 'Delivery',
-    url: '/delivery',
-    icon: 'fa fa-delicious',
-    badge: {
-      variant: 'info',
-      text: 'NEW'
-    }
-  },
-  {
-    name: 'Analytics',
-    url: '/charts',
-    icon: 'icon-pie-chart'
-  },
-  {
-    divider: true,
-  },
-  {
-    title: true,
-    name: 'Smart Shop',
-  },
-  {
-    name: 'SmartEngine',
-    url: '/smartengine',
-    icon: 'icon-magnifier',
-    badge: {
-      variant: 'info',
-      text: 'NEW'
-    }
-  },
+  }, */
   {
     divider: true
   },
   {
     title: true,
-    name: 'Extras',
+    name: 'Εφαρμογές',
   },
   {
-    name: 'Devices',
-    url: '/devices',
-    icon: 'fa fa-microchip',
-    badge: {
-      variant: 'accent',
-      text: 'NEW'
-    }
-  },
-  {
-    name: 'Pages',
+    name: 'Σελίδες',
     url: '/extern',
     icon: 'fa fa-sticky-note',
     children: [
-      {
-        name: 'Login',
+      /* {
+        name: 'Σύνδεση Χρήστη',
         url: '/extern/login',
         icon: 'icon-lock'
-      },
+      }, */
       {
-        name: 'Register',
+        name: 'Εγγραφή Χρήστη',
         url: '/extern/register',
         icon: 'icon-people'
       }
     ]
   },
-  {
+ /*  {
     name: 'Download CoreUI',
     url: 'http://coreui.io/angular/',
     icon: 'icon-cloud-download',
@@ -198,5 +153,5 @@ export const navigation = [
     url: 'http://coreui.io/pro/angular/',
     icon: 'icon-layers',
     variant: 'danger'
-  }
+  } */
 ];

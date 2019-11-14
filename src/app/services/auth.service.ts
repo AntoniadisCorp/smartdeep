@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { of, Observable } from 'rxjs';
 import { catchError, mapTo, tap, map } from 'rxjs/operators';
 import { config } from '../variables';
 import { Tokens } from '../interfaces';
 import { Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -25,10 +26,15 @@ export class AuthService {
   private windowHandle;
   private httpOptions = {
     withCredentials: true,
-    headers: new HttpHeaders({ 'Content-Type': 'application/json'  })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor(private http: HttpClient, private router: Router) {
+
+
+
+  constructor(private http: HttpClient, private router: Router,
+    // @Inject('LOCALSTORAGE') private localStorage: any,
+    @Inject(PLATFORM_ID) private platformId: Object) {
 
     // this.httpOptions.headers.append('Access-Control-Allow-Origin', '*');
     this.apiUrl = `${config.apiUrl}/auth`;
@@ -91,14 +97,19 @@ export class AuthService {
   }
 
   getJwtToken() {
-    return localStorage.getItem(this.JWT_TOKEN);
+    // Client only code.
+    if (isPlatformBrowser(this.platformId)) {
+
+      return localStorage.getItem(this.JWT_TOKEN);
+    } else return null
+    // return this.localStorage.getItem(this.JWT_TOKEN);
   }
 
   authorizeuser(redirectUri: string) {
 
     this.windowHandle = window.open(
       `${this.apiUrl}/v2/authorize?client_id=${this.clientId}&response_type=code&redirect_uri=${redirectUri}`
-        , '_parent');
+      , '_parent');
     let href;
 
     setTimeout(() => {
@@ -125,11 +136,11 @@ export class AuthService {
     this.http.post(
       `${this.apiUrl}/v2/token`,
       tokendata,
-      {headers})
-      .subscribe( (data: { token: string }) => {
-          this.accesstoken = data.token;
-          console.log(this.accesstoken);
-          this.router.navigate(['/dashboard']);
+      { headers })
+      .subscribe((data: { token: string }) => {
+        this.accesstoken = data.token;
+        console.log(this.accesstoken);
+        this.router.navigate(['/dashboard']);
       });
   }
 
@@ -140,13 +151,13 @@ export class AuthService {
     const newclient = this.randomstring(10);
     const client = 'name=' + newclient + '&id=' + appid + '&secret=' + appsecret;
 
-    const headers =  new HttpHeaders();
+    const headers = new HttpHeaders();
 
     headers.append('Content-Type', 'application/X-www-form-urlencoded');
 
     return this.http.post<any>(`${this.apiUrl}/client`, client/* , this.httpOptions */)
       .pipe(
-        tap(tokens => {} /* this.doLoginUser(user.username, tokens) */),
+        tap(tokens => { } /* this.doLoginUser(user.username, tokens) */),
         mapTo(true),
         catchError(error => {
 
@@ -166,21 +177,48 @@ export class AuthService {
   }
 
   private getRefreshToken() {
-    return localStorage.getItem(this.REFRESH_TOKEN);
+    // Client only code.
+    if (isPlatformBrowser(this.platformId)) {
+
+      return localStorage.getItem(this.REFRESH_TOKEN);
+    }
+    // return this.localStorage.getItem(this.REFRESH_TOKEN);
   }
 
   private storeJwtToken(jwt: string) {
-    localStorage.setItem(this.JWT_TOKEN, jwt);
+    // Client only code.
+    if (isPlatformBrowser(this.platformId)) {
+
+      localStorage.setItem(this.JWT_TOKEN, jwt);
+    }
+    // this.localStorage.setItem(this.JWT_TOKEN, jwt);
+
   }
 
   private storeTokens(tokens: Tokens) {
-    localStorage.setItem(this.JWT_TOKEN, tokens.jwt);
-    localStorage.setItem(this.REFRESH_TOKEN, tokens.refreshToken);
+
+    // Client only code.
+    if (isPlatformBrowser(this.platformId)) {
+
+      localStorage.setItem(this.JWT_TOKEN, tokens.jwt);
+      localStorage.setItem(this.REFRESH_TOKEN, tokens.refreshToken);
+    }
+    // this.localStorage.setItem(this.JWT_TOKEN, tokens.jwt);
+    // this.localStorage.setItem(this.REFRESH_TOKEN, tokens.refreshToken);
+
   }
 
   private removeTokens() {
-    localStorage.removeItem(this.JWT_TOKEN);
-    localStorage.removeItem(this.REFRESH_TOKEN);
+
+    // Client only code.
+    if (isPlatformBrowser(this.platformId)) {
+
+      localStorage.removeItem(this.JWT_TOKEN);
+      localStorage.removeItem(this.REFRESH_TOKEN);
+    }
+
+    // this.localStorage.removeItem(this.JWT_TOKEN);
+    // this.localStorage.removeItem(this.REFRESH_TOKEN);
   }
 
   private randomstring(len) {

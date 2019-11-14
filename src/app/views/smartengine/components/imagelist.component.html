@@ -1,0 +1,47 @@
+<ol class="card-toolbar paginator row" aria-label="Page navigation example">
+    <ul class="pagination justify-content-start col-md-6">
+        <li>
+            <mat-button-toggle-group [(value)]="toggleListValueByid" #group="matButtonToggleGroup">
+                <mat-button-toggle *ngFor="let item of toggleListOptions;" (change)="selectionChanged($event)"
+                    [value]="item.id">
+                    <mat-icon [ngClass]="'fas fa-' + item.icon + ' mr-2'"></mat-icon> {{item.value}}
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+        </li>
+    </ul>
+    <ul class="pagination justify-content-end col-md-6 mt-2">
+        <li class="page-item disabled">
+            <a mat-button class="page-link" tabindex="-1"><i class="fas fa-chevron-left mr-1"></i>Previous</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item active"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">4</a></li>
+        <li class="page-item "><a class="page-link" href="#">5</a></li>
+        <li class="page-item">
+            <a mat-button class="page-link">Next <i class="fas fa-chevron-right ml-1"></i></a>
+        </li>
+    </ul>
+</ol>
+
+<section id="list">
+    <ul>
+        <li class="card card-accent-primary">
+            <h2 class="card-header-pills mb-0"><span class="badge badge-pill badge-info">323 books</span></h2>
+            <a class="pic">
+                <img src="assets/img/system/no-image-icon-23485.png" title="">
+            </a>
+            <h2>
+                <a title="Χλοοκοπτικά / Χορτοκοπτικά">Χλοοκοπτικά / Χορτοκοπτικά</a>
+            </h2>
+            <div class="sub-items">
+                <h3>
+                    <a>Echo1</a> &nbsp;
+                    <a>Echo2</a> &nbsp;
+                    <a>Echo3</a> &nbsp;
+                </h3>
+                <a>...</a>
+            </div>
+        </li>
+    </ul>
+</section>

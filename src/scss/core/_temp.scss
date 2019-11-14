@@ -69,3 +69,23 @@ mat-spinner.obs-mat-spinner {
 button:focus {
   outline: none;
 }
+
+.label-center {
+  color: $BrandGreenTransLightColor;
+  margin:auto !important;
+  font-size: 20px;
+}
+
+.ldBar-center:after {
+
+    content: "loading";
+    color: #aaa;
+    margin-left: 5px;
+    font-family: courier new;
+    font-size: 0.7em;
+    font-weight: 200;
+  }
+
+.mainline {
+  stroke: $BrandGreenTransLightColor !important;
+}

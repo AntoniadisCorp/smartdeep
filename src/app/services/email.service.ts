@@ -2,20 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse  } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-// import { MessageService } from './message.service';
+import { Logger } from './logger.service';
 
 @Injectable()
 export class EmailsService {
 
-    constructor(private http: HttpClient, /* private messageService: MessageService */) { }
+    constructor(private http: HttpClient, private logger: Logger) { }
 
     /**
      * sendEmail
      * @param Object
      */
     public sendEmail(customer: object): Observable<object> {
-
-        // { 'Authorization': 'Bearer ' + currentUser.token }
 
         const httpOptions = {
             headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -26,9 +24,9 @@ export class EmailsService {
                     catchError(this.handleError<any>('sendEmail')));
     }
 
-    /** Log a HeroService message with the MessageService */
+    /** Log a Service message with the MessageService */
     private log(message: string) {
-        // this.messageService.add(`HeroService: ${message}`);
+        this.logger.log(message)
     }
 
     /**

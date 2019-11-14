@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>
+    {{data.title}} <i [ngClass]="data.image.color + ' fa-lg fas fa-' + data.image.icon"></i>
+</h1>
+<div mat-dialog-content>
+    <p>{{data.text}}</p>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Δημιουργία</button>
+    <button mat-button (click)="onOpenBook()" [mat-dialog-close]="data.status" cdkFocusInitial>Προβολή</button>
+</div>

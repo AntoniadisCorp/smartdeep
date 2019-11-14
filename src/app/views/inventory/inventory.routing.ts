@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InventoryComponent } from './inventory.component';
-import { ItemComponent, KitComponent, WarehouseComponent,
+import { /* ItemComponent, */ KitComponent, WarehouseComponent,
     TransferOrderComponent, CycleCountComponent, ReceiveComponent,
     DeductComponent, WizardComponent } from './components';
 
@@ -10,7 +10,7 @@ const routes: Routes = [
         data: { title: 'Inventory' },
         component: InventoryComponent,
         children: [
-            { path: 'items', component: ItemComponent, data: {title: 'Items', animation: 'item'} },
+            // { path: 'items', component: ItemComponent, data: {title: 'Items', animation: 'item'} },
             { path: 'kits', component: KitComponent, data: {title: 'Kits', animation: 'kits'}},
             { path: 'warehouses', component: WarehouseComponent, data: {title: 'Warehouses', animation: 'warehouse'} },
             { path: 'transferorders', component: TransferOrderComponent, data: {title: 'Transfer Orders', animation: 'transferorder'} },
@@ -34,7 +34,7 @@ export const routedComponents = {
 
     app: [
         InventoryComponent,
-        ItemComponent,
+        /* ItemComponent, */
         KitComponent,
         WarehouseComponent,
         TransferOrderComponent,

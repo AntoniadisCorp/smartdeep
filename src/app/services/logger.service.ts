@@ -1,12 +1,29 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class Logger {
-  logs: string[] = []; // capture logs for testing
+  private logs: string[] = []; // capture logs for testing
 
-  log(message: string) {
+  constructor(private snackBar: MatSnackBar) {}
+  log(message: string, duration?: number) {
     this.logs.push(message);
+    this.openSnackBar(message, duration);
     console.log(message);
+  }
+
+  private openSnackBar(message: string, duration?: number, action?: string) {
+
+    this.snackBar.open(message, action, {
+      // tslint:disable-next-line: no-bitwise
+      duration: duration | 2000,
+    });
+  }
+
+
+  getLogs(): string[] {
+
+    return this.logs;
   }
 
   error(message: string) {

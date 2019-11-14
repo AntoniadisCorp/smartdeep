@@ -1,0 +1,117 @@
+$tablet: 340px !default;
+$BookColor: #bfbfbf !default;
+
+@mixin tablet {
+  @media (min-width: $tablet) {
+    @content;
+  }
+}
+
+section#list {
+  .card {
+    h2 span {
+      font-size: 11px;
+      color: #fff;
+      font-weight: 700;
+    }
+    @include tablet {
+      float: left;
+      max-width: 240px;
+      padding: 15px;
+    }
+  }
+
+  display: inline-block;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    li {
+      margin: 10px;
+      float: left;
+      padding: 15px;
+      min-width: 200px;
+
+      a img {
+        max-width: 100%;
+        max-height: 100%;
+        vertical-align: middle;
+      }
+
+      h2 {
+        position: relative;
+        overflow: hidden;
+        display: block;
+        width: auto;
+        max-width: none;
+        white-space: normal;
+        margin: 3px;
+        a {
+          color: black;
+        }
+      }
+
+      .sub-items {
+        margin: 5px;
+        border-radius: 2px;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        h3 {
+          font-family: "Montserrat";
+          font-size: 17px;
+          a {
+            color: #707070;
+            text-decoration: none;
+          }
+        }
+        a {
+          text-decoration: none;
+          color: #005dff;
+        }
+      }
+    }
+  }
+
+  h2 {
+    max-width: 52%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    margin: 10px 0;
+    font-size: 17px;
+  }
+}
+
+.paginator {
+  padding: 0 0 10px;
+  text-align: center;
+  margin: 0;
+}
+
+.page-link,
+.pagination-datatables li a,
+.pagination li a {
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+.page-item.active .page-link,
+.page-item.active .pagination-datatables li a,
+.pagination-datatables li .page-item.active a,
+.page-item.active .pagination li a,
+.pagination li .page-item.active a,
+.pagination-datatables li.active .page-link,
+.pagination-datatables li.active a,
+.pagination li.active .page-link,
+.pagination li.active a {
+  background-color: #20a8d8;
+  border-color: #20a8d8;
+  border-radius: 50%;
+}

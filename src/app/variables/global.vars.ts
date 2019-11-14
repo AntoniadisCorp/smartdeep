@@ -3,6 +3,7 @@ import { InventoryTabs, Category, Warehouse,
         IDropDownMenu,
         Item} from '../interfaces';
 
+export const EMAIL_REGEX = "[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*";
 // Const values for URLs
 // tslint:disable-next-line: one-variable-per-declaration
 export let middlebar = '/',
@@ -13,8 +14,11 @@ export let middlebar = '/',
             port = 8080;
 
 export const config = {
-  apiUrl: 'https://localhost:8080'
+  apiUrl: 'https://localhost:8080',
+  // serverUrl: 
 };
+
+export const DEFAULT_IMAGE: string = 'assets/img/codepics/book.jpg'
 
 export const WAREHOUSES_DATA: Warehouse[] = [
   {name: 'Store1', type: 'Store'},
@@ -62,11 +66,10 @@ export const INVENTORY_DATA_TABS: InventoryTabs[] = [
     {icon: 'brush', name: 'Wizard', id: 'wizard'},
 ];
 
-export const ORDERS_DATA_TABS: InventoryTabs[] = [
-  // orders tabs
-  {icon:  'inbox', name: 'Processing', id: 'processing'},
-  {icon:  'local_shipping', name: 'Shipped', id: 'shipped'},
-  {icon:  'archive', name: 'Archived', id: 'archived'},
+export const LIBRARY_DATA_TABS: InventoryTabs[] = [
+  // library tabs
+  {icon:  'note_add', name: 'Προσθήκη Βιβλίου', id: 'addbook'},
+  {icon:  'library_books', name: 'Άνοιγμα Βιβλίου', id: 'editbook'},
 ];
 
 // input name, m-selector icon,

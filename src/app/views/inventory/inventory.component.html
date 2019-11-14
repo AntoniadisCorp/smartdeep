@@ -3,32 +3,29 @@
 
         <div class="card">
             <div class="card-header">
-                
+
                 <h5> Inventory Panel </h5>
                 <i class="icon-drawer"></i>
                 <div class="card-header-tabs">
-                    <!-- <nav mat-tab-nav-bar> -->
-                        <!-- a mat-tab-link [active]="activeLink === invtab.id"-->
-                    <nav mat-tab-nav-bar (wheel)="scrollTabs($event)" #tabGroup>
-                        <a mat-tab-link *ngFor="let invtab of InvTabs$ | async"
-                            (click)="activeLink = invtab.id"
-                            [active]="rla.isActive"
-                            [routerLink]="['/inventory', invtab.id]" 
-                            routerLinkActive
-                            
+
+                    <nav mat-tab-nav-bar (wheel)="
+                    ($event)" #tabGroup>
+                        <a mat-tab-link *ngFor="let invtab of InvTabs$ | async" (click)="activeLink = invtab.id"
+                            [active]="rla.isActive" [routerLink]="['/inventory', invtab.id]" routerLinkActive
                             #rla="routerLinkActive">
-                                    <mat-icon class="mat-tab-icon" [ngClass]="invtab.id==='receive' ? 'mat-tab-icon-fix' : ''">{{invtab.icon}}</mat-icon>
-                                    {{invtab.name}}
+                            <mat-icon class="mat-tab-icon" [ngClass]="invtab.id==='receive' ? 'mat-tab-icon-fix' : ''">
+                                {{invtab.icon}}</mat-icon>
+                            {{invtab.name}}
                         </a>
                     </nav>
                 </div>
             </div>
             <div class="card-body">
                 <div [@routeAnimation]="getAnimationData(routerOutlet)">
-                  <router-outlet #routerOutlet="outlet"></router-outlet>
+                    <router-outlet #routerOutlet="outlet"></router-outlet>
                 </div>
             </div>
         </div>
-         
+
     </div>
 </div>

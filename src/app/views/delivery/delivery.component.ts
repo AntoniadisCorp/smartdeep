@@ -47,7 +47,7 @@ export class DeliveryComponent implements OnInit, OnDestroy {
           .subscribe( (u: AnonymousInterface) => {this.AnonymousUser = u, console.log(this.AnonymousUser); } );
 
       console.log(requrl);
-      // this.httpReq.getPlaces(requrl).subscribe(r => console.log(r));
+      // this.httpReq.getTasks(requrl).subscribe(r => console.log(r));
     }
 
     ngOnDestroy() {

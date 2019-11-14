@@ -1,0 +1,110 @@
+<div *ngIf="entranceGate" class="masthead">
+
+    <div class="container d-flex h-50 align-items-center">
+        <div class="mx-auto text-center">
+            <h1 class="mx-auto my-0 text-uppercase">Βιβλιοθηκη</h1>
+            <h2 class="text-white-50 mx-auto mt-2 mb-5">Αναζήτηση Βιβλίου με βάση τον κωδικό..</h2>
+            <form [formGroup]="entranceForm">
+                <!-- <div formGroupName="books"></div> -->
+                <mat-form-field [style.fontSize]="fontSize">
+                    <mat-spinner matSuffix *ngIf="isProcessing" [diameter]="20" [strokeWidth]="3">
+                    </mat-spinner>
+                    <input formControlName="title" required type="text" placeholder="Γράψτε τον κωδικό" matInput
+                        [matAutocomplete]="autoGroup" />
+
+                    <mat-autocomplete #autoGroup="matAutocomplete" (optionSelected)='createBook($event)'>
+                        <!-- <mat-optgroup *ngFor="let group of stateGroupOptions | async" [label]="group.letter"> -->
+                        <mat-option *ngFor="let option of stateGroupOptions | async" [value]="option.name">
+                            <span> {{ option._id }}</span> |
+                            <img class="autocomplete-option-img" aria-hidden [src]="option.avatar.src" height="25">
+                            <span> {{ option.name }}</span> |
+                            <small>Σελίδες: {{ option.pages }}</small>
+                        </mat-option>
+                        <!-- </mat-optgroup> -->
+                    </mat-autocomplete>
+                </mat-form-field>
+                <!-- </div> -->
+                <a (click)="openBook()" mat-raised-button class="btn btn-light text-dark">Άνοιγμα Βιβλίου</a>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="card-body" *ngIf="!entranceGate">
+
+    <form [formGroup]="entranceForm">
+        <div class="card-toolbar row">
+            <div class="col">
+                <div class="d-flex md-form form-group mt-0">
+                    <div class="clearfix d-sm-block d-md-block pt-3">
+                        <button type="button" mat-icon-button class="d-md-down-none" (click)="entranceGate=true">
+                            <i class="fas fa-arrow-left text-dark fa-lg"></i>
+                        </button>
+                        <span class="text-dark uk-text-large mr-3">Πίσω</span>
+                        <i class="fas fa-book fa-lg text-dark mr-2"></i>
+                        <span class="text-dark font-weight-bold mr-0">Προβολή Βιβλίου</span>
+                        <i class="fas fa-database fa-lg text-dark mr-2 ml-3"></i>
+                        <span class="text-dark mr-4">Βιβλιοθήκη:
+                            <mat-chip-list aria-label="Library Selection">
+                                <mat-chip> {{ libraryName.value }} </mat-chip>
+                            </mat-chip-list>
+                        </span>
+                        <!-- <span class="text-dark uk-text-large mr-2">Κατάσταση: </span> -->
+                        <label class="switch switch-text switch-pill switch-success mt-2">
+                            <input type="checkbox" checked
+                                class="form-check-input switch-input ng-untouched ng-pristine ng-valid"
+                                formControlName="status" id="status">
+                            <span class="switch-label" data-on="ΔΙΑΘΕΣΙΜΟ" data-off="ΜΗΔΙΑΘΕΣΙΜΟ"></span>
+                            <span class="switch-handle"></span>
+                        </label>
+                    </div>
+                    <a class="navbar-btn ml-auto pt-3">
+                        <button mat-button class="btn btn-outline-warning btn-sm mb-0 ml-0" type="submit">
+                            <i class="fas fa-edit fa-lg mr-1 mb-1"></i>
+                            Επεξεργασία
+                        </button>
+                        <button mat-button class="btn btn-outline-danger btn-sm mb-0 ml-0" type="submit">
+                            <i class="fas fa-trash fa-lg mr-1 mb-1"></i>
+                            Διαγραφή
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <h2 id="specs" class="title section-title specs-section">
+            <span class="content">Πληροφορίες Βιβλίου {{ title.value }}</span>
+        </h2>
+
+        <div class="specs container ">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-row">
+                        <!-- Image Preview -->
+                        <div class="form-group col-md-12"  *ngIf="avatarFile && avatarFile.src !== ''">
+                            <button mat-icon-button class="icon heart active">
+                                <i class="fas fa-heart fa-lg"></i></button>
+                            <img class="img-fluid fit shadow-lg rounded" [src]="avatarFile.src" />
+                            <button mat-icon-button class="icon card-settings favorite-card-settings">
+                                <i class="fas fa-ellipsis-v fa-lg"></i> </button>
+                        </div>
+                    </div>
+                    <!-- <app-file-upload formControlName="avatar" [progress]="progress"></app-file-upload> -->
+                </div>
+                <div class="spec-groups col-md-8">
+                    <div class="spec-details">
+                        <h3>{{categoryName.value}}</h3>
+                        <dl *ngFor = "let st of stateData$ | async" >
+                            <dt >{{ st.text}}</dt>
+                            <dd ><span [ngClass]="(st.id==='status' && st.value === 'Διαθέσιμο'? 'availability': '') + ' instock'">{{ st.value }}</span></dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>

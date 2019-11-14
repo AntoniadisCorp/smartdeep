@@ -100,6 +100,7 @@ const APP_SERVICES = [
 
   Logger,
   EventsService,
+  {provide: 'LOCALSTORAGE', useFactory: getLocalStorage}
 ];
 
 @NgModule({
@@ -128,4 +129,18 @@ export class AppModule {
       'in the browser' : 'on the server';
     console.log(`Running ${platform} with appId=${appId}`);
   }
+}
+
+//Stub for localStorage
+let localStorage = {
+  getItem: function (key) {
+    return this[key];
+  },
+  setItem: function (key, value) {
+    this[key] = value;
+  }
+};
+
+export function getLocalStorage() {
+  return (typeof window !== "undefined") ? window.localStorage : localStorage;
 }

@@ -9,6 +9,7 @@ import { MaterialsModule, AppNgModules } from '../../modules';
 
 import { ReDirective } from '../../directives';
 import { APP_PRODUCT_CARD } from 'src/app/components';
+import { FormsModule } from '@angular/forms';
 
 const APP_DIRECTIVES = [
     ReDirective,
@@ -25,9 +26,10 @@ const APP_DIRECTIVES = [
         AppNgModules,
         EngineRoutingModule,
         MaterialsModule,
+        FormsModule,
     ],
 
     exports: [],
     providers: [],
 })
-export class SearchModule {}
+export class SearchModule {};

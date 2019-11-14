@@ -6,10 +6,16 @@ export interface IBreadcrumb {
   url: string;
 }
 
+export interface StateGroup {
+  letter: string;
+  name: string[];
+}
+
 export interface OptionEntry {
-  display: string;
-  value: any;
-  details: any;
+  code: number;
+  status: string;
+  data?: any;
+  error?: any;
 }
 
 export interface DataSource {
@@ -25,75 +31,95 @@ export interface DataCRUD {
 }
 
 export interface Tasks {
-    _id: string;
-    title: string;
-    details: {
-        icon: string,
-        storeName: string,
-        storeAdress: string,
-        shipping: string,
-        stars: number,
-        orders: number,
-    };
-    isDone: boolean;
+  _id: string;
+  title: string;
+  details: {
+    icon: string,
+    storeName: string,
+    storeAdress: string,
+    shipping: string,
+    stars: number,
+    orders: number,
+  };
+  isDone: boolean;
 }
 
 export interface Category {
-    _id?: string;
-    name: string;
-    icon?: string;
-    children?: Array<object>;
-    desc?: number;
-    parent_id?: string;
-    date_added?: Date;
-    date_modified?: Date;
-    status?: string;
-    recyclebin?: boolean;
-    action?: MenuAction;
+  _id?: string;
+  name: string;
+  icon?: string;
+  children?: Array<object>;
+  desc?: string;
+  parent_id?: string;
+  date_added?: Date;
+  date_modified?: Date;
+  status?: boolean;
+  top?: boolean;
+  recyclebin?: boolean;
+  action?: MenuAction;
+}
+
+export interface Library {
+  _id?: string;
+  name: string;
+  books?: number;
+  bookcases?: string[];
+  icon?: string;
+  imageUrl?: string;
+  date_added?: Date;
+  date_modified?: Date;
+  recyclebin?: boolean;
+  status?: string;
+}
+
+export interface BodyObj {
+
+  data: Library | Category | any; // body data, it is json OBJECT
+  col: string; // collection
 }
 
 export interface Iconfonts {
-    iconclass: string;
-    link: string;
-    name: string;
-    type: string;
+  iconclass: string;
+  link: string;
+  name: string;
+  type: string;
 }
 
 export interface MenuAction {
 
-    status: boolean;
-    iconclass: string;
-    CategoryRemList: string[];
-    actionfun?: () => boolean;
+  status: boolean;
+  iconclass: string;
+  CategoryRemList: string[];
+  actionfun?: () => boolean;
 }
 
 export interface RESTfulServ {
 
-    code: number;
-    message: string;
-    status: string;
+  code: number;
+  message: string;
+  status: string;
 }
 
 export interface DlvryFilters {
 
-    Title: string;
-    Action: string;
-    groupHeader: {
-      title: string;
-      action: string;
-      icon: string;
-    };
-    groupList: [{
-      icon: string;
-      href: string;
-      count: number;
-      status: string; // selected or not
-    }];
-    groupForm: {
-      inputCount: number;
-      btnAction: string;
-      icon: string;
-    };
+  Title: string;
+  Action: string;
+  groupHeader: {
+    title: string;
+    action: string;
+    icon: string;
+  };
+  groupList: [{
+    icon: string;
+    href: string;
+    count: number;
+    status: string; // selected or not
+  }];
+  groupForm: {
+    inputCount: number;
+    btnAction: string;
+    icon: string;
+  };
 }
 
 export interface MainPageTabIndex {
@@ -103,7 +129,7 @@ export interface MainPageTabIndex {
   };
 
   DeliveryClass: {
-   active: boolean;
+    active: boolean;
   };
 }
 
@@ -125,6 +151,13 @@ export interface IDropDownMenu {
   cmd: () => void;
 }
 
+export interface ItoggleListMenu {
+  id: number;
+  value: string;
+  icon: string;
+  uRL: string;
+}
+
 
 export interface Item {
 
@@ -140,7 +173,7 @@ export interface Item {
   location: {
     id: number;
     warehouse?: Warehouse;
-  } [];
+  }[];
   tags: string[];
   distributors: string[];
   fullfillmentSKU: string;
@@ -159,7 +192,7 @@ export interface Item {
   /* The mover rating is a ranking of each item in your inventory based on recent sales volume.
    "A" movers are your top 20% of items sold recently, while "B" items are your next 60%, and
     "C" items are your bottom 20%. */
-  lastcounted?: CycleCount; /* This indicates when this item was last counted as part of a cycle count. 
+  lastcounted?: CycleCount; /* This indicates when this item was last counted as part of a cycle count.
   This will be empty if the item has never been included in any cycle counts before. */
 }
 
@@ -266,16 +299,16 @@ export interface GoogleApiFindPlaceFromText {
     'weekday_text': []
   };
   'photos': [
-      {
-        'height': number,
-        'html_attributions': string[];
-        'photo_reference': string;
-        'width': number;
-      }
+    {
+      'height': number,
+      'html_attributions': string[];
+      'photo_reference': string;
+      'width': number;
+    }
   ];
-'place_id': string;
-'types': Array<string>;
-'vicinity': string;
-'rating': number;
+  'place_id': string;
+  'types': Array<string>;
+  'vicinity': string;
+  'rating': number;
 }
 

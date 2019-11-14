@@ -50,7 +50,7 @@ $navbar-border: (
 $navbar-brand-width:                  88px !default;
 $navbar-brand-bg:                     #fff !default;
 $navbar-brand-logo:                   url('assets/img/logo.png') !default;
-$navbar-brand-logo-size:              70px auto !default;
+$navbar-brand-logo-size:              68px auto !default;
 $navbar-brand-border: (
   bottom: (
     size:                             1px,
@@ -230,3 +230,10 @@ $card-icon-color:                     $body-color !default;
 // SubPages
 
 $grade-row-box:                       18px !default;
+
+$BrandSecondaryColor:               #c8ced3 !default;
+$BrandDangerColor:                  #f86c6b !default;
+$BrandLightColor:                   #f0f3f5 !default;
+$BrandGreenTransLightColor:         #3bb54a !default; 
+$SliteGray:                         slategray !default;
+$Gray200Color:                      #f0f3f5 !default;

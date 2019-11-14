@@ -17,7 +17,7 @@ export const HomeRoutes: Routes = [
       canActivate: [GlobalGuard],
       canLoad: [GlobalGuard]
     },
-    {
+  /*   {
       path: 'inventory', // Inventory
       component: FullLayoutComponent,
       children: [
@@ -28,14 +28,26 @@ export const HomeRoutes: Routes = [
       ],
       canActivate: [GlobalGuard],
       canLoad: [GlobalGuard]
-    },
+    }, */
     {
-      path: 'orders', // Orders
+      path: 'library', // Orders
       component: FullLayoutComponent,
       children: [
         {
             path: '',
-            loadChildren: () => import('../views/orders/orders.module').then(mod => mod.OrdersModule)
+            loadChildren: () => import('../views/library/library.module').then(mod => mod.LibraryModule)
+        }
+      ],
+      canActivate: [GlobalGuard],
+      canLoad: [GlobalGuard]
+    },    
+    {
+      path: 'smartengine', // Smart Shop
+      component: FullLayoutComponent,
+      children: [
+        {
+            path: '',
+            loadChildren: () => import('../views/smartengine/smartengine.module').then(mod => mod.SearchModule),
         }
       ],
       canActivate: [GlobalGuard],
@@ -60,30 +72,6 @@ export const HomeRoutes: Routes = [
         {
             path: '',
             loadChildren: () => import('../views/chartjs/chartjs.module').then(mod => mod.ChartJSModule)
-        }
-      ],
-      canActivate: [GlobalGuard],
-      canLoad: [GlobalGuard]
-    },
-    {
-      path: 'smartengine', // Smart Shop
-      component: FullLayoutComponent,
-      children: [
-        {
-            path: '',
-            loadChildren: () => import('../views/smartengine/smartengine.module').then(mod => mod.SearchModule),
-        }
-      ],
-      canActivate: [GlobalGuard],
-      canLoad: [GlobalGuard]
-    },
-    {
-      path: 'icons',
-      component: FullLayoutComponent,
-      children: [
-        {
-            path: '',
-            loadChildren: () => import('../views/icons/fontawesome.module').then(mod => mod.FontsAwesomeModule),
         }
       ],
       canActivate: [GlobalGuard],

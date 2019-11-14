@@ -1,5 +1,6 @@
-button {
-    right: 10px;
+button.logout {
+    right: 9px;
+    top: 9px;
     position: absolute;
 }
   
@@ -9,6 +10,11 @@ p {
     position: absolute;
     text-align: center;
     width: 100%;
+
+    button {
+        left: 2px;
+        position: relative;  
+    }
 }
 
 .number {

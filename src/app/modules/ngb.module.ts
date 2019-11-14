@@ -1,8 +1,8 @@
-import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDatepickerModule, NgbTypeaheadModule, NgbProgressbarModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
 
 const NgbMapModule = [
-    NgbDatepickerModule,
+    NgbDatepickerModule, NgbTypeaheadModule, NgbProgressbarModule
 ];
 
 @NgModule({

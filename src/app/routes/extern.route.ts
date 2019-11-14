@@ -17,9 +17,5 @@ export const ExternRoutes: Routes = [
         }
       ]
     },
-    {
-      path: 'post',
-      loadChildren: () => import('../views/post/post.module').then(mod => mod.PostModule),
-    },
 ];
 
