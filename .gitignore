@@ -16,6 +16,9 @@
 *.csr
 *.js
 
+# Windows Runtime Files
+*.exe
+
 # pictures
 *.png
 *.jpg

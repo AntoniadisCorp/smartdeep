@@ -16,8 +16,8 @@ export class FileUploadComponent implements ControlValueAccessor, OnInit {
 
     @Input() progress: number;
     @Input() upload: boolean = false;
-
     @Input() formControlName: string;
+
     @ViewChild('subscribe', { static: true }) form: ElementRef<HTMLFormElement>;
 
     onChange: Function;
@@ -37,13 +37,13 @@ export class FileUploadComponent implements ControlValueAccessor, OnInit {
     }
 
 
-    constructor(private host: ElementRef<HTMLInputElement>, @Host() @SkipSelf()
-    private controlContainer: ControlContainer) {
+    constructor(private host: ElementRef<HTMLInputElement>/*, @Host() @SkipSelf()
+     private controlContainer: ControlContainer */) {
     }
 
     ngOnInit() {
 
-        if (this.controlContainer) {
+        /* if (this.controlContainer) {
             if (this.formControlName) {
                 this.control = this.controlContainer.control.get(this.formControlName)
                 // this.control.valueChanges.subscribe(file => { if (!file) this.file = file })
@@ -52,7 +52,7 @@ export class FileUploadComponent implements ControlValueAccessor, OnInit {
             }
         } else {
             console.warn('Can\'t find parent FormGroup directive');
-        }
+        } */
 
     }
 
