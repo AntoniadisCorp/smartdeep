@@ -4,7 +4,7 @@
             <mat-button-toggle-group [(value)]="toggleListValueByid" #group="matButtonToggleGroup">
                 <mat-button-toggle *ngFor="let item of toggleListOptions;" (change)="selectionChanged($event)"
                     [value]="item.id">
-                    <mat-icon [ngClass]="'fas fa-' + item.icon + ' mr-2'"></mat-icon> {{item.value}}
+                    <i class="{{'fas fa-lg fa-' + item.icon + ' mr-2'}}"></i> {{item.value}}
                 </mat-button-toggle>
             </mat-button-toggle-group>
         </li>

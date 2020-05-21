@@ -1,0 +1,99 @@
+<h1 mat-dialog-title>
+    {{data.title}} <mat-icon fontSet="fas" svgIcon="{{data.image.svg}}" style="font-size: 1.5rem;height: auto;"
+        fontIcon="fa-{{data.image.icon}} fa-lg"></mat-icon>
+
+</h1>
+
+
+<div class="align-middle">
+
+    <p *ngIf="data.body && date_added.value.length">
+
+        <mat-chip style="height: unset;">* Ημ/νία Δημ/γιας {{ date_added.value | date }}</mat-chip>
+
+        <!-- <mat-chip style="height: unset;">{{data.subtitle}}</mat-chip> -->
+    </p>
+
+    <p *ngIf="data.body && date_modified.value.length">
+        <mat-chip style="height: unset;">* Ημ/νία Τροπ/σης {{ date_modified.value | date }}</mat-chip>
+    </p>
+</div>
+
+<div mat-dialog-content>
+
+
+    <div class="container">
+        <form [formGroup]="LibSpaceForm" class="bookcase">
+            <div class="form-group row">
+                <mat-form-field hintLabel="πχ. Α,Β,α,β,a,b.. ή 1,2,3">
+                    <mat-label>Αρίθμηση Βιβλιοθήκης</mat-label>
+                    <input matInput formControlName="whatnot" required maxlength="5" placeholder="Α">
+                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                    <mat-hint align="end">{{whatnot.value?.length || 0}}/5</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="form-group row">
+                <!-- <h4>Είδος Βιβλιοθήκης</h4> -->
+                <mat-form-field>
+                    <mat-label>Είδος Βιβλιοθήκης</mat-label>
+                    <mat-select formControlName="LibtypesCntr" required>
+                        <mat-option *ngFor="let type of Libtypes" [value]="type.id">
+                            {{type.value}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="form-group row">
+                <mat-form-field hintLabel="πχ. Α,Β,α,β,a,b.. ή 1,2,3">
+                    <mat-label>Αρίθμηση Ράφιου</mat-label>
+                    <mat-chip-list #chipList>
+                        <mat-chip *ngFor="let shelf of shelves" [selectable]="selectable" [removable]="removable"
+                            (removed)="remove(shelf.name)">
+                            {{shelf.name}}
+                            <mat-icon matChipRemove *ngIf="!shelf.used? removable : false">cancel</mat-icon>
+                        </mat-chip>
+                    </mat-chip-list>
+                    <input matInput formControlName="bookshelf" required maxlength="5" placeholder="Α.."
+                        [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)"
+                        [matAutocomplete]="auto" #shelvesInput>
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                        <mat-option *ngFor="let shelfs of filteredShelves | async" [value]="shelfs">
+                            {{shelfs}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                    <mat-hint align="end">{{bookshelf.value?.length || 0}}/5</mat-hint>
+                </mat-form-field>
+            </div>
+            <!-- <div class="form-group row">
+                <mat-form-field hintLabel="πχ. Α,Β,α,β,a,b.. ή 1,2,3">
+                    <mat-label>Αρίθμηση Βιβλίου</mat-label>
+                    <input matInput type="text" formControlName="bookshelfNo" required maxlength="10" placeholder="888">
+                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                    <mat-hint align="end">{{bookshelfNo.value?.length || 0}}/10</mat-hint>
+                </mat-form-field>
+            </div> -->
+
+            <h3 *ngIf="data.body" class="form-group row">
+                <mat-checkbox formControlName="disabled">
+                    <!-- [disabled]="data.body? false : true" -->
+                    {{disabled.value? 'Ενεργό' : 'Ανενεργό'}} </mat-checkbox>
+            </h3>
+        </form>
+    </div>
+
+
+    <!-- <h5>{{data.text}} Θέση: -->
+        <!-- {{this.nameObservable | async }} -->
+    <!-- </h5> -->
+
+</div>
+<div mat-dialog-actions class="justify-content-center">
+    <button mat-button (click)="onNoClick()">Πίσω</button>
+    <button mat-button [disabled]="!LibtypesCntr.valid || !whatnot.valid || !shelves.length>0"
+        (click)="onSave()">προσθήκη</button><!-- cdkFocusInitial -->
+    <!-- Action Progress Data Bar -->
+    <mat-progress-spinner *ngIf="progressActionDataBar>0" [diameter]="20" mode="Indeterminate" [value]="progressActionDataBar"></mat-progress-spinner>
+    <!-- [mat-dialog-close]="data" -->
+</div>

@@ -1,0 +1,37 @@
+.toolbar-toggle-menu {
+  margin-bottom: 10px;
+}
+
+.treecrumb {
+  display: flex;
+  flex-wrap: wrap;
+  transition: left 0.25s, right 0.25s, width 0.25s;
+  margin-bottom: 0rem;
+  list-style: none;
+}
+.spinner-container {
+  position: relative;
+  width: 300px;
+  height: 1px;
+  display: initial;
+  bottom: 100px;
+}
+
+.spinner-container mat-spinner {
+  margin: 130px auto 0 auto;
+}
+
+.description-cell {
+  text-align: left;
+  margin: 10px auto;
+}
+
+.duration-cell {
+  text-align: center;
+}
+
+.duration-cell mat-icon {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 20px;
+}

@@ -8,3 +8,5 @@ export * from './inventory.service';
 export * from './task.service';
 export * from './auth.service';
 export * from './books.datasource';
+export * from './searchResolve.service';
+export * from './svgicon.service'

@@ -5,7 +5,7 @@
             <mat-button-toggle-group [(value)]="toggleListValueByid" #group="matButtonToggleGroup">
                 <mat-button-toggle *ngFor="let item of toggleListOptions;" (change)="selectionChanged($event)"
                     [value]="item.id">
-                    <mat-icon [ngClass]="'fas fa-' + item.icon + ' mr-2'"></mat-icon> {{item.value}}
+                    <i class="{{'fas fa-lg fa-' + item.icon + ' mr-2'}}"></i> {{item.value}}
                 </mat-button-toggle>
             </mat-button-toggle-group>
         </li>
@@ -67,9 +67,19 @@
 
 </div>
 
-<div class="card-table mat-elevation-z0 course">
+<div id="letter-range-holder">
+    <div id="letter_range">
+        <span id="letter_A" class="letter">A</span>
+        <span id="number" class="letter">#</span>
+        <span id="all" class="letter active">ALL</span>
+    </div>
+</div>
 
+<div class="card-table mat-elevation-z8">
 
+    <!-- ******************** Second bar On Table ******************** -->
+
+    <!--  Table Search -->
     <div class="card-extra-toolbar row">
         <mat-form-field class="col-md-4">
             <span class="card-table-search-icon" mat-button matPrefix mat-icon-button aria-label="Search"
@@ -77,41 +87,45 @@
                 <mat-icon>search</mat-icon>
             </span>
             <!-- (keyup)="applyFilter($event.target.value)" -->
-            <input matInput #search placeholder="Search..">
-            <button mat-button *ngIf="search.value" matSuffix mat-icon-button aria-label="Clear" (click)="search.value=''">
+            <input matInput #search placeholder="Αναζήτηση..">
+            <button mat-button *ngIf="search.value" matSuffix mat-icon-button aria-label="Clear"
+                (click)="clearSearch()">
                 <mat-icon>close</mat-icon>
             </button>
         </mat-form-field>
-        <mat-paginator class="col-md-8" [length]="resultsLength" [pageSize]="5"
-        [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> <!--  -->
+        <!--  Table Paginator -->
+        <mat-paginator class="col-md-8" [length]="resultsLength" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"
+            showFirstLastButtons></mat-paginator>
     </div>
 
-    <table mat-table [dataSource]="data" matSort matSortActive="_id" matSortDirection="asc" matSortDisableClear>
+    <!-- TABLE -->
+    <table mat-table [dataSource]="data" matSort matSortActive="name" matSortDirection="asc" matSortDisableClear>
 
         <!-- Checkbox Column -->
         <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef>
-                <mat-checkbox (change)="$event ? masterToggle() : null"
-                    [checked]="selection.hasValue() && isAllSelected()"
+                <mat-checkbox style="display: inherit; position: relative; top: 2px;"
+                    (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
                     [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let row">
-                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-                    [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                <mat-checkbox style="display: inherit; position: relative; top: 2px;" (click)="$event.stopPropagation()"
+                    (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                    [aria-label]="checkboxLabel(row)">
                 </mat-checkbox>
             </td>
         </ng-container>
 
         <!-- Code Column -->
-        <ng-container matColumnDef="_id">
+        <ng-container matColumnDef="SKU">
             <th mat-header-cell *matHeaderCellDef mat-sort-header># Κωδικός</th>
-            <td mat-cell *matCellDef="let element">{{element._id}}</td>
+            <td mat-cell *matCellDef="let element">{{element.SKU}}</td>
         </ng-container>
 
         <!-- Image Column -->
         <ng-container matColumnDef="avatar">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Εικόνα </th>
+            <th mat-header-cell *matHeaderCellDef> Εικόνα </th>
             <td class="td-image" mat-cell *matCellDef="let el"> <img title="{{el.avatar.file.name}}"
                     src="{{el.avatar.src}}" class="rounded float-left" alt="{{el.avatar.file.name}}">
             </td>
@@ -119,26 +133,98 @@
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Τίτλος </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Τίτλος </th>
             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
         </ng-container>
 
         <!-- bookcase Column -->
         <ng-container matColumnDef="bookcase">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Θέση </th>
-            <td mat-cell *matCellDef="let element"> {{element.bookcase}} </td>
+            <th mat-header-cell *matHeaderCellDef disableClear> ΒιβλιοΘέση </th>
+            <td mat-cell *matCellDef="let element">
+                {{element.bookcase && element.bookcase._id? element.bookcase.whatnot + element.bookcase.bookshelf + element.bookcase.bookshelfNo  : ''}}
+            </td>
         </ng-container>
 
-        <!-- barcode Column -->
-        <!-- <ng-container matColumnDef="barcode">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Barcode </th>
-            <td mat-cell *matCellDef="let element"> {{element.barcode | number: '12.0'}} </td>
-        </ng-container> -->
+        <!-- author Column -->
+        <ng-container matColumnDef="author">
+            <th mat-header-cell *matHeaderCellDef> Συγγραφέας </th>
+            <td mat-cell *matCellDef="let element"> {{element.author}} </td>
+        </ng-container>
+
+        <!-- publisher Column -->
+        <ng-container matColumnDef="publisher">
+            <th mat-header-cell *matHeaderCellDef> Εκδότης </th>
+            <td mat-cell *matCellDef="let element"> {{element.publisher }} </td>
+        </ng-container>
+
+
+        <!-- year Column -->
+        <ng-container matColumnDef="year">
+            <th mat-header-cell *matHeaderCellDef> Έτος Έκδοσης </th>
+            <td mat-cell *matCellDef="let element"> {{element.year }} </td>
+        </ng-container>
+
+        <!-- pages Column -->
+        <ng-container matColumnDef="pages">
+            <th mat-header-cell *matHeaderCellDef> Σελίδες </th>
+            <td mat-cell *matCellDef="let element"> {{element.pages }} </td>
+        </ng-container>
+
+        <!-- dimensions Column -->
+        <ng-container matColumnDef="dimensions">
+            <th mat-header-cell *matHeaderCellDef> Διαστάσεις </th>
+            <td mat-cell *matCellDef="let element"> {{element.dimensions.x }} x {{element.dimensions.y }} </td>
+        </ng-container>
+
+        <!-- isbn10 Column -->
+        <!-- | number: '12.0' -->
+        <ng-container matColumnDef="isbn10">
+            <th mat-header-cell *matHeaderCellDef> isbn10 </th>
+            <td mat-cell *matCellDef="let element"> {{element.isbn10}} </td>
+        </ng-container>
+
+        <!-- isbn13 Column -->
+        <ng-container matColumnDef="isbn13">
+            <th mat-header-cell *matHeaderCellDef> isbn13 </th>
+            <td mat-cell *matCellDef="let element"> {{element.isbn13 }}</td>
+        </ng-container>
+
+        <!-- notes Column -->
+        <ng-container matColumnDef="notes">
+            <th mat-header-cell *matHeaderCellDef> Σημειώσεις </th>
+            <td mat-cell *matCellDef="let element"> {{element.notes}} </td>
+        </ng-container>
+
+        <!-- status Column -->
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Κατάσταση </th>
+            <td mat-cell *matCellDef="let element"> <span
+                    [ngClass]="(element.status==1? 'availability': '') + ' instock'">{{element.status==1? 'Διαθέσιμο' : 'Μη Διαθέσιμο'}}</span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="operations">
+
+            <th mat-header-cell *matHeaderCellDef> Ενέργειες </th>
+
+            <td mat-cell *matCellDef="let element">
+                <button mat-button color="primary" class="text-warning"
+                    (click)="editRow({_id: element._id, SKU: element.SKU})">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-button color="primary" class="text-danger"
+                    (click)="deleteRow({_id: element._id, SKU: element.SKU})">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+
+        </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row (click)="onRowClicked(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
+    <!--  Table loading Spinner -->
     <div class="spinner-container" *ngIf="isLoadingResults">
         <mat-spinner></mat-spinner>
     </div>

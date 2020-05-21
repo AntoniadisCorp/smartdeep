@@ -1,5 +1,8 @@
 <button class="logout" mat-raised-button color="primary" (click)="logout()">Logout</button>
+<div><span >{{ documents | async }}</span></div>
 <p>Very secret random number: <span class="number">{{randomNumber | async}}</span>
+
+
     <span class="number">
         <button mat-raised-button [routerLink]="['/library/addbook']" routerLinkActive="router-link-active">
             Create Book

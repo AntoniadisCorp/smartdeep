@@ -1,0 +1,143 @@
+<h1 mat-dialog-title>
+    {{data.title}} <mat-icon fontSet="fas" svgIcon="{{data.image.svg}}" style="font-size: 1.5rem;height: auto;"
+        fontIcon="fa-{{data.image.icon}} fa-lg"></mat-icon>
+
+</h1>
+<p>
+    <mat-chip style="height: unset;">{{data.subtitle}}</mat-chip>
+</p>
+<div mat-dialog-content>
+
+
+    <div class="card-table">
+
+
+        <!--  Table Search -->
+        <div class="card-extra-toolbar row">
+            <mat-form-field class="col-12">
+                <span class="card-table-search-icon" mat-button matPrefix mat-icon-button aria-label="Search"
+                    (click)="search.value=''">
+                    <mat-icon>search</mat-icon>
+                </span>
+                <mat-label>Αναζήτηση Ραφιού</mat-label>
+                <!-- (keyup)="applyFilter($event.target.value)" -->
+                <input matInput #search placeholder="Αναζήτηση..">
+                <button mat-button *ngIf="search.value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="clearSearch()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+
+
+        </div>
+
+        <!--  Table Paginator -->
+        <mat-paginator [length]="resultsLength" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+        </mat-paginator>
+
+
+
+        <table mat-table matSort [dataSource]="dataSource" matSortDirection="asc" matSortDisableClear
+            class="mat-elevation-z8">
+
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue()"
+                        [indeterminate]="selection.hasValue()" [aria-label]="checkboxLabel()">
+                    </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <mat-checkbox (click)="$event.stopPropagation()" (change)="nodeToggle($event, row)"
+                        [checked]="selection.selected !== null && selection.selected[0] && selection.selected.length && selection.selected[0].skuid === row.skuid"
+                        [aria-label]="checkboxLabel(row)">
+                    </mat-checkbox>
+                </td>
+            </ng-container>
+
+            <!-- Position Column -->
+            <!-- <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.position + 1 </td>
+        </ng-container> -->
+
+            <!-- skuid Column -->
+            <ng-container matColumnDef="skuid">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Κωδ. </th>
+                <td mat-cell *matCellDef="let element"> {{element.skuid}} </td>
+            </ng-container>
+
+            <!-- type Column -->
+            <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef> Τύπος </th>
+                <td mat-cell *matCellDef="let element"> {{element.type==0? 'Ράφια' : 'Ερμάριο' }} </td>
+            </ng-container>
+
+            <!-- whatnot Column -->
+            <ng-container matColumnDef="whatnot">
+                <th mat-header-cell *matHeaderCellDef> Βιβλιοθήκη </th>
+                <td mat-cell *matCellDef="let element"> {{element.whatnot}} </td>
+            </ng-container>
+
+            <!-- bookshelf Column -->
+            <ng-container matColumnDef="bookshelf">
+                <th mat-header-cell *matHeaderCellDef> Ράφι </th>
+                <td mat-cell *matCellDef="let element"> {{element.bookshelf}} </td>
+            </ng-container>
+
+            <!-- bookshelf No Column -->
+
+            <!--   <ng-container>
+                <th mat-header-cell> Θέση Βιβλίου(Ράφι) </th>
+                <td mat-cell *matCellDef="let element">
+                    
+                </td>
+            </ng-container> -->
+
+            <!-- books Count Column -->
+            <ng-container matColumnDef="books">
+                <th mat-header-cell *matHeaderCellDef> Βιβλία </th>
+                <td mat-cell *matCellDef="let element"> {{element.books.count}} </td>
+            </ng-container>
+
+
+            <!-- Categories Count Column -->
+            <ng-container matColumnDef="categories">
+                <th mat-header-cell *matHeaderCellDef> Κατηγορίες </th>
+                <td mat-cell *matCellDef="let element"> {{element.categories.length}} </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row (click)="onRowClicked(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <!--  TABLE LOADING SPINNER -->
+        <div class="spinner-container" *ngIf="isLoadingResults">
+            <mat-spinner></mat-spinner>
+        </div>
+
+        <span>&nbsp;</span>
+
+        <mat-form-field>
+            <mat-label>Τοποθέτηση Βιβλίου</mat-label>
+            <mat-select [formControl]='bookshelfNo' name="bookshelfNo">
+                <mat-option>Αυτόματα</mat-option>
+                <mat-option *ngFor="let selected of booksPos" [value]="selected">
+                    {{selected + 1}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+
+    <!-- <h5>{{data.text}} Θέση:
+        {{this.nameObservable | async }}
+    </h5> -->
+
+</div>
+<div mat-dialog-actions class="justify-content-center">
+    <button mat-button (click)="onNoClick()">Πίσω</button>
+    <button mat-button [disabled]="!this.selection.hasValue()" (click)="onSave()" cdkFocusInitial>Αποθήκευση</button>
+    <!-- [mat-dialog-close]="data" -->
+</div>

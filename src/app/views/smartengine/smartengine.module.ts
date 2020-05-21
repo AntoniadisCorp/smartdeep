@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { EngineRoutingModule
     , routedComponents } from './smartengine.routing';
 
-import { MaterialsModule, AppNgModules } from '../../modules';
+import { MaterialsModule, AppNgModules, ItemListModule } from '../../modules';
 
 import { ReDirective } from '../../directives';
 import { APP_PRODUCT_CARD } from 'src/app/components';
@@ -20,6 +20,7 @@ const APP_DIRECTIVES = [
     declarations: [
 
         routedComponents.others,
+        routedComponents.entry,
         ...APP_DIRECTIVES,
     ],
     imports: [
@@ -27,7 +28,9 @@ const APP_DIRECTIVES = [
         EngineRoutingModule,
         MaterialsModule,
         FormsModule,
+        ItemListModule
     ],
+    entryComponents: [ routedComponents.entry ],
 
     exports: [],
     providers: [],

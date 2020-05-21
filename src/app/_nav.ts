@@ -10,7 +10,30 @@ export const navigation = [
   {
     name: 'Βιβλιοθήκη',
     url: '/library',
-    icon: 'icon-book-open',
+    icon: 'icon-notebook',
+
+    children: [
+      {
+        name: 'Χωροθέτηση',
+        url: '/library/map', // bookcase, categories
+        icon: 'icon-map'
+      },
+      {
+        name: 'Βιβλία',
+        url: '/library/book',
+        icon: 'icon-book-open'
+      },
+      {
+        name: 'Κατανομή',
+        url: '/library/allocation', // authors, publishers, book contents
+        icon: 'icon-layers'
+      },
+      {
+        name: 'Δανεισμός',
+        url: '/library/lending', // authors, publishers, book contents
+        icon: 'icon-note'
+      },
+    ]
   },
   {
     name: 'Αναζήτηση',
@@ -26,6 +49,7 @@ export const navigation = [
     url: '/charts',
     icon: 'icon-pie-chart'
   },
+
   /* {
     name: 'Delivery',
     url: '/delivery',
@@ -125,6 +149,11 @@ export const navigation = [
     name: 'Εφαρμογές',
   },
   {
+    name: 'Ρυθμίσεις',
+    url: '/settings',
+    icon: 'fas fa-tools',
+  },
+  {
     name: 'Σελίδες',
     url: '/extern',
     icon: 'fa fa-sticky-note',
@@ -141,17 +170,17 @@ export const navigation = [
       }
     ]
   },
- /*  {
-    name: 'Download CoreUI',
-    url: 'http://coreui.io/angular/',
-    icon: 'icon-cloud-download',
-    class: 'mt-auto',
-    variant: 'success'
-  },
-  {
-    name: 'Try CoreUI PRO',
-    url: 'http://coreui.io/pro/angular/',
-    icon: 'icon-layers',
-    variant: 'danger'
-  } */
+  /*  {
+     name: 'Download CoreUI',
+     url: 'http://coreui.io/angular/',
+     icon: 'icon-cloud-download',
+     class: 'mt-auto',
+     variant: 'success'
+   },
+   {
+     name: 'Try CoreUI PRO',
+     url: 'http://coreui.io/pro/angular/',
+     icon: 'icon-layers',
+     variant: 'danger'
+   } */
 ];

@@ -1,0 +1,29 @@
+.toolbar-toggle-menu {
+  margin-bottom: 10px;
+}
+.spinner-container {
+  position: relative;
+  width: 300px;
+  height: 1px;
+  display: initial;
+  bottom: 100px;
+}
+
+.spinner-container mat-spinner {
+  margin: 130px auto 0 auto;
+}
+
+.description-cell {
+  text-align: left;
+  margin: 10px auto;
+}
+
+.duration-cell {
+  text-align: center;
+}
+
+.duration-cell mat-icon {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 20px;
+}

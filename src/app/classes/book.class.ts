@@ -1,4 +1,4 @@
-import { Category } from '../interfaces';
+import { Category, BookCase } from '../interfaces';
 import { ImageSnippet } from '.';
 
 export class BookDimension {
@@ -9,12 +9,15 @@ export class BookDimension {
 export class Book {
 
     name: '';
-    _id=0;
-    bookcase: '';
+    _id = 0;
+    SKU = 0;
+    bookcase: { _id: string, whatnot: string, bookshelf: string, bookshelfNo?: number };
     author: '';
     publisher: '';
     year: '';
     pages: 0;
+    volume: null;
+    version: null;
     dimensions: BookDimension;
     isbn10: 0;
     isbn13: 0;

@@ -1,0 +1,69 @@
+<mat-list>
+    <h3 mat-subheader>Γενικά</h3>
+
+    <mat-list-item *ngFor="let general of generals">
+
+        <mat-icon mat-list-icon fontSet="fas" style="font-size: 1.5rem;" fontIcon="fa-{{general.icon}}">
+        </mat-icon>
+
+
+        <h4 mat-line>{{general.name}}</h4>
+        <p mat-line> Ενημερώθηκε: {{general.updated | date}} </p>
+
+        <mat-form-field>
+            <mat-select placeholder="" required [(value)]="general.selected">
+                <mat-option *ngFor="let item of general.options" value="{{item.name}}">{{item.name}}</mat-option>
+            </mat-select>
+
+            <mat-label>
+                <b>{{general.hint}}</b> <i></i>
+            </mat-label>
+        </mat-form-field>
+
+
+    </mat-list-item>
+
+
+    <mat-list-item *ngFor="let general of generalsAvatar">
+
+        <mat-icon mat-list-icon fontSet="fas" style="font-size: 1.5rem;" fontIcon="fa-{{general.icon}}">
+        </mat-icon>
+
+
+        <h4 mat-line>{{general.name}}</h4>
+        <p mat-line> Ενημερώθηκε: {{general.updated | date}} </p>
+
+        
+        <div class="form-row">
+
+            <!-- Image Preview -->
+            <div class="form-group col-md-12">
+                <img class="img-fluid fit shadow-lg rounded img-thumbnail" *ngIf="avatarFile && avatarFile.src !== ''"
+                    [src]="avatarFile.src" />
+            </div>
+        </div>
+
+        <app-file-upload [formControl]="avatar" [upload]="true" [progress]="progress"></app-file-upload>
+
+
+
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+
+    <h3 mat-subheader>Προβολής</h3>
+    <mat-list-item *ngFor="let note of notes">
+        <mat-icon mat-list-icon fontSet="fas" style="font-size: 1.5rem;" fontIcon="fa-{{note.icon}}"></mat-icon>
+        <h4 mat-line>{{note.name}}</h4>
+        <p mat-line> Ενημερώθηκε: {{note.updated | date}} </p>
+        <mat-selection-list #shoes>
+            <mat-list-option> παπουτσι</mat-list-option>
+        </mat-selection-list>
+
+        <a matLine href="...">link</a>
+        <button mat-icon-button (click)="showInfo(link)">
+            <mat-icon>info</mat-icon>
+        </button>
+
+    </mat-list-item>
+</mat-list>

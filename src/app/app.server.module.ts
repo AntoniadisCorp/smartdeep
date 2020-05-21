@@ -7,6 +7,7 @@ import {
 /* Import Noop Animations Module Js */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader';
+import {FlexLayoutServerModule} from '@angular/flex-layout/server';
 
 import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
@@ -19,6 +20,7 @@ import { AppComponent } from './app.component';
         ServerModule,
         ModuleMapLoaderModule,
         ServerTransferStateModule, // <--- Added
+        FlexLayoutServerModule,
         // BrowserModule.withServerTransition({ appId: 'tour' }),
     ],
     providers: [

@@ -25,6 +25,14 @@
   border-color: #bcbcbc;
 }
 
+.btn-remove {
+  position: absolute;
+  top: 0px;
+  // display: none;
+  background-color: rgba(185, 185, 185, 0.2);
+  right: 8px;
+}
+
 $BrandSecondaryColor: #c8ced3 !default;
 $BrandDangerColor: #f86c6b !default;
 $BrandLightColor: #f0f3f5 !default;
@@ -41,23 +49,6 @@ $desktop: 992px;
 }
 
 .masthead {
-  position: relative;
-  width: 100%;
-  height: auto;
-  min-height: 35rem;
-  padding: 15rem 0;
-  background: linear-gradient(
-      to bottom,
-      rgba(22, 22, 22, 0.3) 0,
-      rgba(22, 22, 22, 0.7) 75%,
-      #161616 100%
-    ),
-    url(../../../../assets/img/codepics/caption.jpg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-size: cover;
-
   @include desktop {
     height: 100vh;
     padding: 0;
@@ -68,10 +59,12 @@ $desktop: 992px;
     font-size: 2.5rem;
     line-height: 2.5rem;
     letter-spacing: 0.8rem;
-    background: -webkit-linear-gradient(
-      rgba(255, 255, 255, 0.9),
-      rgba(255, 255, 255, 0)
-    );
+    background: linear-gradient(
+      to bottom,
+      rgba(22, 22, 22, 0.3) 0,
+      rgba(22, 22, 22, 0.7) 75%,
+      #161616 100%
+    ); /* -webkit-linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0)); */
     -webkit-text-fill-color: transparent;
     background-clip: text;
 
@@ -99,20 +92,32 @@ $desktop: 992px;
     display: inline-block;
   }
 
-  
   .mat-form-field {
     width: 300px;
   }
 }
 
-.custom-file-input:lang(en) ~ .custom-file-label::after {
-  content: "αναζήτηση";
+.switch.switch-text .switch-input:checked ~ .switch-handle {
+  left: 74%;
+}
+.switch.switch-text .switch-label::after,
+.switch.switch-text .switch-label::before {
+  top: 48%;
+  width: 80%;
+}
+
+.switch.switch-text {
+  width: 91px;
+  height: 24px;
+}
+.switch.switch-text .switch-handle {
+  left: 3px;
 }
 
 .wfield {
-  width: 80%
+  width: 80%;
 }
- /* .mat-form-field .mat-input-element {
+/* .mat-form-field .mat-input-element {
   color: $BrandLightColor;
   font-size: 19px;
 }

@@ -1,0 +1,32 @@
+#letter-range-holder {
+    min-height: 20px;
+    padding-bottom: 15px;
+    width: 100%;
+  }
+  
+  #letter_range {
+    padding-bottom: 0;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin: auto;
+  }
+  
+  #letter_range .active {
+    font-weight: 700;
+  }
+  
+  #letter_range #all {
+    width: 40px;
+  }
+  
+  .letter {
+    cursor: pointer;
+    width: 25px;
+    text-align: center;
+    display: inline-block;
+  
+    &:hover {
+      color: #ccc;
+    }
+  }

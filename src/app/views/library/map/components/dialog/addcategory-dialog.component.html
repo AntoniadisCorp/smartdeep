@@ -1,0 +1,148 @@
+<h1 mat-dialog-title>
+    {{data.title}} <mat-icon fontSet="fas" svgIcon="{{data.image.svg}}" style="font-size: 1.5rem;height: auto;"
+        fontIcon="fa-{{data.image.icon}} fa-lg"></mat-icon>
+
+</h1>
+
+
+<div class="align-middle">
+
+    <!-- <p *ngIf="data.body && date_added.value.length"> -->
+
+    <!-- <mat-chip style="height: unset;">* Ημ/νία Δημ/γιας {{ date_added.value | date }}</mat-chip> -->
+
+    <!-- <mat-chip style="height: unset;">{{data.subtitle}}</mat-chip> -->
+    <!-- </p> -->
+
+    <!-- <p *ngIf="data.body && date_modified.value.length"> -->
+    <!-- <mat-chip style="height: unset;">* Ημ/νία Τροπ/σης {{ date_modified.value | date }}</mat-chip> -->
+    <!-- </p> -->
+</div>
+
+<div mat-dialog-content>
+
+
+    <div class="container">
+        <form [formGroup]="CategoryForm" class="bookcase">
+
+            <div class="form-group row">
+
+                <mat-form-field hintLabel="Πατερικά, Ιστορικά..">
+                    <mat-label>Τίτλος θεματολογίας</mat-label>
+                    <input matInput formControlName="name" placeholder="Γρράψτε μια θεματολογία" required
+                        maxlength="50">
+                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                    <mat-hint align="end">{{name.value?.length || 0}}/50</mat-hint>
+                </mat-form-field>
+            </div>
+
+            <label class="form-group row mat-optgroup-label">Είδος θεματολογίας</label>
+            <div class="form-group row">
+                <!-- <h4>Είδος Βιβλιοθήκης</h4> -->
+                <mat-radio-group aria-labelledby="Categories" formControlName="root" class="radio-group">
+                    <mat-radio-button class="radio-button" *ngFor="let type of Categorytypes" [value]="type.id">
+                        <!-- [ngModelOptions]="{standalone: true}" -->
+                        {{type.value}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+
+            <div class="form-group row card mat-tree-parent" *ngIf="root.value">
+                <!-- <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport"> -->
+                <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="tree">
+                    <!-- This is the tree node template for leaf nodes -->
+                    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+                        <button mat-icon-button disabled></button>
+
+                        <!-- <p> <label>ka</label> </p> -->
+                        <mat-checkbox (change)="todoLeafItemSelectionToggle(node)" [checked]="checklistSelection.selected && checklistSelection.selected[0] && checklistSelection.selected.length &&
+                             checklistSelection.selected[0].name === node.name"
+                            [disabled]='data.body && data.body.name === node.name'>
+                            {{node.name}}</mat-checkbox>
+                        <!-- <button mat-icon-button (click)="addNewItem(node)"> 
+                            <mat-icon>add</mat-icon> class="checklist-leaf-node"
+                        </button> -->
+                    </mat-tree-node>
+
+                    <!-- <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
+                        <button mat-icon-button disabled></button>
+                        <mat-form-field>
+                            <mat-label>Νέα Υποκατηγορία...</mat-label>
+                            <input matInput #itemValue (change)='' placeholder="π.χ Περιηγητικά..">
+                        </mat-form-field>
+                        <button mat-button (click)="saveNode(node, itemValue.value)">Αποθήκευση</button>
+                    </mat-tree-node> -->
+
+                    <!-- This is the tree node template for expandable nodes -->
+                    <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+                            <mat-icon class="mat-icon-rtl-mirror">
+                                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                            </mat-icon>
+                        </button>
+                        <mat-checkbox
+                            [checked]="checklistSelection.selected !== null && checklistSelection.selected[0] && checklistSelection.selected.length && checklistSelection.selected[0].name === node.name"
+                            [indeterminate]="descendantsPartiallySelected(node)"
+                            (change)="todoItemSelectionToggle(node)"
+                            [disabled]='data.body && data.body.name === node.name'>
+                            {{node.name}}</mat-checkbox>
+                        <!--  <button mat-icon-button (click)="addNewItem(node)">
+                            <mat-icon>add</mat-icon>
+                        </button> -->
+                    </mat-tree-node>
+                </mat-tree>
+                <!-- </cdk-virtual-scroll-viewport> -->
+            </div>
+
+            <!--  Επιλογή Εικόνας -->
+            <div class="form-group row">
+
+                <mat-form-field class="pick-category-icon">
+                    <i class="obs-no-matches fa fa-{{icon.value}}"></i>
+                    <mat-label>Επιλογή εικόνας</mat-label>
+                    <input type="text" matInput placeholder="Επιλέξτε μια εικόνα" aria-label="Number"
+                        formControlName="icon" [matAutocomplete]="autoIcon">
+                    <mat-autocomplete autoActiveFirstOption #autoIcon="matAutocomplete">
+                        <mat-option *ngFor="let ic of filteredFonts | async" [value]="ic.name">
+                            <span class="input-option-img"><i class="{{ic.iconclass}}{{ic.name}}"
+                                    aria-hidden="true"></i></span>
+                            <span>{{ic.name}}</span>|<small>{{ic.type}}</small>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+
+            <!-- Περιγραφή -->
+            <div class="form-group row">
+
+                <mat-form-field>
+                    <mat-label>Περιγραφή</mat-label>
+                    <textarea matInput formControlName="desc" placeholder="Γράψτε μια περιγραφή.."
+                        maxlength="150"></textarea>
+                    <mat-icon matSuffix>description</mat-icon>
+                    <mat-hint align="end">{{desc.value?.length || 0}}/150</mat-hint>
+                </mat-form-field>
+            </div>
+
+            <!-- Κατάσταση -->
+            <h3 *ngIf="data.body" class="form-group row">
+                <mat-checkbox formControlName="disabled">
+                    <!-- [disabled]="data.body? false : true" -->
+                    {{disabled.value? 'Ενεργό' : 'Ανενεργό'}} </mat-checkbox>
+            </h3>
+        </form>
+    </div>
+</div>
+<!-- {{ ( }} >>> {{ !(root.value && (!name.valid || checklistSelection.isEmpty())) }} -->
+
+<div mat-dialog-actions class="justify-content-center">
+    <button mat-button (click)="onNoClick()">Πίσω</button>
+    <button mat-button
+        [disabled]="(!name.valid && root.value===0) || (root.value===1 && (!name.valid || checklistSelection.isEmpty()))"
+        (click)="onSave()">Αποθήκευση</button><!-- cdkFocusInitial -->
+    <!-- Action Progress Data Bar -->
+    <mat-progress-spinner *ngIf="progressActionDataBar>0" [diameter]="20" mode="Indeterminate"
+        [value]="progressActionDataBar"></mat-progress-spinner>
+    <!-- [mat-dialog-close]="data" -->
+</div>

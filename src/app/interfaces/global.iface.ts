@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import { ObjectID } from 'bson';
 
 export interface IBreadcrumb {
   label: string;
@@ -12,10 +13,17 @@ export interface StateGroup {
 }
 
 export interface OptionEntry {
+
   code: number;
   status: string;
-  data?: any;
+  data?: entryData | any;
   error?: any;
+}
+
+export interface entryData {
+
+  result?: Array<any>
+  message?: string
 }
 
 export interface DataSource {
@@ -47,16 +55,18 @@ export interface Tasks {
 export interface Category {
   _id?: string;
   name: string;
+  slug?: string;
   icon?: string;
-  children?: Array<object>;
+  children?: Array<Category>;
+  parentId?: string;
   desc?: string;
-  parent_id?: string;
+  root?: boolean;
+  tree?: Array<{ _id: string, name: string, slug: string }>
+  action?: MenuAction;
   date_added?: Date;
   date_modified?: Date;
-  status?: boolean;
-  top?: boolean;
+  disabled?: boolean;
   recyclebin?: boolean;
-  action?: MenuAction;
 }
 
 export interface Library {
@@ -72,9 +82,49 @@ export interface Library {
   status?: string;
 }
 
+
+export interface LibrarySpace {
+
+  _id?: string;
+  whatnot: string;
+  type: number;
+  bookshelves: BookShelf[];
+  date_added: Date;
+  date_modified?: Date;
+  disabled: boolean;
+  status?: string;
+  recyclebin?: boolean;
+}
+
+export interface BookShelf {
+  name: string,
+  used: boolean
+}
+
+export interface BookCase {
+  _id?: string;
+  skuid: string;
+  name: string;
+  type: number;
+  whatnot: string;
+  bookshelf: string;
+  categories?: Array<{ _id: string | ObjectID, name: string }>
+  books?: {
+    count: number,
+    arrIndex: Array<{ _id: string, bookshelfNo: number }>
+  }
+  desc: string,
+  date_added?: Date;
+  date_modified?: Date;
+  imageUrl?: string;
+  disabled: boolean;
+  recyclebin?: boolean;
+}
+
 export interface BodyObj {
 
   data: Library | Category | any; // body data, it is json OBJECT
+  dataPlus?: BodyObj['data']
   col: string; // collection
 }
 
@@ -98,6 +148,10 @@ export interface RESTfulServ {
   code: number;
   message: string;
   status: string;
+}
+
+export interface ObjectId {
+  '$oid': string
 }
 
 export interface DlvryFilters {
@@ -134,6 +188,7 @@ export interface MainPageTabIndex {
 }
 
 export interface InventoryTabs {
+  svg?: string;
   icon: string;
   name: string;
   id: string;
@@ -285,6 +340,7 @@ export class RandomNumber {
 export class Tokens {
   jwt: string;
   refreshToken: string;
+  userId?: string;
 }
 
 export interface GoogleApiFindPlaceFromText {

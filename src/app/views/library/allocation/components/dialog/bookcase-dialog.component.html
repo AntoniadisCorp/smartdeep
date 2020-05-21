@@ -1,0 +1,154 @@
+<h1 mat-dialog-title>
+    {{data.title}} <mat-icon fontSet="fas" svgIcon="{{data.image.svg}}" style="font-size: 1.5rem;height: auto;"
+        fontIcon="fa-{{data.image.icon}} fa-lg"></mat-icon>
+
+</h1>
+
+
+<div class="align-middle">
+
+    <p *ngIf="data.body && date_added.value.length>0">
+
+        <mat-chip style="height: unset;">* Ημ/νία Δημ/γιας {{ date_added.value | date }}</mat-chip>
+
+        <!-- <mat-chip style="height: unset;">{{data.subtitle}}</mat-chip> -->
+    </p>
+
+    <p *ngIf="data.body && date_modified.value.length>0">
+        <mat-chip style="height: unset;">* Ημ/νία Τροπ/σης {{ date_modified.value | date }}</mat-chip>
+    </p>
+</div>
+
+<div mat-dialog-content>
+
+
+    <div class="container">
+        <form [formGroup]="BookCaseForm" class="bookcase">
+            <div class="form-group row">
+                <mat-form-field hintLabel="">
+                    <mat-label>Τίτλος</mat-label>
+                    <input matInput formControlName="name" maxlength="15" placeholder="γράψτε ένα τίτλο..">
+                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                    <mat-hint align="end">{{name.value?.length || 0}}/15</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="form-group row">
+                <mat-form-field [style.fontSize]="fontSize">
+
+                    <mat-label>Επιλογή Βιβλιοθήκης</mat-label>
+                    <mat-spinner matSuffix *ngIf="this.progressAction.isProcessing" [diameter]="20" [strokeWidth]="3">
+                    </mat-spinner>
+
+                    <input type="text" placeholder="πληκτρολογήστε ένα όνομα" matInput required
+                        formControlName="whatnot" [matAutocomplete]="autoGroup" />
+
+                    <mat-autocomplete #autoGroup="matAutocomplete" (optionSelected)='libSpaceSelect($event.option)'>
+                        <mat-option *ngFor="let lspace of libSpace | async" [value]="lspace.whatnot">
+                            <span> {{ lspace.whatnot }} </span> | <span> {{ lspace.type===0? 'Ράφια' : 'Ερμάριο' }}
+                            </span> |
+                            <span *ngFor="let item of lspace.bookshelves"> {{ item.name }} </span>
+                        </mat-option>
+                    </mat-autocomplete>
+
+                </mat-form-field>
+            </div>
+            <div class="form-group row" [hidden]="!whatnot.value || !whatnot.valid">
+
+                <label [style.fontSize]="13">Έιδος Βιβλιοθήκης: </label> &nbsp; &nbsp;
+
+                <mat-radio-group formControlName='type' aria-label="Έιδος Βιβλιοθήκης">
+                    <mat-radio-button [value]='type.value !== null? type.value : "noth"'>
+                        {{type.value===0? 'Ράφια' : 'Ερμάριο' }}</mat-radio-button>
+                </mat-radio-group>
+
+            </div>
+
+            <div class="form-group row" [hidden]="!whatnot.value || !whatnot.valid">
+                <mat-form-field [style.fontSize]="fontSize">
+                    <mat-label>Επιλογή Ραφιού</mat-label>
+                    <mat-select formControlName="bookshelf" required>
+                        <mat-option *ngFor="let shelf of bookshelves" [value]="getBookShelvesIndex(shelf.name)">
+                            <span>{{shelf.name}}</span> <!-- <span style="color: #ff4081;"
+                                *ngIf="getBookShelvesIndex(shelf.name) === bookshelf.value"
+                                class="mat-placeholder-required mat-form-field-required-marker ">*</span> -->
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="form-group row">
+                <mat-form-field [style.fontSize]="fontSize">
+                    <mat-label>Επιλογή Θεματολογίας</mat-label>
+                    <mat-spinner matSuffix *ngIf="this.progressAction.isthemeProcessing" [diameter]="20"
+                        [strokeWidth]="3">
+                    </mat-spinner>
+                    <mat-chip-list #chipList>
+                        <mat-chip *ngFor="let shelf of categories" [selectable]="selectable" [removable]="removable"
+                            (removed)="categoryRemove(shelf)">
+                            {{shelf.name}}
+                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                        </mat-chip>
+                    </mat-chip-list>
+                    <input matInput formControlName="categoryCtrl" maxlength="20" placeholder="πληκτρολογήστε.."
+                        [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="categoryAdd($event)"
+                        [matAutocomplete]="autoChip" #categoryInput>
+                    <mat-autocomplete #autoChip="matAutocomplete" (optionSelected)="categoryOptionSelected($event)">
+                        <mat-option *ngFor="let shelfs of filteredCategories | async" [value]="shelfs">
+                            {{shelfs}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                    <mat-hint align="end">{{categoryCtrl.value?.length || 0}}/20</mat-hint>
+                </mat-form-field>
+            </div>
+
+            <!-- Περιγραφή -->
+            <div class="form-group row">
+
+                <mat-form-field>
+                    <mat-label>Περιγραφή</mat-label>
+                    <textarea matInput formControlName="desc" placeholder="Γράψτε μια περιγραφή.."
+                        maxlength="150"></textarea>
+                    <mat-icon matSuffix>description</mat-icon>
+                    <mat-hint align="end">{{desc.value?.length || 0}}/150</mat-hint>
+                </mat-form-field>
+            </div>
+
+            <!-- <div class="form-group row">
+                <mat-form-field hintLabel="">
+                    <mat-label>Προσθήκη Βιβλίου</mat-label>
+                </mat-form-field>
+            </div> -->
+            <!-- <div class="form-group row">
+                <mat-form-field hintLabel="πχ. Α,Β,α,β,a,b.. ή 1,2,3">
+                    <mat-label>Αρίθμηση Βιβλίου</mat-label>
+                    <input matInput type="text" formControlName="bookshelfNo" required maxlength="10" placeholder="888">
+                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                    <mat-hint align="end">{{bookshelfNo.value?.length || 0}}/10</mat-hint>
+                </mat-form-field>
+            </div> -->
+
+            <h3 *ngIf="data.body" class="form-group row">
+                <mat-checkbox formControlName="disabled">
+                    <!-- [disabled]="data.body? false : true" -->
+                    {{disabled.value? 'Ενεργό' : 'Ανενεργό'}} </mat-checkbox>
+            </h3>
+        </form>
+    </div>
+
+
+    <h5>
+        <!-- {{data.text}} Θέση: -->
+        <!-- {{this.nameObservable | async }} -->
+    </h5>
+    <!-- [disabled]="!LibtypesCntr.valid || !whatnot.valid || !shelves.length>0" -->
+</div>
+<div mat-dialog-actions class="justify-content-center">
+    <button mat-button (click)="onNoClick()">Πίσω</button>
+    <button mat-button (click)="onSave()" [disabled]='!BookCaseForm.valid'>προσθήκη</button><!-- cdkFocusInitial -->
+    <!-- Action Progress Data Bar -->
+    <mat-progress-spinner *ngIf="this.progressAction.progressActionDataBar>0" [diameter]="20" mode="Indeterminate"
+        [value]="progressActionDataBar"></mat-progress-spinner>
+    <!-- [mat-dialog-close]="data" -->
+</div>

@@ -9,6 +9,7 @@ import { Tasks } from '../../interfaces';
 export class SmartEngineComponent implements OnInit {
     product: Tasks[];
     category: object[];
+    search: string;
 
     constructor(private sEngineService: SmartEngineService) { }
 
@@ -79,7 +80,7 @@ export class SmartEngineComponent implements OnInit {
             },
             isDone: true,
         }
-    ];
+        ];
 
         this.category = [{
             title: 'Τεχνολογία',
@@ -88,6 +89,12 @@ export class SmartEngineComponent implements OnInit {
             title: 'Μόδα',
             icon: 'fa fa-address-card'
         }];
+
+        this.varibaleInitialize();
+    }
+
+    public reset(): void {
+        this.search = '';
     }
 
     showTasks() {
@@ -106,5 +113,13 @@ export class SmartEngineComponent implements OnInit {
             },
             isDone: data.isDone
            }]); */
-      }
+    }
+
+    private varibaleInitialize(): void {
+        this.reset();
+    }
+
+    clearSearch(): void {
+
+    }
 }

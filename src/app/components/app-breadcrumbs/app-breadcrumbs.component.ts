@@ -9,10 +9,16 @@ import { filter } from 'rxjs/operators';
     <li class="breadcrumb-item"
         *ngIf="breadcrumb.label.title&&breadcrumb.url.substring(breadcrumb.url.length-1) == '/'||breadcrumb.label.title&&last"
         [ngClass]="{active: last}">
-      <a *ngIf="!last" [routerLink]="breadcrumb.url">{{breadcrumb.label.title}}</a>
-      <span *ngIf="last" [routerLink]="breadcrumb.url">{{breadcrumb.label.title}}</span>
+      <a class="btn btn-sm btn-light breadbtn" *ngIf="!last" [routerLink]="breadcrumb.url">{{breadcrumb.label.title}}</a>
+      <span class="btn btn-sm breadbtn" *ngIf="last" [routerLink]="breadcrumb.url">{{breadcrumb.label.title}}</span>
     </li>
-  </ng-template>`
+  </ng-template>`,
+  styles: [`
+  .btn.breadbtn {
+    font-size: 0.885625rem;
+    border-radius: 23px;"
+  }
+  `]
 })
 export class AppBreadcrumbsComponent {
   breadcrumbs: Array<object>;

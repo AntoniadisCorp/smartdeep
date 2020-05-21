@@ -7,9 +7,11 @@ import { Category, Iconfonts, MenuAction, BodyObj } from '../../interfaces';
 import { _fonts } from '../../datafiles';
 import { SmartEngineService } from '../../services';
 import { setServerUrl } from '../../routines';
-import { middlebar } from '../../variables';
-// isense.smartdeep.io
-const apiUrl: string = setServerUrl('localhost', 8080) + middlebar + 'task'; // isense.azurewebsites.net, isense.smartdeep.io 443
+import { middlebar, config } from '../../variables';
+import { transition, animate, state, style, trigger } from '@angular/animations';
+import { DropdownModule } from 'src/app/modules';
+// isense.smartdeep.io setServerUrl('localhost', 8080)
+const apiUrl: string = config.apiUrl + middlebar + 'task'; // isense.azurewebsites.net, isense.smartdeep.io 443
 
 console.log(apiUrl);
 
@@ -19,11 +21,30 @@ console.log(apiUrl);
   // tslint:disable-next-lines
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
+  animations: [
+    trigger('toggleHeight', [
+      state('hide', style({
+        width: '0px',
+        height: '0px',
+        opacity: '0',
+        overflow: 'hidden',
+        // display: 'none'
+      })),
+      state('show', style({
+        width: '*',
+        height: '*',
+        opacity: '1',
+        // display: 'block'
+      })),
+      transition('hide => show', animate('200ms ease-in')),
+      transition('show => hide', animate('200ms ease-out'))
+    ])
+  ],
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
 
-  public value: string;
+
   public cateObj: Array<Category> = [];
   public searchCatObj: Array<Category> = [];
   public iFonts: Array<Iconfonts> = [];
@@ -36,9 +57,11 @@ export class DashboardComponent implements OnInit {
   isProcessing: boolean;
   refreshing: boolean;
   act: MenuAction;
+  menu: { edit: string}
   emptyText: string;
+  isShowSettings: string;
 
-  constructor(private httpService: SmartEngineService, private modalService: BsModalService) { }
+  constructor(private httpService: SmartEngineService) { }
 
   ngOnInit() {
 
@@ -54,12 +77,12 @@ export class DashboardComponent implements OnInit {
       tap(() => this.isProcessing = true),
       // use switch map so as to cancel previous subscribed events, before creating new ones
       switchMap(value => {
-        if (value !== '') {
-          // lookup from smartdeep isense
-          return this.searchCtrl(value).pipe(finalize(() => this.isProcessing = false));
-        } else {
+        if (value === '' || value.length < 2) {
           // if no value is present, return null
           return of(null);
+        } else {
+          // lookup from smartdeep isense
+          return this.searchCtrl(value, 'category').pipe(finalize(() => this.isProcessing = false));
         }
       }),
       tap(() => this.isProcessing = false),
@@ -67,8 +90,15 @@ export class DashboardComponent implements OnInit {
     /* map(state => state ? this._filterStates(state) : this.searchCatObj.slice()) */
 
 
-    this.filteredOptions = this.iconCtrl.valueChanges.pipe(startWith(''),
-      map(state => state ? this._filterStatesFonts(state) : this.iFonts.slice()));
+    this.filteredOptions = this.iconCtrl.valueChanges.pipe(
+      startWith(''),
+      map(state => state ? this._filterStatesFonts(state) : this.iFonts.slice())
+    )
+  }
+
+  showSettings() {
+
+    this.isShowSettings = (this.isShowSettings === 'show') ? 'hide' : 'show';
   }
 
   private _filterStates(value: string): Category[] {
@@ -84,22 +114,19 @@ export class DashboardComponent implements OnInit {
     return this.iFonts.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  public reset(): void {
-
-    this.value = '';
-  }
 
   public edit() {
 
     this.act.status = !this.act.status;
+    this.menu.edit = !this.act.status ? 'close' : 'edit';
     this.act.iconclass = !this.act.status ? 'trash' : 'plus';
   }
 
-  public searchCtrl(filteredValue: string): Observable<any> {
+  public searchCtrl(filteredValue: string, collectionName: string): Observable<any> {
 
 
     return this.httpService.searchTasks(filteredValue.toLowerCase(),
-      apiUrl + middlebar + 'categories' + middlebar + 'search', 'category');
+      apiUrl + middlebar + 'categories' + middlebar + 'search', collectionName);
   }
 
   public openAction(): void {
@@ -115,29 +142,26 @@ export class DashboardComponent implements OnInit {
     // get object _id
     const obj = this.searchCatObj !== null ? this.searchCatObj.find(o => o.name === this.cateCtrl.value) : undefined;
     const obj2 = this.iFonts.find(o => o.name === this.iconCtrl.value);
-    const parent_id = !obj ? '' : obj._id
+    const parentId = !obj ? '' : obj._id;
 
-    const datafly: Category = {
+    const data: Category = {
+      slug: this.catInput.name.trim().toLowerCase(),
       name: this.catInput.name,
-      icon: `${obj2.iconclass}${this.iconCtrl.value}`,
-      parent_id: parent_id,
-      top: parent_id && parent_id.length > 0 ? false : true,
+      icon: obj2 ? `${obj2.iconclass}${this.iconCtrl.value}` : '',
+      parentId,
+      root: parentId && parentId.length > 0 ? false : true,
       desc: '',
-      status: true,
       date_added: new Date(),
       recyclebin: false
-    }
-
-    localInput = {
-      data: datafly,
-      col: 'category'
     };
+
+
 
     this.catInput = { name: '' };
     this.iconCtrl.setValue('');
 
     // post Http Request call
-    this.httpService.saveTasks(localInput, apiUrl + middlebar + 'save')
+    this.httpService.saveTasks({ data, col: 'category' }, apiUrl + middlebar + 'category' + middlebar + 'save')
       .subscribe((resp: any) => {
         console.log(resp && resp.code && resp.code === 200);
       });
@@ -148,7 +172,7 @@ export class DashboardComponent implements OnInit {
 
 
     // post Http Request call
-    this.httpService.deleteTasks(this.act.CategoryRemList, apiUrl + middlebar + 'del')
+    this.httpService.deleteTasks(this.act.CategoryRemList, apiUrl + middlebar + 'category' + middlebar + 'del', 'category')
       .subscribe((resp: any) => {
         this.act.CategoryRemList = resp && resp.code && resp.code === 200 ? [] : this.act.CategoryRemList;
       });
@@ -160,6 +184,7 @@ export class DashboardComponent implements OnInit {
     this.cateObj = [];
     this.refreshing = true;
     this.emptyText = 'loading...';
+    this.isShowSettings = 'hide';
 
     // get Http Request call,
     this.httpService.getTasks(apiUrl + middlebar + 'categories')
@@ -203,9 +228,13 @@ export class DashboardComponent implements OnInit {
       }
     };
 
+    this.menu = {
+      edit: 'edit'
+    }
 
-    this.value = '';
-    this.catInput = { name: '', parent_id: '' };
+    this.catInput = { name: '', parentId: '' };
     this.iFonts = _fonts;
   }
+
+  
 }

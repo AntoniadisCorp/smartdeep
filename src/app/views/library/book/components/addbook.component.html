@@ -3,21 +3,24 @@
     <div class="container d-flex h-50 align-items-center">
         <div class="mx-auto text-center">
             <h1 class="mx-auto my-0 text-uppercase">Βιβλιοθηκη</h1>
-            <h2 class="text-white-50 mx-auto mt-2 mb-5">Επιλογή ή Δημιουργία Βιβλιοθήκης</h2>
+            <h2 class="text-black-50 mx-auto mt-2 mb-5">Επιλογή Βιβλιοθήκης</h2>
             <form [formGroup]="entranceForm">
                 <mat-form-field [style.fontSize]="fontSize">
+
                     <mat-spinner matSuffix *ngIf="isProcessing" [diameter]="20" [strokeWidth]="3">
                     </mat-spinner>
-                    <input required type="text" placeholder="πληκτρολογήστε ένα Όνομα" matInput formControlName="libraryName"
-                        [matAutocomplete]="autoGroup" />
 
-                    <mat-autocomplete #autoGroup="matAutocomplete">
+                    <input type="text" placeholder="πληκτρολογήστε ένα όνομα" matInput required
+                        formControlName="libraryName" [matAutocomplete]="autoGroup" />
+
+                    <mat-autocomplete #autoGroup="matAutocomplete" (optionSelected)='entranceSelected()'>
                         <mat-optgroup *ngFor="let group of stateGroupOptions | async" [label]="group.letter">
                             <mat-option *ngFor="let option of group.name" [value]="option">
                                 {{ option }}
                             </mat-option>
                         </mat-optgroup>
                     </mat-autocomplete>
+
                 </mat-form-field>
                 <a (click)="openLibrary()" mat-raised-button class="btn btn-light text-dark">Καταχώρηση βιβλίου</a>
             </form>
@@ -65,16 +68,16 @@
                             <span class="text-dark mr-4">Βιβλιοθήκη:
                                 <mat-chip-list aria-label="Book Selection">
                                     <mat-chip class="text-white" color="primary" selected>
-                                        {{ entranceForm.get('libraryName').value }}</mat-chip>
+                                        {{ libraryName.value }}</mat-chip>
                                 </mat-chip-list>
                             </span>
                             <mat-chip class="text-dark mr-4">Κατάσταση: </mat-chip>
                             <label class="switch switch-text switch-pill switch-success mt-2">
 
-                                <input type="checkbox"
+                                <input type="checkbox" checked
                                     class="form-check-input switch-input ng-untouched ng-pristine ng-valid"
                                     formControlName="status" id="status">
-                                <span class="switch-label" data-on="On" data-off="Off"></span>
+                                <span class="switch-label" data-on="ΔΙΑΘΕΣΙΜΟ" data-off="ΜΗΔΙΑΘΕΣΙΜΟ"></span>
                                 <span class="switch-handle"></span>
 
                             </label>
@@ -82,54 +85,83 @@
                         <a class="navbar-btn ml-auto px-1 pt-3">
                             <button mat-button class="btn btn-outline-primary btn-sm mb-0 ml-3" type="submit">
                                 <i class="fas fa-save fa-lg mr-1 mb-1"></i>
-                                Δημιουργία
+                                Αποθήκευση
                             </button>
-                            <button mat-button (click)="resetBookForm()" class="btn btn-outline-light btn-sm mb-0 ml-3" type="submit">
+                            <button mat-button (click)="resetBookForm()" class="btn btn-outline-light btn-sm mb-0 ml-3"
+                                type="submit">
                                 Εκκαθάριση
                             </button>
                         </a>
                     </div>
                 </div>
             </div>
-            <p><!-- <mat-progress-bar [value]="progress"></mat-progress-bar> -->
-                <ngb-progressbar *ngIf="progress>=0" [value]="progress" ><i>{{progress}}%</i></ngb-progressbar></p>
+            <p>
+                <!-- <mat-progress-bar [value]="progress"></mat-progress-bar> -->
+                <ngb-progressbar *ngIf="progress>=0" [value]="progress"><i>{{progress}}%</i></ngb-progressbar>
+            </p>
             <div class="row">
                 <div class="divider-right col-8">
                     <div class="form-row">
                         <div class="form-group col-md-10">
                             <mat-chip class="text-dark mr-2" for="typeahead-config">Θεματολογία</mat-chip>
-                            <mat-form-field class="wfield">
+                            <mat-form-field class="wfield" hintLabel="* Το πεδίο δεν μπορεί να είναι κενό">
                                 <mat-spinner matSuffix *ngIf="isProcessing" [diameter]="20" [strokeWidth]="3">
                                 </mat-spinner>
-                                <input matInput id="typeahead-config" type="text" placeholder="Γεροντικόν.."
-                                    formControlName="categoryName" [ngbTypeahead]="category" />
-
+                                <input matInput id="typeahead-config" type="text" placeholder="Ιστορικά.."
+                                    formGroupName="category" (selectItem)='selectedCategory($event)'
+                                    [value]="cname.value" [ngbTypeahead]="SearchCategory"
+                                    (focus)="focus$.next($any($event).target.value)"
+                                    (click)="click$.next($any($event).target.value)" #instance="ngbTypeahead"
+                                    [resultTemplate]="rt" [inputFormatter]="formatter" />
+                                <!-- {{ (category? category.value  : {})  | json}} -->
+                                <mat-hint align="end">
+                                    {{(catlen==0 || catlen>1) && category.get('cname').value && category.get('cname').value.length>1 ? 
+                                        'Βρέθηκαν ' + catlen + ' αποτελέσματα..' 
+                                        : catlen==1 && category.get('cname').value && category.get('cname').value.length>1? 
+                                        'Βρέθηκε ' + catlen + ' αποτέλεσμα..' 
+                                        : '' }}
+                                </mat-hint>
+                                <ng-template #rt let-r="result" let-t="term">
+                                    <ngb-highlight [result]="r.cname" [term]="t"></ngb-highlight>
+                                </ng-template>
                             </mat-form-field>
+
+                            <a mat-icon-button #categoryTooltip="matTooltip" matTooltip="Προσθήκη νέας Θεματολογίας"
+                                matTooltipPosition="above">
+                                <!-- (click)="addCategoryModal()" -->
+                                <mat-icon>add</mat-icon>
+                            </a>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-2">
                             <mat-chip class="text-dark" for="id">Kωδικός</mat-chip>
                             <mat-form-field class="wfield">
-                                <input matInput formControlName="_id"
-                                    class="text-primary ng-untouched ng-pristine ng-valid" id="id" 
-                                    placeholder="auto.."
-                                    type="number" />
+                                <input matInput required formControlName="SKU"
+                                    class="text-primary ng-untouched ng-pristine ng-valid" id="SKU" min="0"
+                                    placeholder="auto.." type="number" />
                             </mat-form-field>
                         </div>
                         <div class="form-group col-md-8">
                             <mat-chip class="text-dark font-weight-bold mr-4" for="title">Τίτλος Βιβλίου</mat-chip>
                             <mat-form-field style="width:100%" class="wfield">
-                                <input matInput class="text-primary  font-weight-bold ng-pristine ng-valid ng-touched"
-                                    formControlName="title" id="title" placeholder="Αγιος Ιωάννης Κλίμακος.."
+                                <input matInput required
+                                    class="text-primary  font-weight-bold ng-pristine ng-valid ng-touched"
+                                    formControlName="title" id="title" placeholder="Αγιος Ιωάννης της Κλίμακος.."
                                     type="text" />
                             </mat-form-field>
                         </div>
                         <div class="form-group col-md-2">
                             <mat-chip class="text-dark font-weight-bold" for="bookcase">Θέση</mat-chip>
-                            <mat-form-field class="wfield">
-                                <input matInput class="text-primary  font-weight-bold ng-pristine ng-valid ng-touched"
-                                    formControlName="bookcase" id="bookcase" placeholder="'A8'.. etc." type="text" />
+                            <mat-form-field class="wfield" formGroupName="bookcase">
+                                <input matInput required
+                                    class="text-primary font-weight-bold ng-pristine ng-valid ng-touched"
+                                    formControlName="bookcaseName" id="bookcase" placeholder="'A38'.. etc."
+                                    type="text" />
+
+                                <a matSuffix mat-icon-button [style.fontSize.rem]="1.5" (click)="addBookshelf()">
+                                    <mat-icon svgIcon="bookshelf"></mat-icon>
+                                </a>
                             </mat-form-field>
                         </div>
                     </div>
@@ -138,15 +170,15 @@
                             <mat-chip class="text-dark mr-5" for="author">Συγγραφέας</mat-chip>
                             <mat-form-field class="wfield">
                                 <input matInput class=" text-primary" formControlName="author" id="author"
-                                    placeholder="type an author.." type="text" />
+                                    placeholder="Παπαδιαμάντης.." type="text" />
                             </mat-form-field>
 
                         </div>
                         <div class="form-group col-md-6">
-                            <mat-chip class="text-dark mr-3" for="author">Εκδότης</mat-chip>
+                            <mat-chip class="text-dark mr-5" for="author">Εκδότης</mat-chip>
                             <mat-form-field class="wfield">
                                 <input matInput class=" text-primary" formControlName="publisher" id="publisher"
-                                    placeholder="type a publisher.." type="text" />
+                                    placeholder="Αστήρ.." type="text" />
                             </mat-form-field>
                         </div>
 
@@ -156,14 +188,28 @@
                             <mat-chip class="text-dark" for="year">Έκδ. Έτος</mat-chip>
                             <mat-form-field class="wfield">
                                 <input matInput class=" text-primary" formControlName="year" id="year"
-                                    placeholder="type a year.." type="number" />
+                                    placeholder="1993.." type="number" min="0" />
                             </mat-form-field>
                         </div>
                         <div class="form-group col-md-2">
                             <mat-chip class="text-dark" for="pages">Σελίδες</mat-chip>
                             <mat-form-field class="wfield">
                                 <input matInput class=" text-primary" formControlName="pages" id="pages"
-                                    placeholder="type a number of pages.." type="number" />
+                                    placeholder="888.." min="0" type="number" />
+                            </mat-form-field>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <mat-chip class="text-dark" for="pages">Τόμος</mat-chip>
+                            <mat-form-field class="wfield">
+                                <input matInput class=" text-primary" formControlName="volume" id="volume"
+                                    placeholder="1.." min="0" type="number" />
+                            </mat-form-field>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <mat-chip class="text-dark" for="pages">Έκδοση</mat-chip>
+                            <mat-form-field class="wfield">
+                                <input matInput class=" text-primary" formControlName="version" id="version"
+                                    placeholder="1.." min="0" type="number" />
                             </mat-form-field>
                         </div>
                         <div formGroupName="dimensions" class="row col-md-8">
@@ -171,7 +217,7 @@
                                 <mat-chip class="text-dark" for="dimensionsx">Διάσταση X</mat-chip>
                                 <mat-form-field class="wfield">
                                     <input matInput class=" text-primary" formControlName="x" id="dimensionsx"
-                                        placeholder="type x.." type="number" />
+                                        placeholder="37.." type="number" min="0" />
                                     <span matSuffix>cm &nbsp;</span>
                                 </mat-form-field>
                             </div>
@@ -180,7 +226,7 @@
                                 <mat-form-field class="wfield">
                                     <span matPrefix>x &nbsp;</span>
                                     <input matInput class=" text-primary" formControlName="y" id="dimensionsy"
-                                        placeholder="type y.." type="number" />
+                                        placeholder="37.." type="number" min="0" />
                                     <span matSuffix>cm &nbsp;</span>
                                 </mat-form-field>
                             </div>
@@ -194,14 +240,14 @@
                             <mat-chip class="text-dark mr-4" for="isbn10">ISBN-10</mat-chip>
                             <mat-form-field class="wfield">
                                 <input matInput class=" text-primary" formControlName="isbn10" id="isbn10"
-                                    placeholder="ISBN-10: 9604188143.." type="number" />
+                                    placeholder="ISBN-10: 9604188143.." type="text" maxlength="10" />
                             </mat-form-field>
                         </div>
                         <div class="form-group col-md-6">
                             <mat-chip class="text-dark mr-4" for="isbn13">ISBN-13</mat-chip>
                             <mat-form-field class="wfield">
                                 <input matInput class=" text-primary" formControlName="isbn13" id="isbn13"
-                                    placeholder="ISBN-13: 9789604188147.." type="number" />
+                                    placeholder="ISBN-13: 9789604188147.." type="text" maxlength="13" />
                             </mat-form-field>
                         </div>
                     </div>
@@ -211,10 +257,11 @@
                             <mat-form-field style="width: 100%;">
 
                                 <textarea matInput placeholder="σημείωση" aria-label="Notes"
-                                    aria-describedby="NotesAreaGroupPrepend"
+                                    aria-describedby="NotesAreaGroupPrepend" maxlength="3000"
                                     class="text-success  ng-pristine ng-valid ng-touched" formControlName="notes"
                                     id="NotesArea">
                                 </textarea>
+                                <mat-hint align="end">{{notes.value?.length || 0}}/1000</mat-hint>
 
                             </mat-form-field>
                         </div>
@@ -224,8 +271,14 @@
                     <div class="form-row">
                         <!-- Image Preview -->
                         <div class="form-group col-md-12">
+                            <button mat-icon-button class="btn-remove" color="warn" (click)="clearAvatar()"
+                                *ngIf="isAvatar()">
+                                <mat-icon>close</mat-icon>
+                            </button>
                             <img class="img-fluid fit shadow-lg rounded" *ngIf="avatarFile && avatarFile.src !== ''"
-                             [src]="avatarFile.src" />
+                                [src]="avatarFile.src" />
+                            <!-- {{ avatarFile | json }} -->
+                            <!-- {{ avatar | json }} -->
                         </div>
                     </div>
                     <app-file-upload formControlName="avatar" [progress]="progress"></app-file-upload>

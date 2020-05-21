@@ -28,7 +28,7 @@ export class TokenInterceptor implements HttpInterceptor {
     }));
   }
 
-  private addToken(request: HttpRequest<any>, token: string) {
+  private addToken(request: HttpRequest<any>, token: string | null) {
     return request.clone({
       withCredentials: true,
       setHeaders: {

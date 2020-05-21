@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse, HttpEvent, HttpEventType, HttpParams } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { Logger } from '.';
+
 import { Category, DataSource, RESTfulServ, BodyObj, OptionEntry } from '../interfaces';
 import { setServerUrl, toResponseBody, uploadProgress } from '../routines';
 import { middlebar, config } from '../variables';
+import { Logger } from './logger.service';
+
 
 
 @Injectable({
@@ -19,9 +21,9 @@ export class SmartEngineService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private logger: Logger) {
     //  setServerUrl('isense.smartdeep.io', 443)
-    this.taskUrl = `${config.apiUrl}${middlebar}task`
+    this.taskUrl = `${config.apiUrl}${middlebar}task`;
     this.httpOptions.headers.append('Access-Control-Allow-Origin', '*');
   }
 
@@ -29,34 +31,47 @@ export class SmartEngineService {
 
 
     // reset Url if Needed
-    // this.taskUrl = this.setTaskUrl(apiURL);
+    this.taskUrl = this.setTaskUrl(apiURL);
 
     return this.http.get<any>(apiURL, {
       params: new HttpParams()
-        .set('q', term || '' )
+        .set('filter', term || '')
         .set('col', collection || '')
-          /* _sort: 'last_name,first_name' */
+      /* _sort: 'last_name,first_name' */
     }).pipe(
       tap((result) => console.log('result-->', result)),
       catchError(this.handleError<any>('getCategory')));
   }
 
-  searchTasks(term: string, apiURL?: string, collection?: string): Observable<OptionEntry> {
+  getTask(apiURL: string, collection?: string): Observable<OptionEntry> {
 
     // reset Url if Needed
     this.taskUrl = this.setTaskUrl(apiURL);
 
-    console.log('searching for', term);
     return this.http.get<any>(apiURL, {
       params: new HttpParams()
-      .set('q', term || '' )
-      .set('col', collection || '')
+        .set('col', collection || '')
+    }).pipe(
+      tap((result) => console.log('result-->', result)),
+      catchError(this.handleError<any>('getCategory')));
+  }
+
+  searchTasks(term: string, apiURL?: string, collection?: string): Observable<any | null> {
+
+    // reset Url if Needed
+    // this.taskUrl = this.setTaskUrl(apiURL);
+
+    console.log('searching for', term + ' ', apiURL);
+    return this.http.get<any>(apiURL, {
+      params: new HttpParams()
+        .set('filter', term || '')
+        .set('col', collection || '')
     }).pipe(
       tap((result) => {
         console.log('Search results -->', result);
         return result;
       }),
-      map((res: OptionEntry) => res.data['result']),
+      map((res: OptionEntry) => res.data.result),
       catchError(this.handleError<any[]>('lookupforCategories')));
   }
 
@@ -68,7 +83,7 @@ export class SmartEngineService {
       reportProgress: true,
       observe: 'events',
       // headers: new HttpHeaders(/* { 'Access-Control-Allow-Origin': '*'} */).set('Accept', 'application/json')
-    })
+    });
   }
 
   saveTasks(task: BodyObj, apiURL?: string): Observable<OptionEntry> {
@@ -84,13 +99,38 @@ export class SmartEngineService {
       );
   }
 
-  deleteTasks(task: string[], apiURL?: string): Observable<string[]> {
+  updateTaskswithProgress(task: any, apiURL?: string): Observable<HttpEvent<any>> {
+    this.taskUrl = this.setTaskUrl(apiURL);
+
+    return this.http.put<any>(this.taskUrl, task, {
+      reportProgress: true,
+      observe: 'body',
+      // headers: new HttpHeaders(/* { 'Access-Control-Allow-Origin': '*'} */).set('Accept', 'application/json')
+    });
+  }
+
+  deleteTasks(task: string[], apiURL?: string, collectionName?: string): Observable<string[]> {
 
     this.taskUrl = this.setTaskUrl(apiURL);
 
     return this.http.post<string[]>(this.taskUrl, {
-      q: task
+      q: task,
+      col: collectionName
     }, this.httpOptions).pipe(
+      tap((result) => {
+        console.log('Deletion result -->', result);
+        return result;
+      }),
+      catchError(this.handleError<string[]>('deleteCategories')));
+  }
+
+  deleteOneTask(apiURL?: string, params?: BodyObj): Observable<any> {
+
+    this.taskUrl = this.setTaskUrl(apiURL)
+
+    return this.http.delete(this.taskUrl, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }).pipe(
       tap((result) => {
         console.log('Deletion result -->', result);
         return result;
@@ -100,19 +140,22 @@ export class SmartEngineService {
 
 
   find(
-    _id: string, q: string = '', sortOrder: string = 'asc',
-    pageNumber:number = 0, pageSize: number = 3, collection?: string, apiURL?: string): Observable<any[]> {
+    _id: string, filter: string = '', sortOrder: string = 'asc',
+    pageNumber: number = 0, pageSize: number = 5, collection?: string, apiURL?: string,
+    sortActive?: string, refField?: string): Observable<any[]> {
 
     this.taskUrl = this.setTaskUrl(apiURL);
 
     return this.http.get(this.taskUrl, {
       params: new HttpParams()
         .set('_id', String(_id))
-        .set('filter', q)
+        .set('filter', filter)
+        .set('sortActive', sortActive)
         .set('sortOrder', sortOrder)
         .set('pageNumber', pageNumber.toString())
         .set('pageSize', pageSize.toString())
         .set('col', collection || '')
+        .set('refField', refField || '')
     }).pipe(
       tap((result: any) => {
         console.log('tableSearch result -->', result);
@@ -133,26 +176,34 @@ export class SmartEngineService {
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
+  public handleError<T>(operation = 'operation', result?: T) {
+    return (returnedErr: any): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
+      // console.error(error); // log to console instead
 
-      if (error.error instanceof ErrorEvent) {
+      if (returnedErr.error.error instanceof ErrorEvent) {
         // A client-side or network error occurred. Handle it accordingly.
-        console.error('An error occurred:', error.error.message);
+        console.error('An error occurred:', returnedErr.error.error.message);
       } else {
         // The backend returned an unsuccessful response code.
         // The response body may contain clues as to what went wrong,
         console.error(
-          `Backend returned code ${error.status}, ` +
-          `body was: ${JSON.stringify(error.error)}`);
+          `Backend returned code ${returnedErr.error.code}, ` +
+          `body was: ${JSON.stringify(returnedErr)}`);
       }
       // TODO: better job of transforming error for user consumption
-      // this.log(`${operation} failed: ${error.message}`);
+      if (returnedErr.error.error)
+        this.log(`${operation} failed: ${returnedErr.error.status} ${returnedErr.error.error.message}`, 5000);
+
+      result = returnedErr
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
+
+  /** Log a Service message with the MessageService */
+  private log(message: string, duration?: number) {
+    this.logger.log(message, duration)
   }
 }

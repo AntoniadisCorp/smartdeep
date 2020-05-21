@@ -1,0 +1,87 @@
+<div class="d-flex md-form form-group mt-0" style="border-bottom: 1px solid #eeee;">
+    <a class="navbar-btn ml-auto pt-3 pb-2 mr-3">
+        <button mat-button class="btn btn-primary btn-sm mb-0 ml-0" type="submit">
+            <i class="fas fa-save fa-lg mr-1"></i>
+            Αποθήκευση Βιβλιοθήκης
+        </button>
+        <button mat-button (click)="resetBookForm()" class="btn btn-danger btn-sm mb-0 ml-0" type="submit">
+            <i class="fas fa-backspace fa-lg mr-1"></i>
+            Εκκαθάριση
+        </button>
+    </a>
+</div>
+
+<form [formGroup]="libForm">
+
+
+    <div class="mt-2 container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px"
+        fxLayoutGap.xs="0">
+
+        <div fxFlex>
+            <h3 class="dda_container">Τίτλος Βιβλιοθήκης</h3>
+        </div>
+    </div>
+
+
+    <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+
+        <div fxFlex>
+            <mat-form-field class="d-block mb-3"
+                hintLabel="Μέχρι 40 χαρακτήρες, π.χ. (Τα βιβλία μου, Ταινίες, Παιχνίδια, Οικογενεικά Συλλογή CD)">
+                <input matInput formControlName="name" maxlength="40" type="text" placeholder="Εθνική Βιβλιοθήκη..">
+                <mat-hint align="end">{{name.value?.length || 0}}/40</mat-hint>
+            </mat-form-field>
+        </div>
+        <div fxFlex="35%"></div>
+    </div>
+
+    <mat-divider class="inset">
+    </mat-divider>
+
+    <div class="mt-2 container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px"
+        fxLayoutGap.xs="0">
+
+
+        <div class="mb-3" fxFlex>
+            <h3 class="dda_container">Τύπος Βιβλιοθήκης</h3>
+        </div>
+    </div>
+
+    <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+
+
+        <div fxFlex class="d-block">
+
+
+            <mat-radio-group formControlName="type">
+                <mat-radio-button value="books">Βιβλία</mat-radio-button>
+            </mat-radio-group>
+
+            <p class="lead">ο τύπος μπορεί να είναι βιβλία, ταινίες, παιχνίδια μουσική</p>
+        </div>
+        <div fxFlex="35%"></div>
+    </div>
+
+
+    <mat-divider class="inset">
+    </mat-divider>
+
+
+    <div class="mt-2 container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px"
+        fxLayoutGap.xs="0">
+
+
+        <div class="mb-3" fxFlex>
+            <h3 class="dda_container">Κοινοποίηση Βιβλιοθήκης</h3>
+        </div>
+    </div>
+
+    <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+        <div fxFlex>
+            <mat-checkbox class="d-block mb-3" formControlName="access">Δημόσια</mat-checkbox>
+            <p class="lead">Κοινοποιόντας τη βιβλιοθήκη δίνετε πρόσβαση σε όλους τους χρήστες της εφαρμογής.</p>
+        </div>
+        <div fxFlex="35%"></div>
+    </div>
+
+</form>

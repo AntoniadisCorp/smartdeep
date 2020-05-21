@@ -1,25 +1,29 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SmartEngineComponent } from './smartengine.component';
-import { ImageListComponent, ItemListComponent } from './components';
-import { InventoryService } from 'src/app/services';
+import { ImageListComponent, ItemListComponent, DeleteitemListDialogConfirm } from './components';
+import { SmartResolveService } from 'src/app/services';
 
 
 const routes: Routes = [
 
-    {
-        path: '',
-        data: {
-          title: 'SearchEngine'
-        },
-        component: SmartEngineComponent,
-        children: [
-          { path: 'searchit', component: ItemListComponent, data: {title: 'Searchit', animation: 'item'},
-          /* resolve: {collection: InventoryService} */ },
-          { path: 'searchil', component: ImageListComponent, data: {title: 'Searchil', animation: 'image'},
-             },
-        ]
-      }
+  {
+    path: '',
+    data: {
+      title: 'SearchEngine'
+    },
+    component: SmartEngineComponent,
+    children: [
+      { path: 'searchit', component: ItemListComponent, data: { title: 'Searchit', animation: 'item' } },
+      {
+        path: 'searchit/:id', component: ItemListComponent, data: { title: 'Searchit', animation: 'item' },
+        /* resolve: { _id: SmartResolveService } */
+      },
+      {
+        path: 'searchil', component: ImageListComponent, data: { title: 'Searchil', animation: 'image' },
+      },
+    ]
+  }
 ];
 
 @NgModule({
@@ -31,11 +35,10 @@ export class EngineRoutingModule { }
 
 export const routedComponents = {
 
-    app: [],
+  entry: [],
 
-    others: [
-        SmartEngineComponent,
-        ImageListComponent,
-        ItemListComponent
-    ]
-} ;
+  others: [
+    SmartEngineComponent,
+    ImageListComponent,
+  ]
+};

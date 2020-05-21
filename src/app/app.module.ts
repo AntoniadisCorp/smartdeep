@@ -7,13 +7,21 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import * as Hammer from 'hammerjs';
 
 /* Import App Routing Module and Components */
-import { AppRoutingModule,
-  routedComponents } from './app-routing.module';
+import {
+  AppRoutingModule,
+  routedComponents
+} from './app-routing.module';
 
 /* Import Material design Module */
 import { MaterialsModule, AppNgModules, DropdownModule } from './modules';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthModule } from 'src/app/auth/auth.module';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+
+/* Import and configure SocketIoModule */
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const socketConfig: SocketIoConfig = { url: config.apiUrl, options: {} };
 
 // Import Modules
 const APP_MODULES = [
@@ -26,6 +34,8 @@ const APP_MODULES = [
   DropdownModule,
   AuthModule.forRoot(),
   // MDBBootstrapModule.forRoot()
+  NgbDropdownModule,
+  SocketIoModule.forRoot(socketConfig)
 ];
 
 // Import containers
@@ -91,16 +101,21 @@ const APP_DIRECTIVES = [
 ];
 
 // import Global Services
-import { EventsService, Logger } from './services';
+import { EventsService, Logger, SvgIconService } from './services';
 import { isPlatformBrowser } from '@angular/common';
 import { AppComponent } from './app.component';
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
+import { url } from 'inspector';
+import { config } from './variables/global.vars';
+import { SocketService } from './services/socket.service';
 
 const APP_SERVICES = [
 
   Logger,
   EventsService,
-  {provide: 'LOCALSTORAGE', useFactory: getLocalStorage}
+  SvgIconService,
+  SocketService,
+  { provide: 'LOCALSTORAGE', useFactory: getLocalStorage }
 ];
 
 @NgModule({
@@ -117,9 +132,9 @@ const APP_SERVICES = [
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ...APP_MODULES,
   ],
-  providers: [ ...APP_SERVICES  ],
-  schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA ],
-  bootstrap: [ AppComponent ]
+  providers: [...APP_SERVICES],
+  schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor(

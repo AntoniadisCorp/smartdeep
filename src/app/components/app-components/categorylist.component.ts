@@ -130,7 +130,8 @@ export class InnerCategoryComponent implements OnInit {
         </a>
     </div>
     <ng-template #external>
-      <a [ngClass]="hasVariant() ? 'nav-link nav-link-' + link.variant : 'nav-link'" href="{{link.url}}">
+      <a [ngClass]="hasVariant() ? 'nav-link nav-link-' + link.variant : 'nav-link'" [routerLink]="['/smartengine/searchit', link._id]"
+      routerLinkActive="router-link-active" >
       <i *ngIf="isIcon()" class="{{ link.icon }}"></i>
       <span class="title" >{{ link.name }}</span>
       <span *ngIf="isBadge()" [ngClass]="'badge badge-' + link.badge.variant">{{ link.badge.text }}</span>
@@ -170,7 +171,7 @@ export class CategoryLinkComponent implements OnInit {
 
   ngOnInit(): void { this.link.action = {status: this.selection, iconclass: 'send'}; }
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   public hasVariant() {
     return this.link && this.link.variant ? true : false;
@@ -182,6 +183,10 @@ export class CategoryLinkComponent implements OnInit {
 
   public isBadge() {
     return this.link && this.link.badge ? true : false;
+  }
+
+  openBookbyId () {
+    return this.router.navigate(['/smartengine/searchit', this.link._id])
   }
 
   public isExternalLink() { // (this.link.url.substring(0, 4) === 'http' || this.link.url.substring(0, 5) === 'https') ?

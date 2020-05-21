@@ -1,4 +1,5 @@
-.pagination-datatables, .pagination {
+.pagination-datatables,
+.pagination {
   li {
     @extend .page-item;
 
@@ -15,7 +16,8 @@
 // temp fix for Vue & React
 
 // Open state for the dropdown
-.open, .show {
+.open,
+.show {
   // Remove the outline when :focus is triggered
   > a {
     outline: 0;
@@ -37,23 +39,21 @@
 }
 
 span.mat-option-text {
-
   right: 6px;
   position: relative;
 
   .input-option-img {
-
-      margin-right: 3px;
+    margin-right: 3px;
   }
 }
 
 .obs-no-matches {
-    &.fa {
-      font-size: large;
-    }
-    position: absolute;
-    color: #3ba3cd;
-    right: 0px;
+  &.fa {
+    font-size: large;
+  }
+  position: absolute;
+  color: #3ba3cd;
+  right: 0px;
 }
 
 mat-spinner.obs-mat-spinner {
@@ -65,27 +65,57 @@ mat-spinner.obs-mat-spinner {
   text-decoration: none;
 }
 
-
 button:focus {
   outline: none;
 }
 
 .label-center {
   color: $BrandGreenTransLightColor;
-  margin:auto !important;
+  margin: auto !important;
   font-size: 20px;
 }
 
 .ldBar-center:after {
-
-    content: "loading";
-    color: #aaa;
-    margin-left: 5px;
-    font-family: courier new;
-    font-size: 0.7em;
-    font-weight: 200;
-  }
+  content: "αναμονή..";
+  color: #aaa;
+  margin-left: 5px;
+  font-family: courier new;
+  font-size: 0.7em;
+  font-weight: 200;
+}
 
 .mainline {
   stroke: $BrandGreenTransLightColor !important;
+}
+
+.custom-file-input:lang(en) ~ .custom-file-label::after {
+  content: "αναζήτηση";
+}
+
+span.availability.instock:before {
+  background: #8dc84d;
+}
+
+span.instock:before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 10px 0 0;
+  border-radius: 50%;
+  background: #999999;
+}
+
+.masthead {
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 35rem;
+  padding: 15rem 0;
+}
+
+table {
+  & > mat-checkbox {
+    display: inherit;
+  }
 }

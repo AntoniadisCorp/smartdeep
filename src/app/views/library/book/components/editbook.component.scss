@@ -6,13 +6,117 @@ $desktop: 992px;
   }
 }
 
+.bookview {
+  table th {
+    border-bottom: 1px solid black;
+  }
+  th,
+  td {
+    padding: 15px;
+  }
+
+  .mdc-table-contents {
+    background-color: #fff;
+    background-color: color(primary-light);
+    border-radius: 4px;
+    /* border: 1px solid rgba(0, 0, 0, 0.12); */
+    -webkit-overflow-scrolling: touch;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow-x: auto;
+    h3 {
+      text-align: center;
+      span {
+        border-bottom: 1px dotted rgba(0, 0, 0, 0.12);
+      }
+    }
+  }
+
+  .mdc-table__header-row,
+  .mdc-table__row {
+    background-color: inherit;
+  }
+
+  .mdc-table__header-cell {
+    height: 56px;
+  }
+
+  .mdc-table__cell,
+  .mdc-table__header-cell {
+    color: rgba(0, 0, 0, 0.87);
+  }
+
+  .mdc-table__content {
+    font-family: Roboto, sans-serif;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 400;
+    letter-spacing: 0.0178571429em;
+    text-decoration: inherit;
+    text-transform: inherit;
+  }
+
+  .mdc-table__row:not(.mdc-table__row--selected):hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  tbody tr .line {
+    width: 100%;
+    border-bottom: 1px dotted #000;
+  }
+
+  .mdc-table__cell,
+  .mdc-table__header-cell {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .mdc-table__cell--numeric {
+    text-align: right;
+  }
+
+  .mdc-table__row {
+    border-top-color: rgba(0, 0, 0, 0.12);
+    border-top-width: 1px;
+    border-top-style: solid;
+  }
+
+  .mdc-table__header-cell {
+    font-family: Roboto, sans-serif;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-size: 0.875rem;
+    line-height: 1.375rem;
+    font-weight: 500;
+    letter-spacing: 0.0071428571em;
+    text-decoration: inherit;
+    text-transform: inherit;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    text-align: left;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .mdc-table__table {
+    width: 100%;
+    min-width: 100%;
+    border: 0;
+    white-space: nowrap;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+}
+
 .masthead {
-  position: relative;
-  width: 100%;
-  height: auto;
-  min-height: 35rem;
-  padding: 15rem 0;
-  background: linear-gradient(
+  /* background: linear-gradient(
       to bottom,
       rgba(22, 22, 22, 0.3) 0,
       rgba(22, 22, 22, 0.7) 75%,
@@ -22,7 +126,7 @@ $desktop: 992px;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;
-  background-size: cover;
+  background-size: cover; */
 
   @include desktop {
     height: 100vh;
@@ -34,10 +138,15 @@ $desktop: 992px;
     font-size: 2.5rem;
     line-height: 2.5rem;
     letter-spacing: 0.8rem;
-    background: -webkit-linear-gradient(
+    background: linear-gradient(
+      to bottom,
+      rgba(22, 22, 22, 0.3) 0,
+      rgba(22, 22, 22, 0.7) 75%,
+      #161616 100%
+    ); /* -webkit-linear-gradient(
       rgba(255, 255, 255, 0.9),
       rgba(255, 255, 255, 0)
-    );
+    ); */
     -webkit-text-fill-color: transparent;
     background-clip: text;
 
@@ -116,20 +225,6 @@ div.section-title {
   margin: 0 0 6px;
   color: #363636;
 
-  .availability.instock:before {
-    content: "";
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    margin: 0 10px 0 0;
-    border-radius: 50%;
-    background: #8dc84d;
-  }
-
-  .instock:before {
-    background: #999999;
-  }
-
   h3 {
     margin: 0 0 15px;
     font-size: 18px;
@@ -154,13 +249,18 @@ div.section-title {
 
     font-size: 16px;
     color: #707070;
-    vertical-align: top;
+    /* vertical-align: top; */
     line-height: 1.4;
   }
 
+  dt {
+    width: 27%;
+  }
   dd {
     font-size: 16px;
     color: #000;
+    width: 100%;
+    display: inline;
   }
 }
 

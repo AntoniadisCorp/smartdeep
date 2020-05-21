@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+
+        <div class="card">
+            <div class="card-header">
+
+                <h5>Χωροθέτηση</h5>
+                <mat-icon fontSet="fas" svgIcon="map" style="font-size: 1.5rem;height: auto;" fontIcon="fa-">
+                </mat-icon>
+                <div class="card-header-tabs">
+                    <!-- (wheel)="scrollTabs($event)" #tabGroup-->
+                    <nav mat-tab-nav-bar>
+                        <a mat-tab-link *ngFor="let invtab of InvTabs$ | async" (click)="activeLink = invtab.id"
+                            [active]="rla.isActive" [routerLink]="['/library/map', invtab.id]" routerLinkActive
+                            #rla="routerLinkActive">
+                            <mat-icon fontSet="fas" svgIcon="{{invtab.svg}}" style="font-size: 1.5rem;height: auto;"
+                                fontIcon="fa-{{invtab.icon}}" class="mat-tab-icon"
+                                [ngClass]="invtab.id==='receive' ? 'card-tab-icon-fix' : ''">
+                            </mat-icon>
+                            {{invtab.name}}
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
+            <div [@routeAnimation]="getAnimationData(routerOutlet)">
+                <router-outlet #routerOutlet="outlet"></router-outlet>
+            </div>
+
+        </div>
+
+    </div>
+</div>

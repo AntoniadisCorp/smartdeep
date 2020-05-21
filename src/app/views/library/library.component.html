@@ -1,30 +1,57 @@
 <div class="row">
-    <div class="col-xs-12 col-md-12">
 
-        <div class="card">
+
+
+    <div class="col-6 col-sm-6 col-md-3 mb-2" *ngFor="let invtab of InvTabs$ | async">
+
+        <mat-card class="example-card">
+
+           <!--  <img mat-card-image [src]=""
+                alt="Photo of a Shiba Inu"> -->
+            <!-- <mat-card-content>
+                <p>
+                    The Shiba
+                </p>
+            </mat-card-content> -->
+            <mat-card-header>
+                <div mat-card-avatar class="example-header-image" >
+                    <mat-icon fontSet="fas" svgIcon="{{invtab.svg}}" style="font-size: 1.5rem;height: auto;width: 100%;" fontIcon="fa-"></mat-icon>
+                </div>
+                <mat-card-title>{{invtab.name}}</mat-card-title><!-- 
+                <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+            </mat-card-header>
+
+            <mat-card-actions class=" d-flex align-items-end justify-content-end">
+                <a mat-raised-button class="btn btn-sm" [routerLink]="['/library', invtab.id]">ΑΝΟΙΓΜΑ</a>
+            </mat-card-actions>
+        </mat-card>
+        <!--  <div class="card">
             <div class="card-header">
 
-                <h5> Πάνελ Βιβλιοθήκης </h5>
-                <i class="icon-drawer"></i>
-                <div class="card-header-tabs">
-                    <!-- (wheel)="scrollTabs($event)" #tabGroup-->
+                
+
+                <h5 >Βιβλιοθήκη</h5>
+                <mat-icon fontSet="fas" svgIcon="library" style="font-size: 1.5rem;height: auto;" fontIcon="fa-"></mat-icon> -->
+        <!--  <div class="card-header-tabs">
+                    
                     <nav mat-tab-nav-bar>
                         <a mat-tab-link *ngFor="let invtab of InvTabs$ | async" (click)="activeLink = invtab.id"
-                            [active]="rla.isActive" [routerLink]="['/library', invtab.id]" routerLinkActive
+                            [active]="rla.isActive" [routerLink]="['/library/book', invtab.id]" routerLinkActive
                             #rla="routerLinkActive">
-                            <mat-icon class="mat-tab-icon" [ngClass]="invtab.id==='receive' ? 'card-tab-icon-fix' : ''">
-                                {{invtab.icon}}</mat-icon>
+                            <mat-icon fontSet="fas" svgIcon="{{invtab.svg}}" style="font-size: 1.5rem;height: auto;" fontIcon="fa-{{invtab.icon}}"
+                                class="mat-tab-icon" [ngClass]="invtab.id==='receive' ? 'card-tab-icon-fix' : ''">
+                            </mat-icon>
                             {{invtab.name}}
                         </a>
                     </nav>
-                </div>
-            </div>
+                </div> -->
+        <!--    </div> -->
 
-            <div [@routeAnimation]="getAnimationData(routerOutlet)">
-                <router-outlet #routerOutlet="outlet"></router-outlet>
-            </div>
+        <!-- <div [@routeAnimation]="getAnimationData(routerOutlet)">
+            <router-outlet #routerOutlet="outlet"></router-outlet>
+        </div> -->
 
-        </div>
+        <!--  </div> -->
 
     </div>
 </div>

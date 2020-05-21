@@ -4,15 +4,15 @@ import { CommonModule } from '@angular/common';
 import { MaterialsModule, NgBootstrapModule } from 'src/app/modules';
 import { LibraryRoutingModule, routedComponents } from './library.routing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FileUploadComponent } from '../../components/app-components';
+import { UploadFileModule } from 'src/app/modules/uploadfile.module';
 
 @NgModule({
-    declarations: [ routedComponents.others, routedComponents.app, FileUploadComponent ],
-    imports: [ CommonModule, FormsModule, ReactiveFormsModule,
-         HttpClientModule, MaterialsModule, LibraryRoutingModule, NgBootstrapModule ],
-    entryComponents: [ routedComponents.app ],
-    exports: [FileUploadComponent],
+    declarations: [routedComponents.others, routedComponents.app, /* FileUploadComponent */],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, UploadFileModule,
+        HttpClientModule, MaterialsModule, LibraryRoutingModule, NgBootstrapModule],
+    entryComponents: [routedComponents.app],
+    exports: [/* FileUploadComponent */],
     providers: [],
     schemas: []
 })
-export class LibraryModule {}
+export class LibraryModule { }

@@ -105,6 +105,14 @@ export class AuthService {
     // return this.localStorage.getItem(this.JWT_TOKEN);
   }
 
+  getUserId(): string {
+    // Client only code.
+    if (isPlatformBrowser(this.platformId)) {
+
+      return localStorage.getItem('userId');
+    } else return null
+  }
+
   authorizeuser(redirectUri: string) {
 
     this.windowHandle = window.open(
@@ -202,6 +210,7 @@ export class AuthService {
 
       localStorage.setItem(this.JWT_TOKEN, tokens.jwt);
       localStorage.setItem(this.REFRESH_TOKEN, tokens.refreshToken);
+      localStorage.setItem('userId', tokens.userId)
     }
     // this.localStorage.setItem(this.JWT_TOKEN, tokens.jwt);
     // this.localStorage.setItem(this.REFRESH_TOKEN, tokens.refreshToken);
@@ -215,6 +224,7 @@ export class AuthService {
 
       localStorage.removeItem(this.JWT_TOKEN);
       localStorage.removeItem(this.REFRESH_TOKEN);
+      localStorage.removeItem('userId');
     }
 
     // this.localStorage.removeItem(this.JWT_TOKEN);

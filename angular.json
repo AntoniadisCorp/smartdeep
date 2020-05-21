@@ -30,12 +30,12 @@
             "styles": [
               "src/styles.scss",
               "node_modules/font-awesome/scss/font-awesome.scss",
+              "node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css",
               "node_modules/simple-line-icons/scss/simple-line-icons.scss"
             ],
             "scripts": [
-              "node_modules/chart.js/dist/Chart.bundle.min.js",
               "node_modules/chart.js/dist/Chart.min.js",
-              "node_modules/hammerjs/hammer.min.js",
+              "node_modules/hammerjs/hammer.min.js"
             ]
           },
           "configurations": {
@@ -96,11 +96,13 @@
             "styles": [
               "src/styles.scss",
               "node_modules/font-awesome/scss/font-awesome.scss",
+              "node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css",
               "node_modules/simple-line-icons/scss/simple-line-icons.scss"
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.bundle.min.js",
-              "node_modules/chart.js/dist/Chart.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "node_modules/jquery/dist/jquery.slim.min.js",
               "node_modules/hammerjs/hammer.min.js"
             ]
           }

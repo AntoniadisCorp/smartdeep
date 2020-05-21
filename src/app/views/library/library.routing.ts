@@ -1,34 +1,51 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LibraryComponent } from './library.component';
-import { AddbookComponent, EditbookComponent, AddbookDialogComponent } from './components';
 
 const routes: Routes = [
-    { path: '',
-        data: { title: 'library' },
+  {
+    path: '',
+    data: { title: 'Βιβλιοθήκη' },
+    
+    children: [
+      {
+        path: '',
         component: LibraryComponent,
-        children: [
-            { path: 'addbook', component: AddbookComponent, data: {title: 'Δημιουργία', animation: 'addbook'} },
-            { path: 'editbook', component: EditbookComponent, data: {title: 'Βιβλίο', animation: 'editbook'}},
-        ],
-    }
+        data: { title: 'Αρχική' }
+      },
+      {
+        path: 'map',
+        loadChildren: () => import('./map/libmap.module').then( mod => mod.LibMapModule)
+      },
+      {
+        path: 'book',
+        loadChildren: () => import('./book/book.module').then( mod => mod.BookModule)
+      },
+      {
+        path: 'allocation', // distribution
+        loadChildren: () => import('./allocation/liballoc.module').then( mod => mod.LibAllocModule)
+      },/*{
+        path: 'contributors', //  συνεργάτης συνεισφέρων εισφορέας, φορείς // operators εκδότες - συγγραφεις - δανειστές
+        loadChildren: () => import()
+      }, */
+      /* { // Δανεισμός
+        path: 'lending',
+      }, */
+    ]
+  },
+
 ];
 
 
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
-export class LibraryRoutingModule {}
+export class LibraryRoutingModule { }
 
 export const routedComponents = {
+  app: [],
 
-    app: [ AddbookDialogComponent, ],
-
-    others: [
-        LibraryComponent,
-        AddbookComponent,
-        EditbookComponent
-    ]
+  others: [LibraryComponent]
 };

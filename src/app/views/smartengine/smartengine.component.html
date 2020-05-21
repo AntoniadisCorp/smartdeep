@@ -14,12 +14,26 @@
     <div class="container-fluid">
         <div class="justify-content-md-center justify-searchbar">
             <div class="searchbar">
-                <div class="input-group">
-                    <input type="text" id="input1-group2" name="input1-group2" class="form-control"
-                        placeholder="looking for..">
-                    <span class="input-group-btn">
-                        <button type="button" [routerLink]="['/smartengine/searchit']" routerLinkActive="router-link-active"  class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
-                    </span>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="mat-container">
+                            <mat-form-field appearance="outline" style="width:100%">
+                                <mat-label>αναζήτηση στη βιβλιοθήκη..</mat-label>
+                                <button matPrefix *ngIf="!search" color="primary" [routerLink]="['/smartengine/searchit']"
+                                    routerLinkActive="router-link-active"
+                                    mat-icon-button matSuffix aria-label="Search">
+                                    <mat-icon>search</mat-icon>
+                                </button>
+                                <input matInput placeholder="Αγιος Ιωάννης Χρυσόστομος.." [(ngModel)]="search">
+                                <!-- (click)="search? reset() : add()" -->
+                                <button *ngIf="search" color="primary" matSuffix mat-icon-button aria-label="Clear" (click)="search=''">
+                                    <mat-icon matSuffix>{{search? 'close': ''}}</mat-icon>
+                                </button>
+                                <mat-hint>πληκτρολογίστε μια λέξη</mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

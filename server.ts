@@ -21,18 +21,20 @@ import 'reflect-metadata';
 
 import { enableProdMode } from '@angular/core';
 
-import * as express from 'express';
+import express from 'express'
 import { join } from 'path';
 
-import * as compression from 'compression';
-
-
+import compression from 'compression';
+// import serve from '../isense/src/app'
+// import { DB } from '../isense/src/db';
+// var enforce = require('express-sslify')
 
 // Faster server renders w/ Prod mode (dev mode never needed)
-enableProdMode();
+enableProdMode()
 
-const app = express();
-app.use(compression());
+const app: express.Application = express()
+
+app.use(compression())
 
 // tslint:disable-next-line: radix
 const PORT = parseInt(process.env.PORT) || 4200;
@@ -48,6 +50,17 @@ import { ngExpressEngine } from '@nguniversal/express-engine';
 import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 
 
+
+/**
+ * Get port from environment and store in Express.
+ */
+var port = normalizePort(PORT.toString())
+// ip = IP.toString();
+// app.set('port', port);
+// app.set('ip', ip);
+
+
+
 app.engine('html', ngExpressEngine({
   bootstrap: AppServerModuleNgFactory,
   providers: [
@@ -60,20 +73,20 @@ app.set('views', join(DIST_FOLDER, 'browser'));
 
 console.log(`DIST_FOLDER: ${DIST_FOLDER}`);
 // set Headers and methods
-app.use( (req, res, next) => {
-  /* res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, X-Auth-Token');
-  res.header('Access-Control-Allow-Methods', 'OPTIONS, GET, PATCH, POST, PUT, DELETE'); */
-  if ('OPTIONS' === req.method) {
-      res.sendStatus(200);
-  } else {
+// app.use((req, res, next) => {
+/* res.header('Access-Control-Allow-Origin', '*');
+res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, X-Auth-Token');
+res.header('Access-Control-Allow-Methods', 'OPTIONS, GET, PATCH, POST, PUT, DELETE'); */
+/* if ('OPTIONS' === req.method) {
+  res.sendStatus(200);
+} else {
 
-      console.log(`${req.ip} ${req.method} ${req.url}`);
-      next();
-  }
+  console.log(`${req.ip} ${req.method} ${req.url}`);
+  next();
+}
 
 });
-
+*/
 // app.use(express.static(join(DIST_FOLDER, 'browser/assets'), { index: false }));
 
 // TODO: implement data requests securely
@@ -92,6 +105,80 @@ app.get('*', (req, res) => {
   console.timeEnd(`GET: ${req.originalUrl}`);
 });
 
-app.listen(PORT, () => {
-  console.log(`Angular NodeJs Server listening on http://localhost:${PORT}`);
-});
+
+/**
+ * Create HTTPS server.
+ */
+// for https
+// app.use(enforce.HTTPS({ trustProtoHeader: true }))
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+app.listen(port, onListen);
+app.on('error', onError);
+app.on('listening', onListening);
+
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+async function onListening() {
+
+  let addr = { port: 0 }// server.address();
+  let bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + (addr ? addr.port : null);
+  try {
+    // await DB.connect();
+  } catch (err) {
+    console.error(`Unable to connect to Mongo!`, err);
+  }
+  // debug('Listening on ' + bind);
+}
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+function normalizePort(val: string) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) { return val; }	// named pipe
+  if (port >= 0) { return port; }	// port number
+  return false;
+}
+
+function onListen() {
+
+  console.log(`Angular NodeJs Server listening on ${''}:${PORT}`)
+  // console.log('Server Running on %s:%s', ip, port)
+  return ''
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+function onError(error: any) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
