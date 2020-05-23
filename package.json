@@ -19,7 +19,6 @@
   },
   "private": true,
   "dependencies": {
-    
     "@ng-bootstrap/ng-bootstrap": "^5.1.1",
     "angular-in-memory-web-api": "github:brandonroberts/in-memory-web-api-bazel#50a34d8",
     "bootstrap": "^4.4.1",

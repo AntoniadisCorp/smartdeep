@@ -25,7 +25,7 @@ import {
   IDropDownMenu,
   ItoggleListMenu
 } from 'src/app/interfaces';
-import { MatButtonToggleGroup, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+
 import { Router, ActivatedRoute } from '@angular/router';
 import { customDataSource, SmartEngineService, Logger } from 'src/app/services';
 import { Book } from 'src/app/classes';
@@ -40,6 +40,7 @@ import {
   catchError
 } from 'rxjs/operators';
 import { openMatDialog } from 'src/app/routines';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 
 
 

@@ -1,7 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, Inject, ChangeDetectorRef, AfterViewInit, SimpleChanges, OnChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SmartEngineService, Logger } from 'src/app/services';
-import { MatDialog, MatPaginator, MatSort, MatDialogRef, MAT_DIALOG_DATA, MatAutocompleteSelectedEvent, MatOption, MatChipInputEvent, MatAutocomplete } from '@angular/material';
 import { middlebar, config } from 'src/app/variables';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Item, OptionEntry, BookCase, LibrarySpace, Category, BodyObj, ObjectId, BookShelf } from 'src/app/interfaces';
@@ -13,6 +12,12 @@ import { DeleteitemListDialogConfirm } from 'src/app/views/smartengine/component
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ObjectID } from 'bson';
+import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatOption } from '@angular/material/core';
 
 @Component({
     selector: 'app-library-libdistribute',

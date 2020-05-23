@@ -15,7 +15,7 @@ import { SmartEngineService, Logger, InventoryService } from 'src/app/services';
 import { requiredFileType, _AlphaBeticSort } from 'src/app/routines';
 import { ImageSnippet, Book } from 'src/app/classes';
 import { Category, OptionEntry, Library } from 'src/app/interfaces';
-import { MatAutocompleteSelectedEvent } from '@angular/material';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { ActivatedRoute, Router } from '@angular/router';
 
 export interface StateGroup {
