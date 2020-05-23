@@ -33,7 +33,6 @@
     "mongodb": "^3.4.0",
     "ng2-charts": "^2.3.0",
     "ngx-bootstrap": "^5.1.2",
-    "ngx-loading-bar": "0.0.9",
     "ngx-perfect-scrollbar": "^8.0.0",
     "ngx-socket-io": "^3.0.1",
     "rxjs": "~6.5.3",
