@@ -1,7 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { Item, OptionEntry, BodyObj, LibrarySpace, BookShelf } from 'src/app/interfaces';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatPaginator, MatSort, MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SmartEngineService, Logger } from 'src/app/services';
 import { catchError, map, switchMap, debounceTime, distinctUntilChanged, tap, startWith, finalize } from 'rxjs/operators';
@@ -11,6 +10,11 @@ import { openMatDialog, globalSort, uploadProgress, toResponseBody, EmptyObj, ad
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import { DeleteitemListDialogConfirm } from 'src/app/views/smartengine/components';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
 
 @Component({
     selector: 'app-library-libraryspace',

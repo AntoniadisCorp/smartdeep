@@ -9,11 +9,16 @@ import { SmartEngineService, Logger, SvgIconService, RandomNumberService } from 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Book, ImageSnippet } from '../../../../classes';
 import { requiredFileType, toFormData, replaceAll, toResponseBody, uploadProgress, convertJsontoFormData, globalSort, _AlphaBeticSort, openMatDialog, _filter, escapeRegex } from 'src/app/routines';
-import { MatTooltip, MatTableDataSource, MatPaginator, MatSort, MatCheckboxChange } from '@angular/material';
+
 import { DashboardComponent } from '../../../dashboard/dashboard.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
     selector: 'app-library-addbook-dialog',

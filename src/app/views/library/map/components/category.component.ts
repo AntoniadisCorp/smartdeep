@@ -1,5 +1,4 @@
 import { Component, OnInit, ElementRef, ViewChild, Inject, ChangeDetectionStrategy, Injectable, AfterViewInit } from '@angular/core';
-import { MatPaginator, MatSort, MatDialog, MatAutocomplete, MatDialogRef, MAT_DIALOG_DATA, MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Item, Category, OptionEntry, BodyObj, Iconfonts } from 'src/app/interfaces';
 import { SmartEngineService, Logger } from 'src/app/services';
@@ -9,9 +8,14 @@ import { Observable, of, merge, fromEvent, BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged, catchError, map, tap, debounceTime, startWith, switchMap } from 'rxjs/operators';
 import { openMatDialog, addObjAttr, saveByHttpwithProgress, toResponseBody, uploadProgress } from 'src/app/routines';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { FlatTreeControl } from '@angular/cdk/tree';
+import { FlatTreeControl } from '@angular/cdk/tree/control/flat-tree-control';
 import { _fonts } from 'src/app/datafiles';
 import { DeleteitemListDialogConfirm } from 'src/app/views/smartengine/components';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
+import { MatAutocomplete } from '@angular/material/autocomplete';
 
 
 @Component({
