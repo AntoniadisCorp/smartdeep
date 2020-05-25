@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { RandomNumberService, AuthService } from 'src/app/services';
-import { SocketService } from 'src/app/services/socket.service';
+import { RandomNumberService, AuthService } from '../../services';
+import { SocketService } from '../../services/socket.service';
 import { tap } from 'rxjs/operators';
 
 @Component({

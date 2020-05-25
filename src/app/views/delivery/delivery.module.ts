@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 
 import { DeliveryRoutingModule, routedComponents } from './delivery.routing';
 import { HttpClientModule } from '@angular/common/http';
-import { MaterialsModule } from 'src/app/modules';
+import { MaterialsModule } from '../../modules';
 import { CommonModule } from '@angular/common';
-import { APP_ORDER_COMPONENT } from 'src/app/components/app-components';
+import { APP_ORDER_COMPONENT } from '../../components/app-components';
 
 
 

@@ -18,17 +18,17 @@ import {
   ITEM_DATA,
   middlebar,
   config
-} from 'src/app/variables';
+} from '../../../variables';
 import {
   InventoryTableColumns,
   Item,
   IDropDownMenu,
   ItoggleListMenu
-} from 'src/app/interfaces';
+} from '../../../interfaces';
 
 import { Router, ActivatedRoute } from '@angular/router';
-import { customDataSource, SmartEngineService, Logger } from 'src/app/services';
-import { Book } from 'src/app/classes';
+import { customDataSource, SmartEngineService, Logger } from '../../../services';
+import { Book } from '../../../classes';
 import { fromEvent, pipe, merge, of } from 'rxjs';
 import {
   distinctUntilChanged,
@@ -39,7 +39,7 @@ import {
   map,
   catchError
 } from 'rxjs/operators';
-import { openMatDialog } from 'src/app/routines';
+import { openMatDialog } from '../../../routines';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 
 
@@ -110,6 +110,8 @@ export class ItemListComponent implements OnInit, AfterViewInit {
   @ViewChild('search', { static: false }) search: ElementRef;
 
   book: Book;
+
+  progress: number = 0
 
   // tslint:disable-next-line: ban-types
   toggleListValueByid: number;
@@ -312,12 +314,12 @@ export class ItemListComponent implements OnInit, AfterViewInit {
     else this.tableAction = false
   }
 
-  editRow(Row: Book): void {
+  editRow(Row: { _id: string, SKU: number }): void {
     this.tableAction = true
     this.router.navigate(['/library/book/add', Row._id])
   }
 
-  deleteRow(Row: Book): void {
+  deleteRow(Row: { _id: string, SKU: number }): void {
 
     this.tableAction = true
     // console.log('Row.SKU: ', Row.SKU)
@@ -343,7 +345,7 @@ export class ItemListComponent implements OnInit, AfterViewInit {
         console.log('The dialog was closed', result);
 
         if (result)
-          this.httpService.deleteOneTask(this.apiUrl.deleteUrl('book', Row._id)).subscribe((res) => { console.log('deleteOneTask: ', res) })
+          this.httpService.deleteOneTask(this.apiUrl.deleteUrl('book', Row._id)).subscribe((res) => { console.log('deleteOneTask: ', res) });
       });
   }
 

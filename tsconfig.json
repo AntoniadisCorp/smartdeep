@@ -1,6 +1,11 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "*": [
+        "types/*"
+      ]
+    },
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
@@ -14,7 +19,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "importHelpers": true,
-    "target": "ES2015",
+    "target": "es2015",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -22,9 +27,11 @@
       "es2018",
       "dom"
     ],
-   /*  "angularCompilerOptions": {
-      "fullTemplateTypeCheck": true,
-      "strictInjectionParameters": true
-    } */
-  }
+  },
+  "angularCompilerOptions": {
+    /*    "enableIvy": false, */
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true,
+    /* "strictTemplates": true */
+  },
 }

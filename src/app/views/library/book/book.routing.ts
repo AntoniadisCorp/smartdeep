@@ -2,7 +2,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import { AddbookComponent, EditbookComponent, AddBookDialogComponent, AddBookCaseDialogComponent, AddCategoryDialogComponent } from './components';
-import { SmartResolveService } from 'src/app/services';
+import { SmartResolveService } from '../../../services';
 import { BookComponent } from './book.component';
 import { BookListComponent } from './components';
 

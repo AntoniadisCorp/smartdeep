@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { MaterialsModule, NgBootstrapModule, ItemListModule } from 'src/app/modules';
+import { MaterialsModule, NgBootstrapModule, ItemListModule, UploadFileModule } from '../../../modules';
 import { LibMapRoutingModule, routedComponents } from './libmap.routing'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UploadFileModule } from 'src/app/modules/uploadfile.module';
 import { ScrollingModule } from '@angular/cdk/scrolling'
 
 

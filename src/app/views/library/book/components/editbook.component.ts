@@ -10,11 +10,11 @@ import {
   distinctUntilChanged
 } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { middlebar, config } from 'src/app/variables';
-import { SmartEngineService, Logger, InventoryService } from 'src/app/services';
-import { requiredFileType, _AlphaBeticSort } from 'src/app/routines';
-import { ImageSnippet, Book } from 'src/app/classes';
-import { Category, OptionEntry, Library } from 'src/app/interfaces';
+import { middlebar, config } from '../../../../variables';
+import { SmartEngineService, Logger, InventoryService } from '../../../../services';
+import { requiredFileType, _AlphaBeticSort } from '../../../../routines';
+import { ImageSnippet, Book } from '../../../../classes';
+import { Category, OptionEntry, Library } from '../../../../interfaces';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { ActivatedRoute, Router } from '@angular/router';
 

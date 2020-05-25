@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { InventoryService, SvgIconService } from 'src/app/services';
+import { InventoryService, SvgIconService } from '../../../services';
 import { Router, ActivatedRoute, ParamMap, RouterOutlet } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { LIBRARY_LIBALLOC_TABS } from 'src/app/variables';
-import { InventoryTabs } from 'src/app/interfaces';
+import { LIBRARY_LIBALLOC_TABS } from '../../../variables';
+import { InventoryTabs } from '../../../interfaces';
 import { Observable } from 'rxjs';
-import { slideInAnimation } from 'src/app/animations';
+import { slideInAnimation } from '../../../animations';
 
 @Component({
     selector: 'app-library-liballoc',

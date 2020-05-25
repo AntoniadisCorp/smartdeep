@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { InventoryTabs } from 'src/app/interfaces';
+import { InventoryTabs } from '../../../interfaces';
 import { Observable } from 'rxjs';
-import { InventoryService, SvgIconService } from 'src/app/services';
+import { InventoryService, SvgIconService } from '../../../services';
 import { Router, ActivatedRoute, ParamMap, RouterOutlet } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { LIBRARY_BOOK_TABS } from 'src/app/variables';
-import { slideInAnimation } from 'src/app/animations';
+import { LIBRARY_BOOK_TABS } from '../../../variables';
+import { slideInAnimation } from '../../../animations';
 
 @Component({
     selector: 'app-library-book',

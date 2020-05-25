@@ -1,5 +1,5 @@
 import { NgbDatepickerModule, NgbTypeaheadModule, NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { DropdownModule } from './dropdown.module';
 import { FileUploadComponent } from '../components/app-components';
 import { MaterialsModule } from '.';

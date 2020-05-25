@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ItoggleListMenu } from 'src/app/interfaces';
+import { ItoggleListMenu } from '../../../interfaces';
 import { Router } from '@angular/router';
 
 @Component({

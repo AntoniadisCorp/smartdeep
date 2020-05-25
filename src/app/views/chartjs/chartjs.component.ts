@@ -83,7 +83,7 @@ export class ChartJSComponent {
   public polarAreaChartData: number[] = [300, 500, 100, 40, 120];
   public polarAreaLegend = true;
 
-  public polarAreaChartType = 'polarArea';
+  public polarAreaChartType: string = 'polarArea';
 
   // events
   public chartClicked(e: any): void {

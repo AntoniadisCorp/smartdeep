@@ -1,10 +1,10 @@
 import { Component, OnInit, ElementRef, AfterViewInit, HostListener, NgZone } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { requiredFileType } from 'src/app/routines';
-import { ImageSnippet } from 'src/app/classes';
-import { SmartEngineService, AuthService } from 'src/app/services';
-import { config, middlebar } from 'src/app/variables';
-import { OptionEntry } from 'src/app/interfaces';
+import { requiredFileType } from '../../../../routines';
+import { ImageSnippet } from '../../../../classes';
+import { SmartEngineService, AuthService } from '../../../../services';
+import { config, middlebar } from '../../../../variables';
+import { OptionEntry } from '../../../../interfaces';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -19,6 +19,7 @@ export class SettingsComponent implements OnInit, AfterViewInit {
     notes: any[]
     generalsAvatar: any[]
 
+    progress: number = 0
     avatar: FormControl
 
     private nativeElement: HTMLDocument;

@@ -1,8 +1,8 @@
 import { Component, AfterViewInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
-import { AuthService, SmartEngineService, SvgIconService, RandomNumberService } from 'src/app/services';
+import { AuthService, SmartEngineService, SvgIconService, RandomNumberService } from '../../services';
 import { Router } from '@angular/router';
-import { config, middlebar, DEFAULT_SESSION } from 'src/app/variables';
-import { OptionEntry, Library } from 'src/app/interfaces';
+import { config, middlebar, DEFAULT_SESSION } from '../../variables';
+import { OptionEntry, Library } from '../../interfaces';
 import { map } from 'rxjs/operators';
 
 @Component({

@@ -1,14 +1,14 @@
 import { Component, Inject, OnInit, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { NgbTypeaheadConfig, NgbProgressbarConfig, NgbTypeahead, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
-import { ITEM_DATA, MENUBTN_ORDER_PROCESS, ACTIONBTN_ORDER_PROCESS, config, middlebar, DEFAULT_SESSION, DEFAULT_IMAGE } from 'src/app/variables';
-import { InventoryTableColumns, Item, IDropDownMenu, Category, Library, BodyObj, OptionEntry, StateGroup, BookCase } from 'src/app/interfaces';
+import { ITEM_DATA, MENUBTN_ORDER_PROCESS, ACTIONBTN_ORDER_PROCESS, config, middlebar, DEFAULT_SESSION, DEFAULT_IMAGE } from '../../../../variables';
+import { InventoryTableColumns, Item, IDropDownMenu, Category, Library, BodyObj, OptionEntry, StateGroup, BookCase } from '../../../../interfaces';
 import { Observable, of, observable, fromEvent, merge, OperatorFunction, Subject } from 'rxjs';
 import { debounceTime, map, distinctUntilChanged, startWith, tap, switchMap, finalize, catchError, filter } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { SmartEngineService, Logger, SvgIconService, RandomNumberService } from 'src/app/services';
+import { SmartEngineService, Logger, SvgIconService, RandomNumberService } from '../../../../services';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Book, ImageSnippet } from '../../../../classes';
-import { requiredFileType, toFormData, replaceAll, toResponseBody, uploadProgress, convertJsontoFormData, globalSort, _AlphaBeticSort, openMatDialog, _filter, escapeRegex } from 'src/app/routines';
+import { requiredFileType, toFormData, replaceAll, toResponseBody, uploadProgress, convertJsontoFormData, globalSort, _AlphaBeticSort, openMatDialog, _filter, escapeRegex } from '../../../../routines';
 
 import { DashboardComponent } from '../../../dashboard/dashboard.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -87,12 +87,13 @@ export class AddBookCaseDialogComponent implements AfterViewInit {
     @ViewChild(MatSort, { static: false }) sort: MatSort;
 
 
-    protected isLoadingResults: boolean = true
+    isLoadingResults: boolean = true
+    resultsLength: number
     protected isRateLimitReached: boolean = false;
     protected isDataLength: number;
 
-    protected dataSource = new MatTableDataSource<PeriodicElement>([]);
-    protected selection = new SelectionModel<PeriodicElement>(true, []);
+    dataSource = new MatTableDataSource<PeriodicElement>([]);
+    selection = new SelectionModel<PeriodicElement>(true, []);
     private tableAction: boolean = false;
     private apiUrl: { searchUrl: string, deleteUrl?: (col: string, id: string | number) => string, deleteManyUrl: string };
 
@@ -100,8 +101,8 @@ export class AddBookCaseDialogComponent implements AfterViewInit {
 
 
     protected extraFilters: Array<{ [x: string]: any }>
-    protected bookshelfNo: FormControl
-    protected booksPos: number[]
+    bookshelfNo: FormControl
+    booksPos: number[]
 
     // On Edit Window set editable Row Values
     private RowData: any = this.data.body
@@ -303,7 +304,7 @@ export class AddBookCaseDialogComponent implements AfterViewInit {
     }
 
     /* ------------------------ Table Row Acts ---------------------------- */
-    protected onRowClicked(Row: PeriodicElement) {
+    onRowClicked(Row: PeriodicElement) {
 
 
         if (!this.tableAction)
@@ -313,7 +314,7 @@ export class AddBookCaseDialogComponent implements AfterViewInit {
     }
 
     /* ------------------------ On Clear Search Table ---------------------------- */
-    protected clearSearch() {
+    clearSearch() {
         this.search.nativeElement.value = '';
         this.masterToggle()
         this.loadPage(this.isEditing() ? this.RowData.bookcaseId : '')
@@ -354,18 +355,18 @@ export class AddBookCaseDialogComponent implements AfterViewInit {
     }
 
     /** Selects all rows if they are not all selected; otherwise clear selection. */
-    protected masterToggle() {
+    masterToggle() {
         this.selection.hasValue() ?
             this.selection.clear() :
             null;
     }
 
-    protected nodeToggle(event: MatCheckboxChange, row: PeriodicElement) {
+    nodeToggle(event: MatCheckboxChange, row: PeriodicElement) {
 
         this.switchCheckbox(event.checked, row)
     }
     /** The label for the checkbox on the passed row */
-    protected checkboxLabel(row?: PeriodicElement): string {
+    checkboxLabel(row?: PeriodicElement): string {
         if (!row) {
             return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
         }
@@ -820,7 +821,7 @@ export class AddbookComponent implements OnInit, AfterViewInit {
         this.logger.log(`Το βιβλίο μπορεί να δημιουργηθεί, επέστρεψε σφάλμα με κωδικό ${err.error.code}! ${err.error.data.message} `, 4000)
     }
 
-    protected resetBookForm(): void {
+    resetBookForm(): void {
 
         this.entranceForm.reset({
             libraryName: this.libraryName.value,
@@ -833,13 +834,13 @@ export class AddbookComponent implements OnInit, AfterViewInit {
         this.clearAvatar()
     }
 
-    protected clearAvatar(): void {
+    clearAvatar(): void {
 
         this.avatarFile = new ImageSnippet()
         this.books.get('avatar').patchValue(null)
     }
 
-    private isAvatar(): boolean {
+    isAvatar(): boolean {
         return this.avatarFile && this.avatarFile.src !== '' && this.avatarFile.src !== DEFAULT_IMAGE
     }
 
@@ -869,7 +870,7 @@ export class AddbookComponent implements OnInit, AfterViewInit {
         //    
     }
 
-    protected formatter = (x: { name: string }) => x.name;
+    formatter = (x: { name: string }) => x.name;
     private formater2 = (s: { _id: string, name: string }) => ({ _id: s._id, name: s.name })
 
     private categoryObserv() {
