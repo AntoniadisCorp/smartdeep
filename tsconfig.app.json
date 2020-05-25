@@ -9,13 +9,11 @@
     "src/polyfills.ts"
   ],
   "include": [
-    "src/**/*.ts"
+    "src/**/*.d.ts"
   ],
   "exclude": [
     "src/test.ts",
     "**/**/*spec.ts"
   ],
-  "angularCompilerOptions": {
-    "enableIvy": false
-  }
+  
 }

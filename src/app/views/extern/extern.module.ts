@@ -3,11 +3,11 @@ import { NgModule } from '@angular/core';
 
 import { PagesRoutingModule,
 routedComponents } from './extern.routing';
-import { AuthModule } from 'src/app/auth/auth.module';
+import { AuthModule } from '../../auth/auth.module';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MaterialsModule } from 'src/app/modules';
+import { MaterialsModule } from '../../modules';
 
 @NgModule({
   imports: [ PagesRoutingModule,

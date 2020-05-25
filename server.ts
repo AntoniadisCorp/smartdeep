@@ -19,105 +19,148 @@
 import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
 
-import { enableProdMode } from '@angular/core';
+// import { enableProdMode } from '@angular/core';
 
 import express from 'express'
 import { join } from 'path';
 
 import compression from 'compression';
-// import serve from '../isense/src/app'
-// import { DB } from '../isense/src/db';
-// var enforce = require('express-sslify')
 
-// Faster server renders w/ Prod mode (dev mode never needed)
-enableProdMode()
-
-const app: express.Application = express()
-
-app.use(compression())
-
-// tslint:disable-next-line: radix
-const PORT = parseInt(process.env.PORT) || 4200;
-const DIST_FOLDER = join(process.cwd(), 'dist');
-
-
-// * NOTE :: leave this as require() since this file is built Dynamically from webpack
-const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main');
-
+import { APP_BASE_HREF } from '@angular/common';
 // Express Engine
 import { ngExpressEngine } from '@nguniversal/express-engine';
 // Import module map for lazy loading
 import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
+import { existsSync } from 'fs';
+import { AppServerModule } from './src/main.server';
+
+// import serve from '../isense/src/app'
+// import { DB } from '../isense/src/db';
+// var enforce = require('express-sslify')
+
+export function app() {
+  // Faster server renders w/ Prod mode (dev mode never needed)
+  // enableProdMode()
+
+  const app: express.Application = express()
+
+  app.use(compression())
+
+
+  const DIST_FOLDER = join(process.cwd(), 'dist/browser');
+  const indexHtml = existsSync(join(DIST_FOLDER, 'index.orginal.html')) ? 'index.orginal.html' : 'index';
+
+
+  // * NOTE :: leave this as require() since this file is built Dynamically from webpack AppServerModuleNgFactory
+  // const { AppServerModule, LAZY_MODULE_MAP } = require('./dist/server/main');
 
 
 
-/**
- * Get port from environment and store in Express.
- */
-var port = normalizePort(PORT.toString())
-// ip = IP.toString();
-// app.set('port', port);
-// app.set('ip', ip);
+  // ip = IP.toString();
+  // app.set('port', port);
+  // app.set('ip', ip);
 
 
 
-app.engine('html', ngExpressEngine({
-  bootstrap: AppServerModuleNgFactory,
-  providers: [
-    provideModuleMap(LAZY_MODULE_MAP)
-  ]
-}));
+  app.engine('html', ngExpressEngine({
+    bootstrap: AppServerModule,
+    /* providers: [
+      provideModuleMap(LAZY_MODULE_MAP)
+    ] */
+  }));
 
-app.set('view engine', 'html');
-app.set('views', join(DIST_FOLDER, 'browser'));
+  app.set('view engine', 'html');
+  app.set('views', DIST_FOLDER);
 
-console.log(`DIST_FOLDER: ${DIST_FOLDER}`);
-// set Headers and methods
-// app.use((req, res, next) => {
-/* res.header('Access-Control-Allow-Origin', '*');
-res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, X-Auth-Token');
-res.header('Access-Control-Allow-Methods', 'OPTIONS, GET, PATCH, POST, PUT, DELETE'); */
-/* if ('OPTIONS' === req.method) {
-  res.sendStatus(200);
-} else {
+  console.log(`DIST_FOLDER: ${DIST_FOLDER}`);
+  // set Headers and methods
+  // app.use((req, res, next) => {
+  /* res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, X-Auth-Token');
+  res.header('Access-Control-Allow-Methods', 'OPTIONS, GET, PATCH, POST, PUT, DELETE'); */
+  /* if ('OPTIONS' === req.method) {
+    res.sendStatus(200);
+  } else {
+  
+    console.log(`${req.ip} ${req.method} ${req.url}`);
+    next();
+  }
+  
+  });
+  */
+  // app.use(express.static(join(DIST_FOLDER, 'browser/assets'), { index: false }));
 
-  console.log(`${req.ip} ${req.method} ${req.url}`);
-  next();
+  // TODO: implement data requests securely
+  app.get('/api/**', (req, res) => {
+    res.status(404).send('data requests are not supported');
+  });
+
+  // Server static files from /browser
+  app.get('*.*', express.static(DIST_FOLDER, { maxAge: '1y' }));
+
+  // All regular routes use the Universal engine
+  app.get('*', (req, res) => {
+    // tslint:disable-next-line: no-console
+    console.time(`GET: ${req.originalUrl}`);
+    // res.render('index', { req });
+
+    res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
+    // tslint:disable-next-line: no-console
+    console.timeEnd(`GET: ${req.originalUrl}`);
+  });
+
+  return app;
 }
 
-});
-*/
-// app.use(express.static(join(DIST_FOLDER, 'browser/assets'), { index: false }));
 
-// TODO: implement data requests securely
-app.get('/api/*', (req, res) => {
-  res.status(404).send('data requests are not supported');
-});
+function run() {
+  // tslint:disable-next-line: radix
+  const PORT = parseInt(process.env.PORT) || 4200;
+  /**
+ * Get port from environment and store in Express.
+ */
+  var port = normalizePort(PORT.toString())
 
-// Server static files from /browser
-app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), { maxAge: '1y' }));
-
-app.get('*', (req, res) => {
-  // tslint:disable-next-line: no-console
-  console.time(`GET: ${req.originalUrl}`);
-  res.render('index', { req });
-  // tslint:disable-next-line: no-console
-  console.timeEnd(`GET: ${req.originalUrl}`);
-});
-
-
-/**
+  /**
  * Create HTTPS server.
  */
-// for https
-// app.use(enforce.HTTPS({ trustProtoHeader: true }))
+  // for https
+  // app.use(enforce.HTTPS({ trustProtoHeader: true }))
 
-/**
- * Listen on provided port, on all network interfaces.
- */
-app.listen(port, onListen);
-app.on('error', onError);
-app.on('listening', onListening);
+  /**
+   * Listen on provided port, on all network interfaces.
+   */
+
+
+  // Start up the Node server
+  const server = app();
+  server.listen(port, () => { console.log(`Angular NodeJs Server listening on ${''}:${PORT}`) });
+  server.on('error', (error: any) => {
+    if (error.syscall !== 'listen') {
+      throw error;
+    }
+
+    var bind = typeof port === 'string'
+      ? 'Pipe ' + port
+      : 'Port ' + port;
+
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+      case 'EACCES':
+        console.error(bind + ' requires elevated privileges');
+        process.exit(1);
+        break;
+      case 'EADDRINUSE':
+        console.error(bind + ' is already in use');
+        process.exit(1);
+        break;
+      default:
+        throw error;
+    }
+  });
+  server.on('listening', onListening);
+}
+
 
 
 /**
@@ -149,36 +192,19 @@ function normalizePort(val: string) {
   return false;
 }
 
-function onListen() {
-
-  console.log(`Angular NodeJs Server listening on ${''}:${PORT}`)
-  // console.log('Server Running on %s:%s', ip, port)
-  return ''
-}
-
 /**
  * Event listener for HTTP server "error" event.
  */
-function onError(error: any) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
 
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
+// Webpack will replace 'require' with '__webpack_require__'
+// '__non_webpack_require__' is a proxy to Node 'require'
+// The below code is to ensure that the server is run only when not requiring the bundle.
+declare const __non_webpack_require__: NodeRequire;
+const mainModule = __non_webpack_require__.main;
+const moduleFilename = mainModule && mainModule.filename || '';
+if (moduleFilename === __filename || moduleFilename.includes('iisnode')) {
+  run();
 }
+
+export * from './src/main.server';

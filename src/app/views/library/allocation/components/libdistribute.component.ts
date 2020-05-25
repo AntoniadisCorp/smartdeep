@@ -1,18 +1,23 @@
 import { Component, OnInit, ElementRef, ViewChild, Inject, ChangeDetectorRef, AfterViewInit, SimpleChanges, OnChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SmartEngineService, Logger } from 'src/app/services';
-import { MatDialog, MatPaginator, MatSort, MatDialogRef, MAT_DIALOG_DATA, MatAutocompleteSelectedEvent, MatOption, MatChipInputEvent, MatAutocomplete } from '@angular/material';
-import { middlebar, config } from 'src/app/variables';
+import { SmartEngineService, Logger } from '../../../../services';
+import { middlebar, config } from '../../../../variables';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Item, OptionEntry, BookCase, LibrarySpace, Category, BodyObj, ObjectId, BookShelf } from 'src/app/interfaces';
+import { Item, OptionEntry, BookCase, LibrarySpace, Category, BodyObj, ObjectId, BookShelf } from '../../../../interfaces';
 import { debounceTime, distinctUntilChanged, tap, switchMap, map, catchError, startWith, finalize } from 'rxjs/operators';
 import { fromEvent, of, merge, Observable } from 'rxjs';
-import { openMatDialog, _filter, saveByHttpwithProgress, addObjAttr, uid, MongoId, uploadProgress, toResponseBody } from 'src/app/routines';
+import { openMatDialog, _filter, saveByHttpwithProgress, addObjAttr, uid, MongoId, uploadProgress, toResponseBody } from '../../../../routines';
 import { LibrarySpaceDialogComponent } from '../../map/components';
-import { DeleteitemListDialogConfirm } from 'src/app/views/smartengine/components';
+import { DeleteitemListDialogConfirm } from '../../../../views/smartengine/components';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ObjectID } from 'bson';
+import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatOption } from '@angular/material/core';
 
 @Component({
     selector: 'app-library-libdistribute',
@@ -27,18 +32,18 @@ export class LibDistributeComponent implements OnInit {
     @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
     @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-    protected displayedColumns: string[] = ['select', '_id', 'skuid',
+    displayedColumns: string[] = ['select', '_id', 'skuid',
         'name', 'whatnot', 'type', 'bookshelf', 'categoryCount',
         'bookCount', 'desc', 'disabled', 'date_added', 'date_modified',
         'operations'];
 
-    protected selection = new SelectionModel<Item>(true, []);
+    selection = new SelectionModel<Item>(true, []);
 
-    protected resultsLength: any;
-    protected progressActionDataBar: number;
-    protected isLoadingResults: boolean = true
+    resultsLength: any;
+    progressActionDataBar: number;
+    isLoadingResults: boolean = true
     protected isRateLimitReached: boolean = false;
-    protected data: any;
+    data: any;
     protected extraFilters: Array<{ [x: string]: any }>
 
     private tableAction: boolean = false
@@ -163,7 +168,7 @@ export class LibDistributeComponent implements OnInit {
     }
 
     /* ------------------------ On Clear Search Table ---------------------------- */
-    private clearSearch() {
+    clearSearch() {
         this.search.nativeElement.value = '';
         this.loadPage()
             .pipe(
@@ -213,7 +218,7 @@ export class LibDistributeComponent implements OnInit {
     }
 
     /* ------------------------ Table Row Acts ---------------------------- */
-    protected onRowClicked(Row: { _id: string }) {
+    onRowClicked(Row: { _id: string }) {
         console.log('Row clicked: ', Row)
 
         if (!this.tableAction)
@@ -221,11 +226,11 @@ export class LibDistributeComponent implements OnInit {
         else this.tableAction = false
     }
 
-    protected addRow(): void {
+    addRow(): void {
         this.addBookDistributeModal()
     }
 
-    protected editRow(Row: BookCase): void {
+    editRow(Row: BookCase): void {
 
         this.tableAction = true
 
@@ -248,7 +253,7 @@ export class LibDistributeComponent implements OnInit {
         this.addBookDistributeModal(RowData)
     }
 
-    protected deleteRow(Row: BookCase): void {
+    deleteRow(Row: { _id: string, name: string, whatnot: string, bookshelf: string }): void {
 
         this.tableAction = true
 
@@ -280,7 +285,7 @@ export class LibDistributeComponent implements OnInit {
     // ------------------------ On Table Selections ----------------------------
     // Toogle selectors
     /** Whether the number of selected elements matches the total number of rows. */
-    protected isAllSelected() {
+    isAllSelected() {
         const numSelected = this.selection.selected.length;
         const numRows = 0 /* this.dataSource.data.length */;
         return numSelected === numRows;
@@ -288,7 +293,7 @@ export class LibDistributeComponent implements OnInit {
 
     // Toogle selectors
     /** Selects all rows if they are not all selected; otherwise clear selection. */
-    protected masterToggle() {
+    masterToggle() {
 
         this.isAllSelected() ? this.selection.clear() : '';
         /* this.dataSource.data.forEach(row => this.selection.select(row)) */
@@ -296,7 +301,7 @@ export class LibDistributeComponent implements OnInit {
 
     // Toogle selectors Labels
     /** The label for the checkbox on the passed row */
-    protected checkboxLabel(row?: Item): string {
+    checkboxLabel(row?: Item): string {
         if (!row) {
             return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
         }
@@ -346,8 +351,8 @@ export class BookCaseDialogComponent {
     private cindex: number
     private stateGroupSelected: boolean
 
-    protected categories: { _id: string | ObjectID, name: string }[] = [];
-    protected bookshelves: BookShelf[] = []
+    categories: { _id: string | ObjectID, name: string }[] = [];
+    bookshelves: BookShelf[] = []
 
 
     fontSize = '18px'
@@ -357,7 +362,7 @@ export class BookCaseDialogComponent {
     addOnBlur = true;
     separatorKeysCodes: number[] = [ENTER, COMMA];
 
-    protected progressAction: ProgressLoader
+    progressAction: ProgressLoader
 
     constructor(
         public dialogRef: MatDialogRef<BookCaseDialogComponent>,
@@ -588,7 +593,7 @@ export class BookCaseDialogComponent {
             );
     }
 
-    protected libSpaceSelect(option: MatOption, bs?: string): void {
+    libSpaceSelect(option: MatOption, bs?: string): void {
 
         this.bookshelves = [], this.type.setValue(null)
 
@@ -603,11 +608,11 @@ export class BookCaseDialogComponent {
         this.stateGroupSelected = true
     }
 
-    protected getBookShelvesIndex(s: string): number {
+    getBookShelvesIndex(s: string): number {
         return this.bookshelves.findIndex(e => e.name === s)
     }
 
-    protected categoryAdd(event: MatChipInputEvent): void {
+    categoryAdd(event: MatChipInputEvent): void {
         // Add fruit only when MatAutocomplete is not open
         // To make sure this does not conflict with OptionSelected Event
         if (!this.matCategoryAutocomplete.isOpen) {
@@ -632,7 +637,7 @@ export class BookCaseDialogComponent {
     }
 
 
-    protected categoryRemove(shelf: { _id: string, name: string }) {
+    categoryRemove(shelf: { _id: string, name: string }) {
         this.removeElement(this.categories, shelf)
         // push to AllShelves
         // this.allShelves.push(shelf)
@@ -641,7 +646,7 @@ export class BookCaseDialogComponent {
 
 
 
-    protected categoryOptionSelected(event: MatAutocompleteSelectedEvent): void {
+    categoryOptionSelected(event: MatAutocompleteSelectedEvent): void {
 
         const value = event.option.viewValue
 

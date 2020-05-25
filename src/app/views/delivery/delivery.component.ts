@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { SmartEngineService } from 'src/app/services';
-import { getPlaceSearchUrl, PlaceParameters } from 'src/app/api';
-import { DlvryFilters, MainPageTabIndex } from 'src/app/interfaces';
+import { SmartEngineService } from '../../services';
+import { getPlaceSearchUrl, PlaceParameters } from '../../api';
+import { DlvryFilters, MainPageTabIndex } from '../../interfaces';
 import { of, Observable, Subscription } from 'rxjs';
 import { delay, tap, debounceTime } from 'rxjs/operators';
 
@@ -17,84 +17,84 @@ interface AnonymousInterface {
 }
 
 @Component({
-    selector: 'app-delivery',
-    templateUrl: './delivery.component.html',
-    styleUrls: ['./delivery.component.scss']
+  selector: 'app-delivery',
+  templateUrl: './delivery.component.html',
+  styleUrls: ['./delivery.component.scss']
 })
 export class DeliveryComponent implements OnInit, OnDestroy {
 
-    public Placetext: string;
-    public deliveryFilters: DlvryFilters;
-    subscription: Subscription;
-    AnonymousUser: AnonymousInterface;
+  public Placetext: string;
+  public deliveryFilters: DlvryFilters;
+  subscription: Subscription;
+  AnonymousUser: AnonymousInterface;
 
-    public tglBtn: MainPageTabIndex;
+  public tglBtn: MainPageTabIndex;
 
-    constructor(private httpReq: SmartEngineService) { }
+  constructor(private httpReq: SmartEngineService) { }
 
-    ngOnInit(): void {
+  ngOnInit(): void {
 
-      this.Placetext = 'σιφνος';
-      const requrl = getPlaceSearchUrl(output,
-          PlaceParameters(api, this.Placetext, language, inputtype), 'findplacefromtext');
+    this.Placetext = 'σιφνος';
+    const requrl = getPlaceSearchUrl(output,
+      PlaceParameters(api, this.Placetext, language, inputtype), 'findplacefromtext');
 
-      this.tglBtn = { OrderClass: { active: true}, DeliveryClass: { active: false}};
+    this.tglBtn = { OrderClass: { active: true }, DeliveryClass: { active: false } };
 
-      // Manual subscription handling
-      this.subscription = this.getDeliveryImage(1500, 'blur', '')
-          .subscribe( (u: AnonymousInterface) => {this.AnonymousUser = u, console.log(this.AnonymousUser); } );
-      this.subscription = this.getDeliveryImage(2000, ' ', '//localhost:4200/assets/img/c/delivery-4.jpg')
-          .subscribe( (u: AnonymousInterface) => {this.AnonymousUser = u, console.log(this.AnonymousUser); } );
+    // Manual subscription handling
+    this.subscription = this.getDeliveryImage(1500, 'blur', '')
+      .subscribe((u: AnonymousInterface) => { this.AnonymousUser = u, console.log(this.AnonymousUser); });
+    this.subscription = this.getDeliveryImage(2000, ' ', '//localhost:4200/assets/img/c/delivery-4.jpg')
+      .subscribe((u: AnonymousInterface) => { this.AnonymousUser = u, console.log(this.AnonymousUser); });
 
-      console.log(requrl);
-      // this.httpReq.getTasks(requrl).subscribe(r => console.log(r));
+    console.log(requrl);
+    // this.httpReq.getTasks(requrl).subscribe(r => console.log(r));
+  }
+
+  ngOnDestroy() {
+    // Only need to unsubscribe if its a multi event Observable
+    this.subscription.unsubscribe();
+  }
+
+  setdel(cl: string) {
+    this.AnonymousUser = { class: cl, img: null };
+  }
+
+  setDeliveryVars(): void {
+
+    this.deliveryFilters.Title = 'Φίλτρα';
+    this.deliveryFilters.Action = 'hide';
+  }
+
+  public setDbtn(): void {
+
+    if (!this.tglBtn.DeliveryClass.active) {
+      this.tglBtn.DeliveryClass.active = !this.tglBtn.DeliveryClass.active;
+      this.tglBtn.OrderClass.active = !this.tglBtn.OrderClass.active;
     }
+  }
 
-    ngOnDestroy() {
-      // Only need to unsubscribe if its a multi event Observable
-      this.subscription.unsubscribe();
+  public setObtn(): void {
+    if (!this.tglBtn.OrderClass.active) {
+      this.tglBtn.OrderClass.active = !this.tglBtn.OrderClass.active;
+      this.tglBtn.DeliveryClass.active = !this.tglBtn.DeliveryClass.active;
     }
+  }
 
-    setdel(cl: string) {
-        this.AnonymousUser = {class: cl, img: null};
-    }
+  getDeliveryImage(time: number, cl: string, img: string): Observable<{}> {
 
-    setDeliveryVars(): void {
+    return of({
+      firstName: 'Luke',
+      lastName: 'Skywalker',
+      age: 65,
+      height: 172,
+      mass: 77,
+      homeworld: 'Tatooine',
+      img,
+      class: cl
 
-      this.deliveryFilters.Title = 'Φίλτρα';
-      this.deliveryFilters.Action = 'hide';
-    }
+    }).pipe(
+      delay(time)
+    );
 
-    public setDbtn(): void {
-
-      if (!this.tglBtn.DeliveryClass.active) {
-        this.tglBtn.DeliveryClass.active = !this.tglBtn.DeliveryClass.active;
-        this.tglBtn.OrderClass.active = !this.tglBtn.OrderClass.active;
-      }
-    }
-
-    public setObtn(): void {
-      if (!this.tglBtn.OrderClass.active) {
-        this.tglBtn.OrderClass.active = !this.tglBtn.OrderClass.active;
-        this.tglBtn.DeliveryClass.active = !this.tglBtn.DeliveryClass.active;
-      }
-    }
-
-    getDeliveryImage(time: number, cl: string, img: string): Observable<{}> {
-
-      return of({
-          firstName: 'Luke',
-          lastName: 'Skywalker',
-          age: 65,
-          height: 172,
-          mass: 77,
-          homeworld: 'Tatooine',
-          img,
-          class: cl
-
-        }).pipe(
-          delay(time)
-        );
-
-    }
+  }
 }

@@ -1,8 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
-import { InventoryTableColumns, Receiving } from 'src/app/interfaces';
+
+import { InventoryTableColumns, Receiving } from '../../../interfaces';
 import { SelectionModel } from '@angular/cdk/collections';
-import { RECEIVING_DATA } from 'src/app/variables';
+import { RECEIVING_DATA } from '../../../variables';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
     selector: 'app-inventory-receive',

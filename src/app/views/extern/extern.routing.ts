@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login.component';
 import { RegisterComponent } from './register.component';
 import { RandomNumberComponent } from './random-number.component';
-import { AuthGuard, GlobalGuard } from 'src/app/auth/guard';
+import { AuthGuard, GlobalGuard } from '../../auth/guard';
 
 const routes: Routes = [
   {

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { NgBootstrapModule, ItemListModule } from 'src/app/modules';
+import { NgBootstrapModule, ItemListModule } from '../../../modules';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ScrollingModule } from '@angular/cdk/scrolling'
 import { LibAllocRoutingModule, routedComponents } from './liballoc.routing';

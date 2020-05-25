@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { InventoryTableColumns, CycleCount } from 'src/app/interfaces';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { CYCLECOUNT_DATA } from 'src/app/variables';
+import { InventoryTableColumns, CycleCount } from '../../../interfaces';
+import { CYCLECOUNT_DATA } from '../../../variables';
 import { SelectionModel } from '@angular/cdk/collections';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
     selector: 'app-inventory-cyclecount',

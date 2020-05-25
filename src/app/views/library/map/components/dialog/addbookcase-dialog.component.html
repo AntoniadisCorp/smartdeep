@@ -91,7 +91,7 @@
 </div>
 <div mat-dialog-actions class="justify-content-center">
     <button mat-button (click)="onNoClick()">Πίσω</button>
-    <button mat-button [disabled]="!LibtypesCntr.valid || !whatnot.valid || !shelves.length>0"
+    <button mat-button [disabled]="!LibtypesCntr.valid || !whatnot.valid || !shelves.length"
         (click)="onSave()">προσθήκη</button><!-- cdkFocusInitial -->
     <!-- Action Progress Data Bar -->
     <mat-progress-spinner *ngIf="progressActionDataBar>0" [diameter]="20" mode="Indeterminate" [value]="progressActionDataBar"></mat-progress-spinner>

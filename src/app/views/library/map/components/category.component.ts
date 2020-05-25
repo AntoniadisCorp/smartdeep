@@ -1,17 +1,21 @@
 import { Component, OnInit, ElementRef, ViewChild, Inject, ChangeDetectionStrategy, Injectable, AfterViewInit } from '@angular/core';
-import { MatPaginator, MatSort, MatDialog, MatAutocomplete, MatDialogRef, MAT_DIALOG_DATA, MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Item, Category, OptionEntry, BodyObj, Iconfonts } from 'src/app/interfaces';
-import { SmartEngineService, Logger } from 'src/app/services';
+import { Item, Category, OptionEntry, BodyObj, Iconfonts } from '../../../../interfaces';
+import { SmartEngineService, Logger } from '../../../../services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { middlebar, config } from 'src/app/variables';
+import { middlebar, config } from '../../../../variables';
 import { Observable, of, merge, fromEvent, BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged, catchError, map, tap, debounceTime, startWith, switchMap } from 'rxjs/operators';
-import { openMatDialog, addObjAttr, saveByHttpwithProgress, toResponseBody, uploadProgress } from 'src/app/routines';
+import { openMatDialog, addObjAttr, saveByHttpwithProgress, toResponseBody, uploadProgress } from '../../../../routines';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { _fonts } from 'src/app/datafiles';
-import { DeleteitemListDialogConfirm } from 'src/app/views/smartengine/components';
+import { _fonts } from '../../../../datafiles';
+import { DeleteitemListDialogConfirm } from '../../../../views/smartengine/components';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
+import { MatAutocomplete } from '@angular/material/autocomplete';
 
 
 @Component({
@@ -26,18 +30,18 @@ export class CategoryThemeComponent implements OnInit {
     @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
     @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-    protected displayedColumns: string[] = ['select', '_id',
+    displayedColumns: string[] = ['select', '_id',
         'name', 'icon', 'tree', 'root', 'desc', 'disabled', 'date_added', 'date_modified',
         'operations'];
 
 
-    protected selection = new SelectionModel<Item>(true, [])
+    selection = new SelectionModel<Item>(true, [])
 
-    protected data: any;
-    protected resultsLength: any;
-    protected progressActionDataBar: number;
+    data: any;
+    resultsLength: any;
+    progressActionDataBar: number;
     protected isRateLimitReached: boolean = false;
-    protected isLoadingResults: boolean = true
+    isLoadingResults: boolean = true
     protected extraFilters: Array<{ [x: string]: any }>
     private tableAction: boolean = false
     private apiUrl: { searchUrl: string, deleteUrl: (col: string, id: string | number) => string, deleteManyUrl: string };
@@ -574,7 +578,7 @@ export class AddCategoryDialogComponent {
     @ViewChild('autoIcon', { static: false }) autoIcon: MatAutocomplete;
     // @ViewChild('itemValue', { static: false }) itemValue: ElementRef;
 
-    protected progressActionDataBar: number = 0;
+    progressActionDataBar: number = 0;
     iFonts: Array<Iconfonts> = [];
     filteredFonts: Observable<Iconfonts[]>;
 

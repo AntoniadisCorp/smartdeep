@@ -18,8 +18,8 @@ import { AppComponent } from './app.component';
         AppModule,
         BrowserAnimationsModule,
         ServerModule,
-        ModuleMapLoaderModule,
-        ServerTransferStateModule, // <--- Added
+        // ModuleMapLoaderModule,
+        // ServerTransferStateModule, // <--- Added
         FlexLayoutServerModule,
         // BrowserModule.withServerTransition({ appId: 'tour' }),
     ],

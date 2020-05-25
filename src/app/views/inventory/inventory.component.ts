@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { RouterOutlet, ActivatedRoute, Router } from '@angular/router';
-import { slideInAnimation } from 'src/app/animations';
+import { slideInAnimation } from '../../animations';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { InventoryService } from 'src/app/services';
-import { InventoryTabs } from 'src/app/interfaces';
-import { INVENTORY_DATA_TABS } from 'src/app/variables';
+import { InventoryService } from '../../services';
+import { InventoryTabs } from '../../interfaces';
+import { INVENTORY_DATA_TABS } from '../../variables';
 
 
 @Component({

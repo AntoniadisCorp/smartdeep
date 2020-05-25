@@ -9,7 +9,7 @@ import { SmartEngineService } from '../../services';
 import { setServerUrl } from '../../routines';
 import { middlebar, config } from '../../variables';
 import { transition, animate, state, style, trigger } from '@angular/animations';
-import { DropdownModule } from 'src/app/modules';
+import { DropdownModule } from '../../modules';
 // isense.smartdeep.io setServerUrl('localhost', 8080)
 const apiUrl: string = config.apiUrl + middlebar + 'task'; // isense.azurewebsites.net, isense.smartdeep.io 443
 
@@ -57,7 +57,7 @@ export class DashboardComponent implements OnInit {
   isProcessing: boolean;
   refreshing: boolean;
   act: MenuAction;
-  menu: { edit: string}
+  menu: { edit: string }
   emptyText: string;
   isShowSettings: string;
 
@@ -236,5 +236,5 @@ export class DashboardComponent implements OnInit {
     this.iFonts = _fonts;
   }
 
-  
+
 }

@@ -3,8 +3,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
-import { KIT_DATA } from 'src/app/variables';
-import { InventoryTableColumns, Kit } from 'src/app/interfaces';
+import { KIT_DATA } from '../../../variables';
+import { InventoryTableColumns, Kit } from '../../../interfaces';
 
 @Component({
     selector: 'app-inventory-kit',

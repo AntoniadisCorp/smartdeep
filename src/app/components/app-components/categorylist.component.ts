@@ -28,22 +28,22 @@ import { strRemofarray } from '../../routines';
 })
 export class CategoryComponent implements OnInit {
 
-    @Input() categories: any;
-    @Input() @Output() action: MenuAction;
+  @Input() categories: any;
+  @Input() @Output() action: MenuAction;
 
-    ngOnInit(): void {}
+  ngOnInit(): void { }
 
-    public isTitle(item: any) {
-        return item.title ? true : false;
-    }
+  public isTitle(item: any) {
+    return item.title ? true : false;
+  }
 
-    constructor() { }
+  constructor() { }
 }
 
 
 @Component({
-    selector: 'app-category-nav-item',
-    template: `
+  selector: 'app-category-nav-item',
+  template: `
     <li *ngIf="!isDropdown(); else dropdown" [ngClass]="hasClass() ? 'nav-item ' + item.class : 'nav-item'">
       <app-category-nav-link *ngIf="item" [selectlink]='selectaction' [link]='item'></app-category-nav-link>
     </li>
@@ -57,52 +57,52 @@ export class CategoryComponent implements OnInit {
           <app-category-nav-dropdown [selectdropdown]='selectaction' *ngIf="item" [link]='item'></app-category-nav-dropdown>
       </li>
     </ng-template>`,
-    providers: [
-      {
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => InnerCategoryComponent),
-        multi: true
-      }
-    ]
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InnerCategoryComponent),
+      multi: true
+    }
+  ]
 })
 export class InnerCategoryComponent implements OnInit {
 
-    @Input() item: any;
-    @Input() @Output() selectaction: MenuAction;
+  @Input() item: any;
+  @Input() @Output() selectaction: MenuAction;
 
-     selectedItem: boolean;
+  selectedItem: boolean;
 
-    constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
-    ngOnInit(): void {
+  ngOnInit(): void {
 
-        this.selectedItem = false;
-    }
+    this.selectedItem = false;
+  }
 
-    onSelect(): void {
+  onSelect(): void {
 
-        this.selectedItem = this.isDropdown() ? !this.selectedItem : false;
-    }
+    this.selectedItem = this.isDropdown() ? !this.selectedItem : false;
+  }
 
-    isIcon(item: any) { return this.item && item.icon ? true : false; }
-    isTitle(item: any) { return this.item && item.title ? true : false; }
+  isIcon(item: any) { return this.item && item.icon ? true : false; }
+  isTitle(item: any) { return this.item && item.title ? true : false; }
 
-    public hasClass() {
-        return this.item && this.item.class ? true : false;
-    }
+  public hasClass() {
+    return this.item && this.item.class ? true : false;
+  }
 
-    public isDropdown() {
+  public isDropdown() {
 
-        return this.item && this.item.children ? this.item.children.length > 0 ? true : false : false;
-    }
+    return this.item && this.item.children ? this.item.children.length > 0 ? true : false : false;
+  }
 
-    public thisUrl() {
-        return this.item ? this.item.url : false;
-    }
-// this.router.isActive(this.thisUrl(), false)
-    public isActive() {
-        return false;
-    }
+  public thisUrl() {
+    return this.item ? this.item.url : false;
+  }
+  // this.router.isActive(this.thisUrl(), false)
+  public isActive() {
+    return false;
+  }
 }
 
 
@@ -138,27 +138,27 @@ export class InnerCategoryComponent implements OnInit {
       </a>
     </ng-template>`,
 
-    providers: [
-      {
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => CategoryLinkComponent),
-        multi: true
-      }
-    ]
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => CategoryLinkComponent),
+      multi: true
+    }
+  ]
 })
 export class CategoryLinkComponent implements OnInit {
 
   @Input() @Output() link: any;
   @Input() @Output() selectlink: MenuAction;
 
-   selection: boolean;
-   indeterminate = false;
-   labelPosition = 'before';
-   disabled = false;
+  selection: boolean;
+  indeterminate = false;
+  labelPosition: string = 'before';
+  disabled = false;
 
   onChange(event: any): void {
 
-    this.link.action = {status: this.selection };
+    this.link.action = { status: this.selection };
 
     if (!this.isSelected() && this.selection) {
 
@@ -169,9 +169,9 @@ export class CategoryLinkComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void { this.link.action = {status: this.selection, iconclass: 'send'}; }
+  ngOnInit(): void { this.link.action = { status: this.selection, iconclass: 'send' }; }
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   public hasVariant() {
     return this.link && this.link.variant ? true : false;
@@ -185,12 +185,12 @@ export class CategoryLinkComponent implements OnInit {
     return this.link && this.link.badge ? true : false;
   }
 
-  openBookbyId () {
+  openBookbyId() {
     return this.router.navigate(['/smartengine/searchit', this.link._id])
   }
 
   public isExternalLink() { // (this.link.url.substring(0, 4) === 'http' || this.link.url.substring(0, 5) === 'https') ?
-    return  true;
+    return true;
   }
 
   public isIcon() {
@@ -201,8 +201,8 @@ export class CategoryLinkComponent implements OnInit {
 
 
 @Component({
-    selector: 'app-category-nav-dropdown',
-    template: `
+  selector: 'app-category-nav-dropdown',
+  template: `
     <div class="nav-select">
       <mat-checkbox
             [hidden]="isSelected()"
@@ -225,61 +225,61 @@ export class CategoryLinkComponent implements OnInit {
       </ng-template>
     </ul>
     `,
-    providers: [
-      {
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => CategoryDropdownComponent),
-        multi: true
-      }
-    ]
-  })
-  export class CategoryDropdownComponent implements OnInit {
-
-    @Input() @Output() link: any;
-    @Input() @Output() selectdropdown: MenuAction;
-
-     selection: boolean;
-     indeterminate = false;
-     labelPosition = 'before';
-     disabled = false;
-
-    public isBadge() {
-      return this.link && this.link.badge ? true : false;
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => CategoryDropdownComponent),
+      multi: true
     }
+  ]
+})
+export class CategoryDropdownComponent implements OnInit {
 
-    public isSelected() {
-      return this.selectdropdown ? this.selectdropdown.status : true;
-    }
+  @Input() @Output() link: any;
+  @Input() @Output() selectdropdown: MenuAction;
 
-    public isIcon() {
-      return this.link && this.link.icon ? true : false;
-    }
+  selection: boolean;
+  indeterminate = false;
+  labelPosition: string = 'before';
+  disabled = false;
 
-    onChange(event: any): void {
-
-      this.link.action = {status: this.selection };
-
-      if (!this.isSelected() && this.selection) {
-
-        this.selectdropdown.CategoryRemList.push(this.link._id);
-      } else if (!this.isSelected() && !this.selection) {
-
-        strRemofarray(this.selectdropdown.CategoryRemList, this.link._id);
-      }
-    }
-
-    ngOnInit(): void { this.link.action = {status: this.selection, iconclass: 'send'}; }
-
-
-    constructor() {}
+  public isBadge() {
+    return this.link && this.link.badge ? true : false;
   }
+
+  public isSelected() {
+    return this.selectdropdown ? this.selectdropdown.status : true;
+  }
+
+  public isIcon() {
+    return this.link && this.link.icon ? true : false;
+  }
+
+  onChange(event: any): void {
+
+    this.link.action = { status: this.selection };
+
+    if (!this.isSelected() && this.selection) {
+
+      this.selectdropdown.CategoryRemList.push(this.link._id);
+    } else if (!this.isSelected() && !this.selection) {
+
+      strRemofarray(this.selectdropdown.CategoryRemList, this.link._id);
+    }
+  }
+
+  ngOnInit(): void { this.link.action = { status: this.selection, iconclass: 'send' }; }
+
+
+  constructor() { }
+}
 
 
 
 export const APP_CATEGORY_COMPONENT = [
 
-    CategoryDropdownComponent,
-    CategoryComponent,
-    InnerCategoryComponent,
-    CategoryLinkComponent
+  CategoryDropdownComponent,
+  CategoryComponent,
+  InnerCategoryComponent,
+  CategoryLinkComponent
 ];

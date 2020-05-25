@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SmartEngineComponent } from './smartengine.component';
 import { ImageListComponent, ItemListComponent, DeleteitemListDialogConfirm } from './components';
-import { SmartResolveService } from 'src/app/services';
+import { SmartResolveService } from '../../services';
 
 
 const routes: Routes = [

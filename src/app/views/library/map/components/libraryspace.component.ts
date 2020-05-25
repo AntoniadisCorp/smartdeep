@@ -1,16 +1,20 @@
 import { Component, OnInit, ElementRef, ViewChild, Inject, ChangeDetectionStrategy } from '@angular/core';
-import { Item, OptionEntry, BodyObj, LibrarySpace, BookShelf } from 'src/app/interfaces';
+import { Item, OptionEntry, BodyObj, LibrarySpace, BookShelf } from '../../../../interfaces';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatPaginator, MatSort, MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
-import { SmartEngineService, Logger } from 'src/app/services';
+import { SmartEngineService, Logger } from '../../../../services';
 import { catchError, map, switchMap, debounceTime, distinctUntilChanged, tap, startWith, finalize } from 'rxjs/operators';
 import { fromEvent, of, merge, Observable } from 'rxjs';
-import { middlebar, config } from 'src/app/variables';
-import { openMatDialog, globalSort, uploadProgress, toResponseBody, EmptyObj, addObjAttr, saveByHttpwithProgress } from 'src/app/routines';
+import { middlebar, config } from '../../../../variables';
+import { openMatDialog, globalSort, uploadProgress, toResponseBody, EmptyObj, addObjAttr, saveByHttpwithProgress } from '../../../../routines';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
-import { DeleteitemListDialogConfirm } from 'src/app/views/smartengine/components';
+import { DeleteitemListDialogConfirm } from '../../../../views/smartengine/components';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
 
 @Component({
     selector: 'app-library-libraryspace',
@@ -24,24 +28,25 @@ export class LibrarySpaceComponent implements OnInit {
     @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
     @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-    protected isLoadingResults: boolean = true
+    isLoadingResults: boolean = true
+    toggleListValueByid: number
 
-    protected displayedColumns: string[] = ['select', '_id',
+    displayedColumns: string[] = ['select', '_id',
         'whatnot', 'type', 'bookshelves', 'date_added', 'date_modified', 'status',
         'operations'];
 
 
-    protected selection = new SelectionModel<Item>(true, []);
+    selection = new SelectionModel<Item>(true, []);
     protected isRateLimitReached: boolean = false;
 
 
-    protected resultsLength: any;
-    protected data: any;
+    resultsLength: any;
+    data: any;
     protected extraFilters: Array<{ [x: string]: any; }>;
     private apiUrl: { searchUrl: string, deleteUrl: (col: string, id: string | number) => string, deleteManyUrl: string };
 
     // private libSpace: any[];
-    protected progressActionDataBar: number;
+    progressActionDataBar: number;
     private tableAction: boolean = false
 
     constructor(private router: Router,
@@ -184,7 +189,7 @@ export class LibrarySpaceComponent implements OnInit {
         this.addBookcaseModal(RowData)
     }
 
-    deleteRow(Row: LibrarySpace): void {
+    deleteRow(Row: { _id: string, whatnot: string }): void {
 
         this.tableAction = true
         // console.log('Row.SKU: ', Row.SKU)
@@ -346,7 +351,7 @@ export class LibrarySpaceDialogComponent {
     @ViewChild('shelvesInput', { static: false }) shelvesInput: ElementRef<HTMLInputElement>;
     @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
 
-    protected progressActionDataBar: number;
+    progressActionDataBar: number;
 
     constructor(
         public dialogRef: MatDialogRef<LibrarySpaceDialogComponent>,

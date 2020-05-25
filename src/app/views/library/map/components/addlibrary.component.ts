@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Logger, SmartEngineService } from 'src/app/services';
+import { Logger, SmartEngineService } from '../../../../services';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

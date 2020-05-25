@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { InventoryTableColumns, Warehouse } from 'src/app/interfaces';
-import { WAREHOUSES_DATA } from 'src/app/variables';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { InventoryTableColumns, Warehouse } from '../../../interfaces';
+import { WAREHOUSES_DATA } from '../../../variables';
 import { SelectionModel } from '@angular/cdk/collections';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
     selector: 'app-inventory-warehouse',

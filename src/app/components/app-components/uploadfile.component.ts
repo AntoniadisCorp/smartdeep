@@ -27,7 +27,7 @@ export class FileUploadComponent implements ControlValueAccessor, OnInit {
     private control: AbstractControl;
 
 
-    @HostListener('change', ['$event.target.files']) emitFiles(event: FileList) {
+    @HostListener('change', ['$event.target.files']) emitFiles(event: any) { // FileList
 
         const file = event && event.item(0);
 

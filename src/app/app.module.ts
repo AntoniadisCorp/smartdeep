@@ -15,7 +15,7 @@ import {
 /* Import Material design Module */
 import { MaterialsModule, AppNgModules, DropdownModule } from './modules';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthModule } from 'src/app/auth/auth.module';
+import { AuthModule } from '../app/auth/auth.module';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 /* Import and configure SocketIoModule */
@@ -128,7 +128,7 @@ const APP_SERVICES = [
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'SECRET-APP-ID' }),
-    BrowserTransferStateModule,
+    // BrowserTransferStateModule,
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ...APP_MODULES,
   ],

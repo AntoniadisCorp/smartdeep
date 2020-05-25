@@ -1,8 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { TRANSFORMORDER_DATA } from 'src/app/variables';
-import { TransferOrder, InventoryTableColumns } from 'src/app/interfaces';
+
+import { TRANSFORMORDER_DATA } from '../../../variables';
+import { TransferOrder, InventoryTableColumns } from '../../../interfaces';
 import { SelectionModel } from '@angular/cdk/collections';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
     selector: 'app-inventory-transferorder',
