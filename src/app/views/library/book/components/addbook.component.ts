@@ -128,10 +128,6 @@ export class AddBookCaseDialogComponent implements AfterViewInit {
         if (!this.selection.hasValue())
             return
 
-
-        /* // Set URL
-        const sUrl = config.apiUrl + middlebar + 'task' +
-            middlebar + 'library' + middlebar + 'alloc' + middlebar + 'save' */
         /*  this.data.status = true; */
 
         const selectedRow: PeriodicElement = this.selection.selected[0]
@@ -166,6 +162,7 @@ export class AddBookCaseDialogComponent implements AfterViewInit {
 
         if (this.RowData) this.OnInit()
     }
+
     private OnInit(): void {
         // console.log('test...')
         // this.switchCheckbox(true, Row)
@@ -174,8 +171,6 @@ export class AddBookCaseDialogComponent implements AfterViewInit {
     // private applyFilter(event?: Event) {
     //     const filterValue = (this.search.nativeElement as HTMLInputElement).value;
     //     this.dataSource.filter = filterValue.trim().toLowerCase();
-
-
     // }
 
     ngAfterViewInit(): void {
@@ -245,7 +240,6 @@ export class AddBookCaseDialogComponent implements AfterViewInit {
 
     private updateFields(data: PeriodicElement[]): void {
 
-
         if (this.RowData && data.length && this.RowData.bookcaseId) {
             this.switchCheckbox(true,
                 data.filter(v => v._id.toLowerCase().indexOf(this.RowData.bookcaseId.toLowerCase()) > -1)[0]
@@ -265,10 +259,6 @@ export class AddBookCaseDialogComponent implements AfterViewInit {
         if (index > -1) this.bookshelfNo.setValue(arrIndex[index].bookshelfNo - 1)
 
         if (this.RowData && !this.RowData.bookshelfNo) this.RowData.bookshelfNo = this.bookshelfNo.value
-
-
-        // return index
-
     }
 
     private arrIndexNoisSelected(): any {
@@ -344,11 +334,13 @@ export class AddBookCaseDialogComponent implements AfterViewInit {
     }
 
     private isEditing(): boolean {
+
         return !!this.RowData as boolean /* && this.search.nativeElement.value.trim().toLowerCase() === '' */
     }
 
     /** Whether the number of selected elements matches the total number of rows. */
     protected isAllSelected() {
+
         const numSelected = this.selection.selected.length;
         const numRows = this.dataSource.data.length;
         return numSelected === numRows;
@@ -356,6 +348,7 @@ export class AddBookCaseDialogComponent implements AfterViewInit {
 
     /** Selects all rows if they are not all selected; otherwise clear selection. */
     masterToggle() {
+
         this.selection.hasValue() ?
             this.selection.clear() :
             null;
@@ -365,8 +358,10 @@ export class AddBookCaseDialogComponent implements AfterViewInit {
 
         this.switchCheckbox(event.checked, row)
     }
+
     /** The label for the checkbox on the passed row */
     checkboxLabel(row?: PeriodicElement): string {
+
         if (!row) {
             return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
         }
@@ -388,8 +383,8 @@ export class AddBookCaseDialogComponent implements AfterViewInit {
 
         // console.log(`count book: ${this.isEditing()}  ${this.selection.selected[0].books.count}`, this.arrIndexNoisSelected().index)
     }
-
 }
+
 
 @Component({
     selector: 'app-library-addcategory-dialog',
@@ -414,7 +409,6 @@ export class AddCategoryDialogComponent extends DashboardComponent {
         this.data.status = true;
     }
 }
-
 
 
 @Component({
@@ -450,6 +444,8 @@ export class AddbookComponent implements OnInit, AfterViewInit {
     entranceGate: boolean;
     avatarFile: ImageSnippet;
 
+    formatter = (x: { name: string }) => x.name;
+
     constructor(
         private httpService: SmartEngineService,
         private route: ActivatedRoute,
@@ -457,15 +453,15 @@ export class AddbookComponent implements OnInit, AfterViewInit {
         private ngbprogr: NgbProgressbarConfig,
         private formBuilder: FormBuilder,
         private logger: Logger,
-        private elRef: ElementRef,
         private dialog: MatDialog, matIconRegistry: SvgIconService,
         private cdr: ChangeDetectorRef,
         private randService: RandomNumberService,
         private router: Router) {
 
-
+        // 
         matIconRegistry.setSvg('bookshelf', 'assets/img/svg/bookshelf.svg')
         matIconRegistry.setSvg('bookshelfNo', 'assets/img/svg/bookshelfNo.svg')
+
         // customize default values of progress bars used by this component tree
         ngbprogr.max = 100;
         ngbprogr.striped = true;
@@ -476,23 +472,18 @@ export class AddbookComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
 
+        this.stateGroupSelected = false
 
-
-        this.ngbconfig.showHint = true;
-
-        this.stateGroupSelected = false;
-
-        this.entranceGate = true;
+        this.entranceGate = this.ngbconfig.showHint = true;
 
         this.createBookForm()
-
-        this.setComponentFonts();
+        // this.setComponentFonts();
     }
 
     ngAfterViewInit(): void {
 
-
         this.getLibrary()
+
         this.getBookSKU()
 
         this.cdr.detectChanges()
@@ -501,8 +492,8 @@ export class AddbookComponent implements OnInit, AfterViewInit {
     private getLibrary(): void {
 
         let currLib: Library = DEFAULT_SESSION.user._session.library
-        this.libraryState = []
 
+        this.libraryState = []
 
         if (!currLib._id)
             this.randService.getLibrary()
@@ -516,8 +507,6 @@ export class AddbookComponent implements OnInit, AfterViewInit {
                 })
         this.libraryName.setValue(currLib.name ? currLib.name : '', { emitEvent: false })
         this.libraryState.push(currLib) // refresh library state
-
-
     }
 
     private getBookSKU(): void {
@@ -708,7 +697,8 @@ export class AddbookComponent implements OnInit, AfterViewInit {
 
         let _title = this.title.value
         let formData: FormData = convertJsontoFormData(this.entranceForm.value)
-        console.log(formData.get('_id').toString())
+        // console.log(formData.get('_id').toString())
+
         // search for category ID
         /* const currCategory: Category = this.categorySate
             .find(o => o.name === this.name.value) */
@@ -823,6 +813,7 @@ export class AddbookComponent implements OnInit, AfterViewInit {
 
     resetBookForm(): void {
 
+        // 
         this.entranceForm.reset({
             libraryName: this.libraryName.value,
             books: {
@@ -831,20 +822,25 @@ export class AddbookComponent implements OnInit, AfterViewInit {
             }
         })
 
+        // 
         this.clearAvatar()
     }
 
     clearAvatar(): void {
 
+        // 
         this.avatarFile = new ImageSnippet()
+
         this.books.get('avatar').patchValue(null)
     }
 
     isAvatar(): boolean {
+
         return this.avatarFile && this.avatarFile.src !== '' && this.avatarFile.src !== DEFAULT_IMAGE
     }
 
     private avatarOnChange(): void {
+
         this.books
             .get('avatar').valueChanges
             .subscribe(file => {
@@ -856,8 +852,11 @@ export class AddbookComponent implements OnInit, AfterViewInit {
 
 
     public selectedCategory(ngbevent?: NgbTypeaheadSelectItemEvent) {
+
         // console.log(ngbevent.item)
         this.catlen = -1
+
+        // 
         this.category.patchValue({ cid: ngbevent.item._id, cname: ngbevent.item.name }, { emitEvent: false })
         // this.entranceForm.patchValue({books: {category: ngbevent.item.name.toString()}}, {emitEvent: false})
     }
@@ -870,7 +869,6 @@ export class AddbookComponent implements OnInit, AfterViewInit {
         //    
     }
 
-    formatter = (x: { name: string }) => x.name;
     private formater2 = (s: { _id: string, name: string }) => ({ _id: s._id, name: s.name })
 
     private categoryObserv() {
@@ -884,10 +882,10 @@ export class AddbookComponent implements OnInit, AfterViewInit {
 
             return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
                 /* filter(term => term.length >= 2), */
-                map(term => (term === '' ? (this.categorySate ? this.categorySate.map(this.formater2) : [])
-                    : (this.categorySate ? this.categorySate.map(this.formater2) : []).filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10)),
-
-            );
+                map(term => (term === '' ? (this.categorySate ? this.categorySate.map(this.formater2) : []) :
+                    (this.categorySate ? this.categorySate.map(this.formater2) : [])
+                        .filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10)),
+            )
         }
         // const sUrl = config.apiUrl + middlebar + 'task' +
         //     middlebar + 'library' + middlebar + 'search'
@@ -935,7 +933,6 @@ export class AddbookComponent implements OnInit, AfterViewInit {
      * addBookshelf
      */
     public addBookshelf() {
-
 
         this.openBookCaseModal(this.bookcaseName.value.length ? this.bookcase.value : undefined)
     }
@@ -993,7 +990,7 @@ export class AddbookComponent implements OnInit, AfterViewInit {
                             /* .map<string>((item: Category) => item.name) */
                         })).subscribe((v: Category[]) => this.categorySate = v)
                 }
-            });
+            })
     }
 
     // public addCategoryModal(): void {
@@ -1019,14 +1016,17 @@ export class AddbookComponent implements OnInit, AfterViewInit {
     // }
 
     public entranceSelected(): void {
+
         this.stateGroupSelected = true
     }
 
     public openLibrary() {
 
+        // 
         this.entranceGate = !this.libraryName.valid;
 
         const currLib: Library = this.libraryState ? this.libraryState.find(o => o.name === this.libraryName.value) : { name: '' }
+
         // on open if not exist create one or use current. const obj2 = this.iFonts.find(o => o.name === this.iconCtrl.value);
         if (!this.entranceGate &&
             !currLib) {
@@ -1112,6 +1112,7 @@ export class AddbookComponent implements OnInit, AfterViewInit {
     }
 
     private _filterGroup(value: string, arr: string[]): StateGroup[] {
+
         const stateGroups = _AlphaBeticSort(arr);
         if (value) {
             return stateGroups
@@ -1134,12 +1135,15 @@ export class AddbookComponent implements OnInit, AfterViewInit {
     get _id() {
         return this.books.get('_id')
     }
+
     get SKU() {
         return this.books.get('SKU')
     }
+
     get title() {
         return this.books.get('title')
     }
+
     get bookcase() {
         return this.books.get('bookcase')
     }
@@ -1167,12 +1171,15 @@ export class AddbookComponent implements OnInit, AfterViewInit {
     get author() {
         return this.books.get('author')
     }
+
     get publisher() {
         return this.books.get('publisher')
     }
+
     get year() {
         return this.books.get('year')
     }
+
     get pages() {
         return this.books.get('pages')
     }
@@ -1180,20 +1187,23 @@ export class AddbookComponent implements OnInit, AfterViewInit {
     get isbn10() {
         return this.books.get('isbn10')
     }
+
     get isbn13() {
         return this.books.get('isbn13')
     }
+
     get notes() {
         return this.books.get('notes')
     }
 
-    private setComponentFonts(): void {
-        /* const matlabel: HTMLElement = this.elRef.nativeElement.querySelector('.mat-form-field-label');
+    /* private setComponentFonts(): void {
+
+        const matlabel: HTMLElement = this.elRef.nativeElement.querySelector('.mat-form-field-label');
         const matInput: HTMLElement = this.elRef.nativeElement.querySelector('.mat-input-element');
      
         matlabel.style.fontSize = '19px';
-        matInput.style.fontSize = '19px'; */
-    }
+        matInput.style.fontSize = '19px';
+    } */
 }
 
 

@@ -1,9 +1,9 @@
 import { Component, OnInit, ElementRef, ViewChild, Inject, ChangeDetectionStrategy, Injectable, AfterViewInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Item, Category, OptionEntry, BodyObj, Iconfonts } from '../../../../interfaces';
+import { Item, Category, OptionEntry, BodyObj, Iconfonts, IDropDownMenu, InventoryTableColumns } from '../../../../interfaces';
 import { SmartEngineService, Logger } from '../../../../services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { middlebar, config } from '../../../../variables';
+import { middlebar, config, MENUBTN_ITEM, GRLETTERS } from '../../../../variables';
 import { Observable, of, merge, fromEvent, BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged, catchError, map, tap, debounceTime, startWith, switchMap } from 'rxjs/operators';
 import { openMatDialog, addObjAttr, saveByHttpwithProgress, toResponseBody, uploadProgress } from '../../../../routines';
@@ -17,7 +17,6 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
 import { MatAutocomplete } from '@angular/material/autocomplete';
 
-
 @Component({
     selector: 'app-library-category',
     templateUrl: './category.component.html',
@@ -30,12 +29,12 @@ export class CategoryThemeComponent implements OnInit {
     @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
     @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-    displayedColumns: string[] = ['select', '_id',
+    displayedColumns: string[] = ['_id',
         'name', 'icon', 'tree', 'root', 'desc', 'disabled', 'date_added', 'date_modified',
         'operations'];
 
 
-    selection = new SelectionModel<Item>(true, [])
+    selection = new SelectionModel<Category>(true, [])
 
     data: any;
     resultsLength: any;
@@ -46,9 +45,20 @@ export class CategoryThemeComponent implements OnInit {
     private tableAction: boolean = false
     private apiUrl: { searchUrl: string, deleteUrl: (col: string, id: string | number) => string, deleteManyUrl: string };
 
+
+    MenuTools: IDropDownMenu[];
+    btnCheckboxCol: InventoryTableColumns[];
+    menuOperation: boolean = false
+    clearMenu: boolean = true
+
+    // Filter list
+    selectable: boolean = true
+    removable: boolean = true
+    filters: { id: number, name: string }[] = []
+    allFilters: string[] = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'ς'];
+
+    sortLetters = GRLETTERS
     // private libSpace: any[];
-
-
 
     constructor(/* private router: Router, */
         private route: ActivatedRoute,
@@ -62,7 +72,7 @@ export class CategoryThemeComponent implements OnInit {
 
         // init API URL for CRUD ACTIVITIES
         this.apiUrl = {
-            searchUrl: `${config.apiUrl}${middlebar}task${middlebar}library${middlebar}space${middlebar}search`,
+            searchUrl: `${config.apiUrl}${middlebar}task${middlebar}library${middlebar}space${middlebar}category${middlebar}search`,
             deleteUrl: (col: string, id: string | number) => `${config.apiUrl}${middlebar}task${middlebar}del${middlebar}${col}${middlebar}${id}`,
             deleteManyUrl: '',
         }
@@ -135,6 +145,8 @@ export class CategoryThemeComponent implements OnInit {
 
         const routeSnapId: string = this.route.snapshot.paramMap.get('id')
         this.extraFilters = []
+
+        this.MenuTools = MENUBTN_ITEM;
     }
 
     private addCategoryModal(editRowData?: Category): void {
@@ -246,14 +258,43 @@ export class CategoryThemeComponent implements OnInit {
             });
     }
 
+    // ------------------------ On Table Filtering -----------------------------
+    // remove filter
+    remove(id: number) {
+        // this.removeElement(this.shelves, this.getBookShelves(shelf))
 
+        if (id < 1) return
+
+        const index: number = this.filters.findIndex((v) => v.id == id)
+
+        if (index > -1) this.filters.splice(index, 1)
+
+
+        // pushh to AllShelves
+        // this.allShelves.push(shelf)
+        // globalSort(this.allShelves)
+    }
+
+    filterByLetter(letter: { id: number, name: string }) {
+
+        if (letter.id < 1) return
+
+        // double push
+        const index: number = this.filters.findIndex((v) => v.id == letter.id)
+
+
+        if (letter.id > 0 && index < 0) {
+            this.filters.push({ id: letter.id, name: letter.name })
+        }
+
+    }
 
     // ------------------------ On Table Selections ----------------------------
     // Toogle selectors
     /** Whether the number of selected elements matches the total number of rows. */
     isAllSelected() {
         const numSelected = this.selection.selected.length;
-        const numRows = 0 /* this.dataSource.data.length */;
+        const numRows = this.data ? this.data.length : 0;
         return numSelected === numRows;
     }
 
@@ -261,19 +302,49 @@ export class CategoryThemeComponent implements OnInit {
     /** Selects all rows if they are not all selected; otherwise clear selection. */
     masterToggle() {
 
-        this.isAllSelected() ? this.selection.clear() : '';
-        /* this.dataSource.data.forEach(row => this.selection.select(row)) */
+        this.isAllSelected() ? this.selection.clear() :
+            this.data.forEach((row: Category) => this.selection.select(row))
+
+        // toggleButton
+        this.menuOperation = this.selection.hasValue()
+
+    }
+
+    slaveToggle(row: Category) {
+
+        this.selection.toggle(row)
+
+        // toggleButton
+        this.menuOperation = this.selection.hasValue()
     }
 
     // Toogle selectors Labels
     /** The label for the checkbox on the passed row */
-    checkboxLabel(row?: Item): string {
+    checkboxLabel(row?: Category): string {
         if (!row) {
             return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
         }
         return `${
             this.selection.isSelected(row) ? 'deselect' : 'select'
             } row ${row.name + 1}`;
+    }
+
+    // Toggle Table Columns
+    setTableColumns(item?: InventoryTableColumns): void {
+
+        const colindex = this.displayedColumns.indexOf('select', 0);
+        const colExistance = colindex > -1;
+
+        this.clearMenu = !this.clearMenu
+
+        // console.log(colExistance);
+        if (!colExistance) {
+            this.displayedColumns.unshift('select')
+        } else if (colExistance) {
+            this.displayedColumns.shift()
+            this.selection.clear()
+            this.menuOperation = false
+        }
     }
 
     // ------------------------ On Clear Search Table ----------------------------

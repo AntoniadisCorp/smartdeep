@@ -8,8 +8,5 @@ import { Component, OnInit } from '@angular/core';
 export class BookListComponent implements OnInit {
     constructor() { }
 
-    ngOnInit() { }
-
-
-    
+    ngOnInit() { }    
 }

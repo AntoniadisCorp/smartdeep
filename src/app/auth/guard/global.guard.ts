@@ -15,9 +15,13 @@ export class GlobalGuard implements CanActivate, CanLoad {
   }
 
   canLoad() {
-    if (!this.authService.isLoggedIn()) {
+
+    let isLoggedIn: boolean = this.authService.isLoggedIn()
+
+    if (!isLoggedIn) {
       this.router.navigate(['/extern/login']);
     }
-    return this.authService.isLoggedIn();
+
+    return isLoggedIn
   }
 }

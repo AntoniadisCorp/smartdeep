@@ -1,17 +1,62 @@
 <div class="card-body">
 
     <div class="card-toolbar row">
+        <!-- justify-content-start  -->
+        <div class="col-md-10">
+            <a color="primary" mat-button #categoryTooltip="matTooltip" matTooltip="Φίλτρα"
+                matTooltipPosition="above">
+                <i class="fas fa-filter"></i>
+                Φίλτρα
+            </a>
 
-        <ul class="toolbar-toggle-menu pagination justify-content-start col-md-4">
-            <li>
-            </li>
-        </ul>
-        <div class="card-toolbar-justify col-md-8">
+
+            <mat-chip-list #chipList class="justify-content-start">
+                <mat-chip *ngFor="let flt of filters" [selectable]="selectable" [removable]="removable"
+                    (removed)="remove(flt.id)">
+                    {{flt.name}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-list>
+        </div>
+
+        <div class="card-toolbar-justify col-md-2">
 
             <a mat-icon-button #categoryTooltip="matTooltip" matTooltip="Προσθήκη νέας Θέσης" matTooltipPosition="above"
                 (click)="addRow()">
                 <mat-icon>add</mat-icon>
             </a>
+
+            <button [hidden]="!menuOperation" mat-icon-button class="first-child" #categoryTooltip="matTooltip"
+                matTooltip="Διαγραφή Επιλεγμένων" matTooltipPosition="above">
+                <mat-icon>delete</mat-icon>
+            </button>
+
+            <!-- Main Menu of category's Table -->
+            <mat-menu restoreFocus="true" #itemMenu="matMenu">
+                <!-- <button mat-menu-item matTooltip="{{mitems.desc}}"
+                    *ngFor="let mitems of MenuTools">{{mitems.title}}</button> -->
+
+                <li mat-menu-item role="menuitemcheckbox" class="">
+                    <a (click)="setTableColumns()">
+
+                        <mat-icon>delete</mat-icon>
+                        Διαγραφή με επιλογή
+                    </a>
+                </li>
+
+            </mat-menu>
+
+            <a mat-icon-button [hidden]="clearMenu" (click)="setTableColumns()" #clearTooltip="matTooltip"
+                matTooltip="Ακύρωση Διαγραφής" matTooltipPosition="above">
+                <mat-icon>clear</mat-icon>
+            </a>
+
+            <button [hidden]="!clearMenu" mat-icon-button class="first-child" [matMenuTriggerFor]="itemMenu"
+                #categoryTooltip="matTooltip" matTooltip="Μενού" matTooltipPosition="above">
+                <mat-icon>more_vert</mat-icon>
+                <!-- Menu -->
+                <!-- <mat-icon>arrow_drop_down</mat-icon> -->
+            </button>
 
             <!-- <mat-menu #itemMenu="matMenu">
                 <button mat-menu-item matTooltip="{{mitems.desc}}"
@@ -30,33 +75,11 @@
 
     <div id="letter-range-holder">
         <div id="letter_range">
-            <span ngf id="letter_A" class="letter">Α</span>
-            <span ngf id="letter_B" class="letter">Β</span>
-            <span ngf id="letter_C" class="letter">Γ</span>
-            <span ngf id="letter_D" class="letter">Δ</span>
-            <span ngf id="letter_E" class="letter">Ε</span>
-            <span ngf id="letter_F" class="letter">Ζ</span>
-            <span ngf id="letter_G" class="letter">Η</span>
-            <span ngf id="letter_H" class="letter">Θ</span>
-            <span ngf id="letter_I" class="letter">Ι</span>
-            <span ngf id="letter_J" class="letter">Κ</span>
-            <span ngf id="letter_K" class="letter">Λ</span>
-            <span ngf id="letter_L" class="letter">Μ</span>
-            <span ngf id="letter_M" class="letter">Ν</span>
-            <span ngf id="letter_N" class="letter">Ξ</span>
-            <span ngf id="letter_O" class="letter">Ο</span>
-            <span ngf id="letter_P" class="letter">Π</span>
-            <span ngf id="letter_Q" class="letter">Τ</span>
-            <span ngf id="letter_R" class="letter">Σ</span>
-            <span ngf id="letter_S" class="letter">Τ</span>
-            <span ngf id="letter_T" class="letter">Υ</span>
-            <span ngf id="letter_U" class="letter">Φ</span>
-            <span ngf id="letter_V" class="letter">Χ</span>
-            <span ngf id="letter_W" class="letter">Ψ</span>
-            <span ngf id="letter_X" class="letter">Ω</span>
+            <span *ngFor="let letter of sortLetters" id="letter_{{letter.enName}}"
+                (click)="filterByLetter({id: letter.id, name: letter.name })" class="letter">{{letter.name}}</span>
 
             <span id="number" class="letter">#</span>
-            <span id="all" class="letter active">ALL</span>
+            <span id="all" (click)="filterByLetter({id: 0, name: 'ALL'})" class="letter">ALL</span>
         </div>
     </div>
 
@@ -101,7 +124,7 @@
                 </th>
                 <td mat-cell *matCellDef="let row">
                     <mat-checkbox style="display: inherit; position: relative; top: 2px;"
-                        (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                        (click)="$event.stopPropagation()" (change)="$event ? slaveToggle(row) : null"
                         [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
                     </mat-checkbox>
                 </td>
@@ -109,7 +132,7 @@
 
             <!-- Code Column -->
             <ng-container matColumnDef="_id">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                <th mat-header-cell *matHeaderCellDef>
                     <!-- # Κωδικός -->
                 </th>
                 <td mat-cell *matCellDef="let element">
@@ -119,7 +142,7 @@
 
             <!-- name Column -->
             <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef> Τίτλος </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Τίτλος </th>
                 <td mat-cell *matCellDef="let element"> {{element.name }} </td>
             </ng-container>
 
@@ -172,13 +195,13 @@
             <!-- date_added Column -->
             <ng-container matColumnDef="date_added">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> * Ημ/νία Δημ/γιας </th>
-                <td mat-cell *matCellDef="let element"> {{element.date_added | date}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.date_added | date:'medium':'+0200':'el'}} </td>
             </ng-container>
 
             <!-- date_modified Column -->
             <ng-container matColumnDef="date_modified">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> * Ημ/νία Τροπ/σης </th>
-                <td mat-cell *matCellDef="let element"> {{element.date_modified | date}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.date_modified | date:'medium':'+0200':'el'}} </td>
             </ng-container>
 
             <ng-container matColumnDef="operations">

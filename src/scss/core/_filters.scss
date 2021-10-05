@@ -1,32 +1,43 @@
 #letter-range-holder {
-    min-height: 20px;
-    padding-bottom: 15px;
-    width: 100%;
+  min-height: 20px;
+  padding-bottom: 15px;
+  width: 100%;
+}
+
+#letter_range {
+  padding-bottom: 0;
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin: auto;
+}
+
+#letter_range .active {
+  font-weight: 700;
+  background: #63c2de;
+  border-radius: 50%;
+  color: white;
+}
+
+#letter_range #all {
+  width: 40px;
+  /* height: 40px; */
+  border-radius: 40%;
+}
+
+.letter {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  display: inline-block;
+  margin: 3px;
+  font-size: 18px;
+  transition: background-color 500ms ease-out 10ms, transform 500ms ease-in-out 10ms;
+
+  &:hover {
+    background: #63c2de;
+    border-radius: 50%;
+    color: white;
   }
-  
-  #letter_range {
-    padding-bottom: 0;
-    text-align: center;
-    font-size: 14px;
-    color: #666;
-    margin: auto;
-  }
-  
-  #letter_range .active {
-    font-weight: 700;
-  }
-  
-  #letter_range #all {
-    width: 40px;
-  }
-  
-  .letter {
-    cursor: pointer;
-    width: 25px;
-    text-align: center;
-    display: inline-block;
-  
-    &:hover {
-      color: #ccc;
-    }
-  }
+}

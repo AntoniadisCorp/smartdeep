@@ -315,3 +315,29 @@ export const ACTIONBTN_ORDER_PROCESS: IDropDownMenu[] = [
   so those orders will return in SKULabs on the next order sync.`, cmd: () => { }
   },
 ];
+
+
+export const GRLETTERS = [{ id: 1, name: 'Α', enName: 'A' },
+{ id: 2, name: 'Β', enName: 'B' },
+{ id: 3, name: 'Γ', enName: 'C' },
+{ id: 4, name: 'Δ', enName: 'D' },
+{ id: 5, name: 'Ε', enName: 'E' },
+{ id: 6, name: 'Ζ', enName: 'F' },
+{ id: 7, name: 'Η', enName: 'G' },
+{ id: 8, name: 'Θ', enName: 'H' },
+{ id: 9, name: 'Ι', enName: 'I' },
+{ id: 10, name: 'Κ', enName: 'J' },
+{ id: 11, name: 'Λ', enName: 'K' },
+{ id: 12, name: 'Μ', enName: 'L' },
+{ id: 13, name: 'Ν', enName: 'M' },
+{ id: 14, name: 'Ξ', enName: 'N' },
+{ id: 15, name: 'Ο', enName: 'O' },
+{ id: 16, name: 'Π', enName: 'P' },
+{ id: 17, name: 'Τ', enName: 'Q' },
+{ id: 18, name: 'Σ', enName: 'R' },
+{ id: 19, name: 'Τ', enName: 'S' },
+{ id: 20, name: 'Υ', enName: 'T' },
+{ id: 21, name: 'Φ', enName: 'U' },
+{ id: 22, name: 'Χ', enName: 'V' },
+{ id: 23, name: 'Ψ', enName: 'W' },
+{ id: 24, name: 'Ω', enName: 'X' },]

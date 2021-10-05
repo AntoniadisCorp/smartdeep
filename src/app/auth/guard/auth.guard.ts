@@ -11,9 +11,13 @@ export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) { }
 
   canActivate() {
-    if (this.authService.isLoggedIn()) {
+
+    let isLoggedIn: boolean = this.authService.isLoggedIn()
+
+    if (isLoggedIn) {
       this.router.navigate(['/extern/secret-random-number']);
     }
-    return !this.authService.isLoggedIn();
+
+    return !isLoggedIn
   }
 }

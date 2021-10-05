@@ -7,7 +7,6 @@
 }
 
 .table-align-middle {
-
   td {
     vertical-align: middle;
   }
@@ -17,4 +16,9 @@
   td {
     border: 0;
   }
+}
+
+/* Mat Tables */
+th.mat-header-cell, td.mat-cell {
+  padding-right: 9px !important;
 }
