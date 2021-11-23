@@ -4,7 +4,7 @@ import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, Inject, APP_ID, PLA
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 /* Import Hammer Js */
-import * as Hammer from 'hammerjs';
+// import * as Hammer from 'hammerjs';
 
 /* Import App Routing Module and Components */
 import {
