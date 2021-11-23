@@ -2,6 +2,7 @@
   "name": "smartdeep",
   "version": "0.0.0",
   "bin": "dist/server.js",
+  "http.proxySupport": "off",
   "scripts": {
     "ng": "ng",
     "serve": "ng serve --open",
@@ -23,6 +24,7 @@
     "postinstall": "ngcc"
   },
   "private": true,
+  "resolutions": {"webpack": "^5.0.0"},
   "dependencies": {
     "@ng-bootstrap/ng-bootstrap": "^5.3.1",
     "angular-in-memory-web-api": "github:brandonroberts/in-memory-web-api-bazel#50a34d8",

@@ -11,7 +11,7 @@ import { ItemListModule } from '../../../modules/list.module';
     declarations: [ routedComponents.others, routedComponents.app],
     imports: [ CommonModule, FormsModule, ReactiveFormsModule, UploadFileModule,
          HttpClientModule, MaterialsModule, BookRoutingModule, NgBootstrapModule, ItemListModule ],
-    entryComponents: [ routedComponents.app ],
+    // entryComponents: [ routedComponents.app ],
     exports: [],
     providers: [],
     schemas: []

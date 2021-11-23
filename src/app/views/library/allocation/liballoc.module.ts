@@ -9,7 +9,7 @@ import { LibAllocRoutingModule, routedComponents } from './liballoc.routing';
 @NgModule({
     declarations: [routedComponents.others, routedComponents.app, /* FileUploadComponent */],
     imports: [ItemListModule, ReactiveFormsModule, HttpClientModule, LibAllocRoutingModule, NgBootstrapModule, ScrollingModule],
-    entryComponents: [routedComponents.app],
+    // entryComponents: [routedComponents.app],
     exports: [/* FileUploadComponent */],
     providers: [],
     schemas: []

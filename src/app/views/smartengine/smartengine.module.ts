@@ -30,7 +30,7 @@ const APP_DIRECTIVES = [
         FormsModule,
         ItemListModule
     ],
-    entryComponents: [ routedComponents.entry ],
+    // entryComponents: [ routedComponents.entry ],
 
     exports: [],
     providers: [],

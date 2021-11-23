@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
     imports: [CommonModule, MaterialsModule, FormsModule ],
     exports: [ItemListComponent, CommonModule, MaterialsModule, FormsModule],
     declarations: [ItemListComponent, DeleteitemListDialogConfirm],
-    entryComponents: [DeleteitemListDialogConfirm],
+    // entryComponents: [DeleteitemListDialogConfirm],
     providers: [],
 })
 export class ItemListModule { }

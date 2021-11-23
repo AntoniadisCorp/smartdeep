@@ -6,6 +6,7 @@
         "types/*"
       ]
     },
+    "strict": true,
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
@@ -16,6 +17,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     // "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "importHelpers": true,
@@ -28,6 +30,12 @@
       "dom"
     ],
   },
+  "no-import-side-effect": [
+    true,
+    {
+      "ignore-module": "(core-js/.*|zone\\.js/.*|@angular/localize/init)$"
+    }
+  ],
   "angularCompilerOptions": {
     /*    "enableIvy": false, */
     "fullTemplateTypeCheck": true,

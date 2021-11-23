@@ -58,7 +58,7 @@
                 <div class="col">
                     <div class="d-flex md-form form-group mt-0">
                         <div class="disabled clearfix d-none d-md-block pt-3">
-                            <button type="button" mat-icon-button class="d-md-down-none" (click)="entranceGate=true">
+                            <button title="button" type="button" mat-icon-button class="d-md-down-none" (click)="entranceGate=true">
                                 <i class="fas fa-arrow-left text-dark fa-lg"></i>
                             </button>
                             <span class="text-dark uk-text-large mr-4">Πίσω</span>
@@ -74,7 +74,7 @@
                             <mat-chip class="text-dark mr-4">Κατάσταση: </mat-chip>
                             <label class="switch switch-text switch-pill switch-success mt-2">
 
-                                <input type="checkbox" checked
+                                <input type="checkbox" placeholder="κατάσταση.." checked
                                     class="form-check-input switch-input ng-untouched ng-pristine ng-valid"
                                     formControlName="status" id="status">
                                 <span class="switch-label" data-on="ΔΙΑΘΕΣΙΜΟ" data-off="ΜΗΔΙΑΘΕΣΙΜΟ"></span>
@@ -271,11 +271,11 @@
                     <div class="form-row">
                         <!-- Image Preview -->
                         <div class="form-group col-md-12">
-                            <button mat-icon-button class="btn-remove" color="warn" (click)="clearAvatar()"
+                            <button type="button" mat-icon-button class="btn-remove" color="warn" (click)="clearAvatar()"
                                 *ngIf="isAvatar()">
                                 <mat-icon>close</mat-icon>
                             </button>
-                            <img class="img-fluid fit shadow-lg rounded" *ngIf="avatarFile && avatarFile.src !== ''"
+                            <img title="avatar" class="img-fluid fit shadow-lg rounded" *ngIf="avatarFile && avatarFile.src !== ''"
                                 [src]="avatarFile.src" />
                             <!-- {{ avatarFile | json }} -->
                             <!-- {{ avatar | json }} -->

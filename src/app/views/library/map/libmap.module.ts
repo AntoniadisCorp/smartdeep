@@ -15,7 +15,7 @@ registerLocaleData(localeEl, 'el');
     declarations: [routedComponents.others, routedComponents.app, DiacriticsPipe,/* FileUploadComponent */],
     imports: [ItemListModule, ReactiveFormsModule, UploadFileModule,
         HttpClientModule, LibMapRoutingModule, NgBootstrapModule, ScrollingModule],
-    entryComponents: [routedComponents.app],
+    // entryComponents: [routedComponents.app],
     exports: [/* FileUploadComponent */],
     providers: [],
     schemas: []

@@ -3,8 +3,7 @@
     <div class="card-toolbar row">
         <!-- justify-content-start  -->
         <div class="col-md-10">
-            <a color="primary" mat-button #categoryTooltip="matTooltip" matTooltip="Φίλτρα"
-                matTooltipPosition="above">
+            <a color="primary" mat-button #categoryTooltip="matTooltip" matTooltip="Φίλτρα" matTooltipPosition="above">
                 <i class="fas fa-filter"></i>
                 Φίλτρα
             </a>
@@ -35,15 +34,16 @@
             <mat-menu restoreFocus="true" #itemMenu="matMenu">
                 <!-- <button mat-menu-item matTooltip="{{mitems.desc}}"
                     *ngFor="let mitems of MenuTools">{{mitems.title}}</button> -->
+                <ul>
+                    <!-- role="menuitemcheckbox" -->
+                    <li mat-menu-item class="">
+                        <a (click)="setTableColumns()">
 
-                <li mat-menu-item role="menuitemcheckbox" class="">
-                    <a (click)="setTableColumns()">
-
-                        <mat-icon>delete</mat-icon>
-                        Διαγραφή με επιλογή
-                    </a>
-                </li>
-
+                            <mat-icon>delete</mat-icon>
+                            Διαγραφή με επιλογή
+                        </a>
+                    </li>
+                </ul>
             </mat-menu>
 
             <a mat-icon-button [hidden]="clearMenu" (click)="setTableColumns()" #clearTooltip="matTooltip"

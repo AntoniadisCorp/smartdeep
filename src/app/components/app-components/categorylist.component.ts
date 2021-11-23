@@ -29,7 +29,7 @@ import { strRemofarray } from '../../routines';
 export class CategoryComponent implements OnInit {
 
   @Input() categories: any;
-  @Input() @Output() action: MenuAction;
+  @Input() @Output() action!: MenuAction;
 
   ngOnInit(): void { }
 
@@ -68,9 +68,9 @@ export class CategoryComponent implements OnInit {
 export class InnerCategoryComponent implements OnInit {
 
   @Input() item: any;
-  @Input() @Output() selectaction: MenuAction;
+  @Input() @Output() selectaction!: MenuAction;
 
-  selectedItem: boolean;
+  selectedItem: boolean = false;
 
   constructor(private router: Router) { }
 
@@ -149,9 +149,9 @@ export class InnerCategoryComponent implements OnInit {
 export class CategoryLinkComponent implements OnInit {
 
   @Input() @Output() link: any;
-  @Input() @Output() selectlink: MenuAction;
+  @Input() @Output() selectlink!: MenuAction;
 
-  selection: boolean;
+  private selection: boolean = false;
   indeterminate = false;
   labelPosition: string = 'before';
   disabled = false;
@@ -236,9 +236,9 @@ export class CategoryLinkComponent implements OnInit {
 export class CategoryDropdownComponent implements OnInit {
 
   @Input() @Output() link: any;
-  @Input() @Output() selectdropdown: MenuAction;
+  @Input() @Output() selectdropdown!: MenuAction;
 
-  selection: boolean;
+  selection: boolean = false;
   indeterminate = false;
   labelPosition: string = 'before';
   disabled = false;

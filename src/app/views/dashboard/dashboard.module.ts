@@ -32,8 +32,7 @@ import { ReeDirective } from '../../directives';
         ...APP_CATEGORY_COMPONENT,
         ReeDirective,
     ],
-    entryComponents: [
-    ],
+    // entryComponents: [],
     exports: [
         ...routedComponents.app,
         ...APP_CATEGORY_COMPONENT,

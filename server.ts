@@ -1,3 +1,7 @@
+/***************************************************************************************************
+ * Load `$localize` onto the global scope - used if i18n tags appear in Angular templates.
+ */
+import '@angular/localize/init';
 // Angular requires Zone.js
 // These are important and needed before anything else
 /**
@@ -61,12 +65,14 @@ export function app() {
   // app.set('ip', ip);
 
 
-
+  // Our Universal express-engine 
+  // (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
+  //@ts-ignore
   app.engine('html', ngExpressEngine({
-    bootstrap: AppServerModule,
-    /* providers: [
-      provideModuleMap(LAZY_MODULE_MAP)
-    ] */
+    bootstrap: AppServerModule
+    // providers: [
+    //   provideModuleMap(LAZY_MODULE_MAP)
+    // ]
   }));
 
   app.set('view engine', 'html');
@@ -115,6 +121,7 @@ export function app() {
 
 function run() {
   // tslint:disable-next-line: radix
+  //  @ts-ignore
   const PORT = parseInt(process.env.PORT) || 4200;
   /**
  * Get port from environment and store in Express.
