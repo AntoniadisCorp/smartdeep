@@ -15,20 +15,20 @@ import { map } from 'rxjs/operators';
 
 export class SettingsComponent implements OnInit, AfterViewInit {
 
-    generals: any[]
-    notes: any[]
-    generalsAvatar: any[]
+    generals: any[] = [];
+    notes: any[] = []
+    generalsAvatar: any[] = []
 
     progress: number = 0
-    avatar: FormControl
+    avatar!: FormControl
 
-    private nativeElement: HTMLDocument;
-    private width: number;
-    private height: number;
-    avatarFile: ImageSnippet;
+    private nativeElement!: HTMLDocument;
+    private width!: number;
+    private height!: number;
+    avatarFile!: ImageSnippet;
 
-    constructor(private elRef: ElementRef, ngZone: NgZone, 
-        private httpService: SmartEngineService, private authService: AuthService ) {
+    constructor(private elRef: ElementRef, ngZone: NgZone,
+        private httpService: SmartEngineService, private authService: AuthService) {
         window.onresize = (e) => {
             ngZone.run(() => {
                 this.width = window.innerWidth;
@@ -77,8 +77,8 @@ export class SettingsComponent implements OnInit, AfterViewInit {
         ];
 
         // this.getlibrary()
-        
-        this.generalsAvatar =  [{
+
+        this.generalsAvatar = [{
             icon: 'photo-video',
             name: 'Φωτογραφία φόντου',
             updated: new Date('1/28/16'),
@@ -89,15 +89,15 @@ export class SettingsComponent implements OnInit, AfterViewInit {
                 }
             ],
             hint: ''
-        } ]
+        }]
 
 
         this.avatar.valueChanges
-        .subscribe(file => {
+            .subscribe(file => {
 
-            // console.log('addbookImageFile: ', file)
-            if (file) this.avatarFile.showPreviewPic(file);
-        })
+                // console.log('addbookImageFile: ', file)
+                if (file) this.avatarFile.showPreviewPic(file);
+            })
 
         this.notes = [
             {
@@ -118,7 +118,7 @@ export class SettingsComponent implements OnInit, AfterViewInit {
         this.refreshLayout()
 
         // HttpRequest Get current Library
-    }    
+    }
 
 
     refreshLayout() {

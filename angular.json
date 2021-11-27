@@ -56,8 +56,7 @@
               "node_modules/simple-line-icons/scss/simple-line-icons.scss"
             ],
             "scripts": [
-              "node_modules/chart.js/dist/Chart.min.js",
-              "node_modules/hammerjs/hammer.min.js"
+              "node_modules/chart.js/dist/Chart.min.js"
             ]
           },
           "configurations": {
@@ -88,6 +87,14 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "development": {
+              "buildOptimizer": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "extractLicenses": false,
+              "vendorChunk": true,
+              "optimization": false
             }
           }
         },
@@ -99,8 +106,12 @@
           "configurations": {
             "production": {
               "browserTarget": "smartdeep:build:production"
+            },
+            "development": {
+              "browserTarget": "smartdeep:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "serve-ssr": {
           "builder": "@nguniversal/builders:ssr-dev-server",
@@ -141,22 +152,7 @@
             "scripts": [
               "node_modules/chart.js/dist/Chart.bundle.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-              "node_modules/jquery/dist/jquery.slim.min.js",
-              "node_modules/hammerjs/hammer.min.js"
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "tsconfig.server.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+              "node_modules/jquery/dist/jquery.slim.min.js"
             ]
           }
         },

@@ -10,9 +10,9 @@ import { Router } from '@angular/router';
 export class ImageListComponent implements OnInit {
 
     // tslint:disable-next-line: ban-types
-    toggleListValueByid: number;
+    toggleListValueByid!: number;
 
-    toggleListOptions: Array<ItoggleListMenu>;
+    toggleListOptions!: Array<ItoggleListMenu>;
 
     constructor(private router: Router) { }
 
@@ -39,13 +39,13 @@ export class ImageListComponent implements OnInit {
         this.toggleListValueByid = 2;
     }
 
-    selectionChanged(item): void {
+    selectionChanged(item: { value: string | number; }): void {
         console.log('Selected value: ' + item.value);
 
-        const iList: ItoggleListMenu =
+        const iList: ItoggleListMenu | undefined =
             this.toggleListOptions.find((k: ItoggleListMenu) => k.id === item.value);
 
-        this.router.navigate(['/smartengine', iList.uRL]);
+        if (iList) this.router.navigate(['/smartengine', iList.uRL]);
         /* this.toggleListValueByid.forEach(i => console.log(`Included Item: ${i}`)); */
     }
 }

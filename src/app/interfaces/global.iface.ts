@@ -334,12 +334,12 @@ export interface Kit {
 }
 
 export class RandomNumber {
-  value: number;
+  value!: number;
 }
 
 export class Tokens {
-  jwt: string;
-  refreshToken: string;
+  jwt!: string;
+  refreshToken!: string;
   userId?: string;
 }
 

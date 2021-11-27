@@ -53,7 +53,7 @@
                 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="tree">
                     <!-- This is the tree node template for leaf nodes -->
                     <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
-                        <button mat-icon-button disabled></button>
+                        <button title="button" mat-icon-button disabled></button>
 
                         <!-- <p> <label>ka</label> </p> -->
                         <mat-checkbox (change)="todoLeafItemSelectionToggle(node)" [checked]="checklistSelection.selected && checklistSelection.selected[0] && checklistSelection.selected.length &&

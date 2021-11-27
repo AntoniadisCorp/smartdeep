@@ -143,7 +143,7 @@ export class CategoryThemeComponent implements OnInit {
     // ------------------------ Οn Table Init ----------------------------
     private VarInitialization(): void {
 
-        const routeSnapId: string = this.route.snapshot.paramMap.get('id')
+        const routeSnapId: string | null = this.route.snapshot.paramMap.get('id')
         this.extraFilters = []
 
         this.MenuTools = MENUBTN_ITEM;
@@ -252,7 +252,7 @@ export class CategoryThemeComponent implements OnInit {
             .subscribe((result: any) => {
                 console.log('The dialog was closed', result);
 
-                if (result)
+                if (result && Row._id)
                     this.httpService.deleteOneTask(this.apiUrl.deleteUrl('category', Row._id))
                         .subscribe((res) => { console.log('deleteOneTask: ', res), this.clearSearch() })
             });
@@ -324,8 +324,7 @@ export class CategoryThemeComponent implements OnInit {
         if (!row) {
             return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
         }
-        return `${
-            this.selection.isSelected(row) ? 'deselect' : 'select'
+        return `${this.selection.isSelected(row) ? 'deselect' : 'select'
             } row ${row.name + 1}`;
     }
 
@@ -697,10 +696,11 @@ export class AddCategoryDialogComponent {
         this.iFonts = _fonts;
 
         // Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-        this.filteredFonts = this.icon.valueChanges.pipe(
-            startWith(''),
-            map(state => state ? this._filterStatesFonts(state) : this.iFonts.slice())
-        )
+        if (this.icon)
+            this.filteredFonts = this.icon.valueChanges.pipe(
+                startWith(''),
+                map(state => state ? this._filterStatesFonts(state) : this.iFonts.slice())
+            )
     }
 
     private treeInitialization(): void {
@@ -708,11 +708,13 @@ export class AddCategoryDialogComponent {
         const RowData: Category = this.data.body
         let node: ItemNode = { name: RowData.name, _id: RowData._id, slug: RowData.slug }
 
+        if (!RowData.tree)
+            return
         // get Flatted Node
         const fnode: ItemFlatNode = this.transformer(node, RowData.tree.length)
 
         // get Parent of Checked Node
-        const parentNode: ItemFlatNode = this.getParentNode(fnode)
+        const parentNode: ItemFlatNode | null = this.getParentNode(fnode)
 
         if (!parentNode)
             return
@@ -734,7 +736,7 @@ export class AddCategoryDialogComponent {
             root: RowData.root !== undefined && RowData.root ? 0 : 1,
             tree: RowData.tree && RowData.tree.length ? RowData.tree : [],
             icon: RowData.icon ? RowData.icon.slice(_fonts[0].iconclass.length) : '',
-            desc: RowData.desc.length ? RowData.desc : '',
+            desc: RowData.desc && RowData.desc.length ? RowData.desc : '',
             date_added: (RowData.date_added ? RowData.date_added : ''),
             date_modified: (RowData.date_modified ? RowData.date_modified : ''),
             disabled: (RowData.disabled !== null ? !RowData.disabled : false),

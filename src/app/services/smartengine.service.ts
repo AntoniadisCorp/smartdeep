@@ -60,9 +60,10 @@ export class SmartEngineService {
 
     // reset Url if Needed
     // this.taskUrl = this.setTaskUrl(apiURL);
+    this.taskUrl = this.setTaskUrl(apiURL);
+    console.log('searching for', term + ' ', this.taskUrl);
 
-    console.log('searching for', term + ' ', apiURL);
-    return this.http.get<any>(apiURL, {
+    return this.http.get<any>(this.taskUrl, {
       params: new HttpParams()
         .set('filter', term || '')
         .set('col', collection || '')
@@ -150,7 +151,7 @@ export class SmartEngineService {
       params: new HttpParams()
         .set('_id', String(_id))
         .set('filter', filter)
-        .set('sortActive', sortActive)
+        .set('sortActive', sortActive || '')
         .set('sortOrder', sortOrder)
         .set('pageNumber', pageNumber.toString())
         .set('pageSize', pageSize.toString())
@@ -165,7 +166,7 @@ export class SmartEngineService {
     );
   }
 
-  private setTaskUrl(setUrl: string) {
+  private setTaskUrl(setUrl?: string) {
 
     return setUrl && setUrl.length > 0 ? setUrl : this.taskUrl;
   }

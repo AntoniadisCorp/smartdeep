@@ -16,7 +16,7 @@ import { filter } from 'rxjs/operators';
   styles: [`
   .btn.breadbtn {
     font-size: 0.885625rem;
-    border-radius: 23px;"
+    border-radius: 23px;
   }
   `]
 })

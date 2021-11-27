@@ -151,7 +151,7 @@ export class CategoryLinkComponent implements OnInit {
   @Input() @Output() link: any;
   @Input() @Output() selectlink!: MenuAction;
 
-  private selection: boolean = false;
+  selection: boolean = false;
   indeterminate = false;
   labelPosition: string = 'before';
   disabled = false;

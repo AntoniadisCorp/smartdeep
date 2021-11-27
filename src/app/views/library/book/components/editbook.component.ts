@@ -29,20 +29,20 @@ export interface StateGroup {
   styleUrls: ['editbook.component.scss']
 })
 export class EditbookComponent implements OnInit {
-  stateGroupOptions: Observable<StateGroup[]>;
-  entranceForm: FormGroup;
-  avatarFile: ImageSnippet;
+  stateGroupOptions!: Observable<StateGroup[]>;
+  entranceForm!: FormGroup;
+  avatarFile!: ImageSnippet;
 
-  stateData$: Observable<any>;
+  stateData$!: Observable<any>;
 
   fontSize = '18px';
 
-  entranceGate: boolean;
-  isProcessing: boolean;
+  entranceGate!: boolean;
+  isProcessing!: boolean;
   // tslint:disable-next-line: ban-types
-  private Formtranslator: Object;
+  private Formtranslator!: Object;
   private booksState: Book[] = [];
-  stateGroupSelected: boolean;
+  stateGroupSelected!: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -129,43 +129,45 @@ export class EditbookComponent implements OnInit {
 
     this.stateGroupSelected = false
 
-    this.stateGroupOptions = this.title.valueChanges.pipe(
-      startWith(''),
-      // delay emits
-      debounceTime(300),
-      // distinctUntilChanged(),
-      tap(() => (this.isProcessing = true)),
-      // use switch map so as to cancel previous subscribed events, before creating new ones
-      switchMap(value => {
-        if (value === '' || value.length < 1 || this.stateGroupSelected) {
-          // if no value is present, return null
-          return of(null);
-        } else {
-          // lookup from smartdeep isense
-          return this.searchHttp(value, 'book').pipe(
-            map((books: Book[]) => {
-              if (!books) {
-                return [];
-              }
-              this.booksState = books;
-              // const k = books.map<any>((item: Book) => { return item
-              /* return {
-                                    name: item.name,
-                                    _id: item._id,
-                                    avatar: item.avatar,
-                                    pages: item.pages
-                                } */
-              // });
-              // console.log(k)
-              return books;
-              // return this._filterGroup(value, k);
-            }),
-            finalize(() => (this.isProcessing = this.stateGroupSelected = false))
-          );
-        }
-      }),
-      tap(() => (this.isProcessing = this.stateGroupSelected = false))
-    );
+    if (this.title !== null)
+      this.stateGroupOptions =
+        this.title.valueChanges.pipe(
+          startWith(''),
+          // delay emits
+          debounceTime(300),
+          // distinctUntilChanged(),
+          tap(() => (this.isProcessing = true)),
+          // use switch map so as to cancel previous subscribed events, before creating new ones
+          switchMap(value => {
+            if (value === '' || value.length < 1 || this.stateGroupSelected) {
+              // if no value is present, return null
+              return of(null);
+            } else {
+              // lookup from smartdeep isense
+              return this.searchHttp(value, 'book').pipe(
+                map((books: Book[]) => {
+                  if (!books) {
+                    return [];
+                  }
+                  this.booksState = books;
+                  // const k = books.map<any>((item: Book) => { return item
+                  /* return {
+                                        name: item.name,
+                                        _id: item._id,
+                                        avatar: item.avatar,
+                                        pages: item.pages
+                                    } */
+                  // });
+                  // console.log(k)
+                  return books;
+                  // return this._filterGroup(value, k);
+                }),
+                finalize(() => (this.isProcessing = this.stateGroupSelected = false))
+              );
+            }
+          }),
+          tap(() => (this.isProcessing = this.stateGroupSelected = false))
+        );
 
     if (
       this.route.snapshot.data._id &&

@@ -7,11 +7,11 @@ import { Tasks } from '../../interfaces';
     styleUrls: ['./smartengine.component.scss']
 })
 export class SmartEngineComponent implements OnInit {
-    product: Tasks[];
-    category: object[];
-    search: string;
+    product!: Tasks[];
+    category!: object[];
+    search!: string;
 
-    constructor(private sEngineService: SmartEngineService) { }
+    constructor(private sEngineService: SmartEngineService) {}
 
     ngOnInit(): void {
 

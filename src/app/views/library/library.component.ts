@@ -20,8 +20,8 @@ export class LibraryComponent implements OnInit {
 
   // @ViewChild('tabGroup', {static: true}) tabGroup: { _tabHeader: { _elementRef: { nativeElement: { children: any; }; }; }; };
 
-  InvTabs$: Observable<InventoryTabs[]>;
-  activeLink: string;
+  InvTabs$!: Observable<InventoryTabs[]>;
+  activeLink!: string;
 
   constructor(private invService: InventoryService, private router: Router,
     private route: ActivatedRoute, matIconRegistry: SvgIconService) {

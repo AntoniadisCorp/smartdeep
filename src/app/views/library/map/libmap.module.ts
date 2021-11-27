@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { MaterialsModule, NgBootstrapModule, ItemListModule, UploadFileModule } from '../../../modules';
 import { LibMapRoutingModule, routedComponents } from './libmap.routing'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScrollingModule } from '@angular/cdk/scrolling'
 import { DiacriticsPipe } from '../../../pipes';
-import localeEl from '@angular/common/locales/el';
-import { registerLocaleData } from '@angular/common';
+import localeEl from '@angular/common/locales/el'
 
 registerLocaleData(localeEl, 'el');
 

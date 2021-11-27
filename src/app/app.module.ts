@@ -148,10 +148,10 @@ export class AppModule {
 
 //Stub for localStorage
 let localStorage = {
-  getItem: function (key) {
+  getItem: function (key: any) {
     return this[key];
   },
-  setItem: function (key, value) {
+  setItem: function (key: any, value: any) {
     this[key] = value;
   }
 };

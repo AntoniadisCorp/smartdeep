@@ -105,18 +105,18 @@ export class ItemListComponent implements OnInit, AfterViewInit {
 
   @Input() viewstyle: any;
 
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild('search', { static: false }) search: ElementRef;
+  @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort!: MatSort;
+  @ViewChild('search', { static: false }) search!: ElementRef;
 
-  book: Book;
+  book!: Book;
 
   progress: number = 0
 
   // tslint:disable-next-line: ban-types
-  toggleListValueByid: number;
+  toggleListValueByid!: number;
 
-  toggleListOptions: Array<ItoggleListMenu>;
+  toggleListOptions!: Array<ItoggleListMenu>;
 
   displayedColumns: string[] = ['select', 'SKU',
     'avatar', 'name', 'bookcase', 'author',
@@ -130,11 +130,11 @@ export class ItemListComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<Book>();
   // dataSource: customDataSource
   selection = new SelectionModel<Item>(true, []);
-  btnCheckboxCol: InventoryTableColumns[];
-  value: string;
+  btnCheckboxCol!: InventoryTableColumns[];
+  value!: string;
 
-  MenuTools: IDropDownMenu[];
-  ActionBtn: IDropDownMenu[];
+  MenuTools!: IDropDownMenu[];
+  ActionBtn!: IDropDownMenu[];
 
   isLoadingResults = true;
   isRateLimitReached = false;
@@ -142,8 +142,8 @@ export class ItemListComponent implements OnInit, AfterViewInit {
   data: any;
 
   private tableAction: boolean = false
-  private apiUrl: { searchUrl: string, deleteUrl: (col: string, id: string | number) => string, deleteManyUrl: string };
-  extraFilters: Array<{ [x: string]: any; }>;
+  private apiUrl!: { searchUrl: string, deleteUrl: (col: string, id: string | number) => string, deleteManyUrl: string };
+  extraFilters!: Array<{ [x: string]: any; }>;
 
   constructor(
     private router: Router,
@@ -195,7 +195,7 @@ export class ItemListComponent implements OnInit, AfterViewInit {
 
   private VarInitialization(): void {
 
-    const routeSnapId: string = this.route.snapshot.paramMap.get('id')
+    const routeSnapId: string = this.route.snapshot.paramMap.get('id') || ''
 
     this.extraFilters = []
     if (routeSnapId) { this.extraFilters.push({ 'categoryId': routeSnapId.trim().toLocaleLowerCase() }) }
@@ -284,11 +284,11 @@ export class ItemListComponent implements OnInit, AfterViewInit {
   selectionChanged(item: any): void {
     // console.log('Selected value: ' + item.value);
 
-    const iList: ItoggleListMenu = this.toggleListOptions.find(
+    const iList: ItoggleListMenu | undefined = this.toggleListOptions.find(
       (k: ItoggleListMenu) => k.id === item.value
     );
 
-    this.router.navigate(['/smartengine', iList.uRL]);
+    if (iList) this.router.navigate(['/smartengine', iList.uRL]);
     /* this.toggleListValueByid.forEach(i => console.log(`Included Item: ${i}`)); */
   }
 
@@ -306,7 +306,7 @@ export class ItemListComponent implements OnInit, AfterViewInit {
   }
 
   // ------------------------ Table Row Acts ----------------------------
-  onRowClicked(Row: { _id }) {
+  onRowClicked(Row: { _id: any }) {
     console.log('Row clicked: ', Row)
 
     if (!this.tableAction)
@@ -376,8 +376,7 @@ export class ItemListComponent implements OnInit, AfterViewInit {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${
-      this.selection.isSelected(row) ? 'deselect' : 'select'
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'
       } row ${row.name + 1}`;
   }
 

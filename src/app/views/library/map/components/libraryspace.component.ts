@@ -24,9 +24,9 @@ import { MatChipInputEvent } from '@angular/material/chips';
 export class LibrarySpaceComponent implements OnInit {
 
 
-    @ViewChild('search', { static: false }) search: ElementRef;
-    @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-    @ViewChild(MatSort, { static: false }) sort: MatSort;
+    @ViewChild('search', { static: false }) search!: ElementRef;
+    @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
+    @ViewChild(MatSort, { static: false }) sort!: MatSort;
 
     isLoadingResults: boolean = true
     toggleListValueByid: number
@@ -131,7 +131,7 @@ export class LibrarySpaceComponent implements OnInit {
     // private Functions
     private VarInitialization(): void {
 
-        const routeSnapId: string = this.route.snapshot.paramMap.get('id')
+        const routeSnapId: string | null = this.route.snapshot.paramMap.get('id')
 
         this.extraFilters = []
         if (routeSnapId) { this.extraFilters.push({ 'categoryId': routeSnapId.trim().toLocaleLowerCase() }) }
@@ -272,8 +272,7 @@ export class LibrarySpaceComponent implements OnInit {
         if (!row) {
             return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
         }
-        return `${
-            this.selection.isSelected(row) ? 'deselect' : 'select'
+        return `${this.selection.isSelected(row) ? 'deselect' : 'select'
             } row ${row.name + 1}`;
     }
 
@@ -335,7 +334,7 @@ export class LibrarySpaceComponent implements OnInit {
 export class LibrarySpaceDialogComponent {
 
     LibSpaceForm: FormGroup
-    nameObservable: Observable<any>
+    nameObservable!: Observable<any>
 
     visible = true;
     selectable = true;
@@ -343,15 +342,15 @@ export class LibrarySpaceDialogComponent {
     addOnBlur = true;
     separatorKeysCodes: number[] = [ENTER, COMMA];
 
-    filteredShelves: Observable<string[]>;
+    filteredShelves!: Observable<string[]>;
     shelves: BookShelf[] = [];
     allShelves: string[] = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'ς'];
     Libtypes: { id: number, value: string }[];
 
-    @ViewChild('shelvesInput', { static: false }) shelvesInput: ElementRef<HTMLInputElement>;
-    @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
+    @ViewChild('shelvesInput', { static: false }) shelvesInput!: ElementRef<HTMLInputElement>;
+    @ViewChild('auto', { static: false }) matAutocomplete!: MatAutocomplete;
 
-    progressActionDataBar: number;
+    progressActionDataBar!: number;
 
     constructor(
         public dialogRef: MatDialogRef<LibrarySpaceDialogComponent>,
@@ -371,7 +370,7 @@ export class LibrarySpaceDialogComponent {
 
         // On Init Window set default Values
         this.Libtypes = [{ id: 0, value: 'Ράφια' }, { id: 1, value: 'Ερμάριο' }]
-        this.LibtypesCntr.setValue(0);
+        if (this.LibtypesCntr) this.LibtypesCntr.setValue(0);
 
         // On Edit Window set editable Row Values
         if (this.data.body) {
@@ -401,12 +400,13 @@ export class LibrarySpaceDialogComponent {
             })
         ) */
 
-        this.filteredShelves = this.bookshelf.valueChanges.pipe(
-            startWith(null),
-            map((shelf: string | null) =>
-                shelf ? this._filter(shelf) : [] // this.allShelves.slice()
-            )
-        );
+        if (this.bookshelf)
+            this.filteredShelves = this.bookshelf.valueChanges.pipe(
+                startWith(null),
+                map((shelf: string | null) =>
+                    shelf ? this._filter(shelf) : [] // this.allShelves.slice()
+                )
+            );
     }
 
     onNoClick(): void {
@@ -423,12 +423,12 @@ export class LibrarySpaceDialogComponent {
             bookcase: {
                 // name: this.name.value,
                 _id: this.data.body ? this.data.body._id : null,
-                whatnot: this.whatnot.value,
-                type: this.LibtypesCntr.value,
+                whatnot: this.whatnot ? this.whatnot.value : '',
+                type: this.LibtypesCntr ? this.LibtypesCntr.value : '',
                 bookshelves: this.shelves,
-                date_added: this.data.body ? new Date(this.date_added.value) : new Date(),
+                date_added: this.data.body && this.date_added ? new Date(this.date_added.value) : new Date(),
                 date_modified: this.data.body ? new Date() : null,
-                disabled: this.data.body ? !this.disabled.value : false
+                disabled: this.data.body && this.disabled ? !this.disabled.value : false,
                 // bookshelfNo: this.bookshelfNo.value,
             },
             editable: this.data.body ? true : false,
@@ -440,7 +440,7 @@ export class LibrarySpaceDialogComponent {
             type: result.bookcase.type,
             bookshelves: result.bookcase.bookshelves,
             date_added: result.bookcase.date_added,
-            date_modified: result.bookcase.date_modified,
+            date_modified: result.bookcase.date_modified || undefined,
             disabled: result.bookcase.disabled,
             status: 'active',
             recyclebin: false
@@ -523,7 +523,7 @@ export class LibrarySpaceDialogComponent {
                 input.value = "";
             }
 
-            this.bookshelf.setValue(null);
+            if (this.bookshelf) this.bookshelf.setValue(null);
         }
     }
 
@@ -543,7 +543,7 @@ export class LibrarySpaceDialogComponent {
         this.removeElement(this.allShelves, event.option.viewValue)
 
         this.shelvesInput.nativeElement.value = "";
-        this.bookshelf.setValue(null);
+        if (this.bookshelf) this.bookshelf.setValue(null);
     }
 
     private removeElement(arr: string[] | BookShelf[], shelf: string | BookShelf): void {

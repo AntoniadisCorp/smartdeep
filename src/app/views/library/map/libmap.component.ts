@@ -18,8 +18,8 @@ import { slideInAnimation } from '../../../animations';
 export class LibMapComponent implements OnInit {
 
 
-    InvTabs$: Observable<InventoryTabs[]>;
-    activeLink: string;
+    InvTabs$!: Observable<InventoryTabs[]>;
+    activeLink!: string;
 
     constructor(private invService: InventoryService, private router: Router,
         private route: ActivatedRoute, matIconRegistry: SvgIconService) {

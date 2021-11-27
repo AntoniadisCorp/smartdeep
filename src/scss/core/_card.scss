@@ -16,6 +16,7 @@
   min-width: 0;
   word-wrap: break-word;
   background-color: #fff;
+  -webkit-background-clip: border-box;
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.08);
 
@@ -395,7 +396,7 @@
     width: 60px;
     height: 65px;
     background-size: 100%;
-    background: url(assets/img/svg/searchbook.svg) no-repeat 0 0/100%;
+    background: url(#{$project-folder}assets/img/svg/searchbook.svg) no-repeat 0 0/100%;
   }
 
   .results-box {

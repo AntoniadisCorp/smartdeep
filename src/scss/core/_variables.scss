@@ -1,6 +1,6 @@
 // scss-lint:disable all
 // ore Admin Variables
-
+$project-folder:                      '../../' !default;   
 $enable-sidebar-nav-rounded:          false !default;
 
 $border-color:                        $gray-200 !default;
@@ -49,7 +49,7 @@ $navbar-border: (
 )  !default;
 $navbar-brand-width:                  88px !default;
 $navbar-brand-bg:                     #fff !default;
-$navbar-brand-logo:                   url('assets/img/logo.png') !default;
+$navbar-brand-logo:                   url('#{$project-folder}assets/img/logo.png') !default;
 $navbar-brand-logo-size:              68px auto !default;
 $navbar-brand-border: (
   bottom: (
@@ -61,7 +61,7 @@ $navbar-brand-border: (
 
 $navbar-brand-minimized-width:        5px !default;
 $navbar-brand-minimized-bg:           $navbar-brand-bg !default;
-$navbar-brand-minimized-logo:         url('assets/img/logo.png') !default;
+$navbar-brand-minimized-logo:         url('#{$project-folder}assets/img/logo.png') !default;
 $navbar-brand-minimized-logo-size:    31px !default;
 $navbar-brand-minimized-border:       $navbar-brand-border !default;
 
