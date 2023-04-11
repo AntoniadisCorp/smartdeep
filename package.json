@@ -78,7 +78,7 @@
     "@angular/service-worker": "^14.3.0",
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@mdi/font": "^6.5.95",
-    "@ngtools/webpack": "^13.0.3",
+    "@ngtools/webpack": "^15.2.5",
     "@nguniversal/builders": "^11.0.1",
     "@popperjs/core": "^2.11.0",
     "@schematics/angular": "^13.0.3",
