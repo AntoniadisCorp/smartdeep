@@ -152,6 +152,7 @@ $desktop: 992px;
       rgba(255, 255, 255, 0)
     ); */
     -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
     background-clip: text;
 
     @include desktop {

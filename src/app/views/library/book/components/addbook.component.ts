@@ -398,7 +398,7 @@ export class AddCategoryDialogComponent extends DashboardComponent {
         httpService: SmartEngineService) {
         super(httpService);
     }
-    ngOnInit(): void { }
+    override ngOnInit(): void { }
 
 
     onNoClick(): void {
@@ -536,14 +536,14 @@ export class AddbookComponent implements OnInit, AfterViewInit {
         /* UPDATE - EDIT BOOK BY ID */
 
         if (
-            this.route.snapshot.data._id &&
-            this.route.snapshot.data._id.code === 200
+            this.route.snapshot.data['_id'] &&
+            this.route.snapshot.data['_id'].code === 200
         ) {
             this.entranceSelected()
             this.catlen = -1
 
             // fetching data
-            const fetchbook: Book = this.route.snapshot.data._id.data.result
+            const fetchbook: Book = this.route.snapshot.data['_id'].data.result
 
             this.avatarFile = new ImageSnippet(fetchbook.avatar.src, fetchbook.avatar.file)
             // this.books.get('avatar').setValue(fetchbook.avatar.file)
@@ -710,11 +710,11 @@ export class AddbookComponent implements OnInit, AfterViewInit {
         this.logger.log('Αποθήκευση ' + _title + ' περιμένετε...')
 
         // UPDATE FORM
-        if (this.route.snapshot.data._id) {
+        if (this.route.snapshot.data['_id']) {
 
             // console.log(this.route.snapshot.data, formData.get('_id'))
 
-            if (this.route.snapshot.data._id.code === 200) {
+            if (this.route.snapshot.data['_id'].code === 200) {
                 this.updateFormByHttp(formData).subscribe((result: any) => {
                     let data = {
                         title: `To Βιβλίο ${_title} δεν ενημερώθηκε!`,

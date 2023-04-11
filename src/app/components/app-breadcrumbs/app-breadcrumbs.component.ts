@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd, Params, Data } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -21,7 +21,7 @@ import { filter } from 'rxjs/operators';
   `]
 })
 export class AppBreadcrumbsComponent {
-  breadcrumbs: Array<object>;
+  breadcrumbs: Array<{ url: string, label: Data | { title: string }, params: Params }>;
   constructor(
     private router: Router,
     private route: ActivatedRoute

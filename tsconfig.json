@@ -12,17 +12,21 @@
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
-    "module": "es2020",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     // "allowSyntheticDefaultImports": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
     "strictPropertyInitialization": false,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "importHelpers": true,
-    "target": "es2015",
+    "target": "es2017",
+    "module": "es2020",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -39,8 +43,10 @@
   ],
   "angularCompilerOptions": {
     /*    "enableIvy": false, */
+    "enableI18nLegacyMessageIdFormat": false,
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
-    /* "strictTemplates": true */
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
   },
 }

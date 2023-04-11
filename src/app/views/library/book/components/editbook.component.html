@@ -16,7 +16,7 @@
                         <!-- <mat-optgroup *ngFor="let group of stateGroupOptions | async" [label]="group.letter"> -->
                         <mat-option *ngFor="let option of stateGroupOptions | async" [value]="option.name">
                             <span> {{ option.SKU }}</span> |
-                            <img class="autocomplete-option-img" aria-hidden [src]="option.avatar.src" height="25">
+                            <img title="avatar" class="autocomplete-option-img" [src]="option.avatar.src" height="25">
                             <span> {{ option.name }}</span> |
                             <small>Σελίδες: {{ option.pages }}</small>
                         </mat-option>
@@ -39,7 +39,8 @@
             <div class="col">
                 <div class="d-flex md-form form-group mt-0">
                     <div class="clearfix d-sm-block d-md-block pt-3">
-                        <button type="button" mat-icon-button class="d-md-down-none" (click)="entranceGate=true">
+                        <button title="entrance" type="button" mat-icon-button class="d-md-down-none"
+                            (click)="entranceGate=true">
                             <i class="fas fa-arrow-left text-dark fa-lg"></i>
                         </button>
                         <span class="text-dark uk-text-large mr-3">Πίσω</span>
@@ -53,7 +54,7 @@
                         </span>
                         <!-- <span class="text-dark uk-text-large mr-2">Κατάσταση: </span> -->
                         <label class="switch switch-text switch-pill switch-success mt-2">
-                            <input type="checkbox" checked
+                            <input title="check" type="checkbox" checked
                                 class="form-check-input switch-input ng-untouched ng-pristine ng-valid"
                                 formControlName="status" id="status">
                             <span class="switch-label" data-on="ΔΙΑΘΕΣΙΜΟ" data-off="ΜΗΔΙΑΘΕΣΙΜΟ"></span>
@@ -87,10 +88,11 @@
                         <div class="form-row">
                             <!-- Image Preview -->
                             <div class="form-group col-md-12" *ngIf="avatarFile && avatarFile.src !== ''">
-                                <button mat-icon-button class="icon heart active">
+                                <button title="like" type="button" mat-icon-button class="icon heart active">
                                     <i class="fas fa-heart fa-lg"></i></button>
-                                <img class="img-fluid fit shadow-lg rounded" [src]="avatarFile.src" />
-                                <button mat-icon-button class="icon card-settings favorite-card-settings">
+                                <img title="avatarfile" class="img-fluid fit shadow-lg rounded"
+                                    [src]="avatarFile.src" />
+                                <button title="settings" type="button" mat-icon-button class="icon card-settings favorite-card-settings">
                                     <i class="fas fa-ellipsis-v fa-lg"></i> </button>
                             </div>
                         </div>
@@ -104,7 +106,8 @@
                                 </dt>
                                 <dd style="display: inline-block; width: auto;">
                                     <h3 [ngClass]="!categoryName.value? 'text-black-50' : ''">
-                                        <span>{{!categoryName.value? 'δεν έχει συμπληρωθεί..' : categoryName.value}}</span>
+                                        <span>{{!categoryName.value? 'δεν έχει συμπληρωθεί..' :
+                                            categoryName.value}}</span>
                                     </h3>
                                 </dd>
                             </dl>
@@ -113,7 +116,8 @@
                                 <dt>{{ st.text}}</dt>
                                 <dd>
                                     <span
-                                        [ngClass]="st.id==='status' && st.value === 'Διαθέσιμο'? 'availability instock' : st.id==='status' && st.value === 'Μη Διαθέσιμο'? ' instock' : !st.value? ' text-black-50' : '' ">{{ !st.value ? 'δεν έχει συμπληρωθεί..' : st.value }}</span>
+                                        [ngClass]="st.id==='status' && st.value === 'Διαθέσιμο'? 'availability instock' : st.id==='status' && st.value === 'Μη Διαθέσιμο'? ' instock' : !st.value? ' text-black-50' : '' ">{{
+                                        !st.value ? 'δεν έχει συμπληρωθεί..' : st.value }}</span>
                                 </dd>
                             </dl>
                         </div>

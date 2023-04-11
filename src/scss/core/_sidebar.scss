@@ -1,6 +1,8 @@
+// Math core
+@use "sass:math";
+
 // scss-lint:disable NestingDepth, SelectorDepth
 .categories {
-  
   //  ex. <a class="nav-link nav-dropdown-toggle" href="#">Components</a>
   .nav-dropdown-toggle {
     position: relative;
@@ -18,7 +20,7 @@
       background-image: $sidebar-nav-dropdown-indicator;
       background-repeat: no-repeat;
       background-position: center;
-      transition: transform .3s;
+      transition: transform 0.3s;
     }
   }
 
@@ -48,8 +50,7 @@
   }
 
   .nav-dropdown-items {
-     .nav-item {
-
+    .nav-item {
       padding: 0;
       list-style: none;
     }
@@ -64,19 +65,17 @@
   flex-direction: column;
   padding: 0;
   color: black;
- /*  background: #fff; */
+  /*  background: #fff; */
 
   .category-nav {
-    
     position: relative;
     flex: 1;
     /* overflow-x: hidden;
     overflow-y: auto; */
     -ms-overflow-style: -ms-autohiding-scrollbar;
     width: $category-width;
-
   }
-  
+
   .nav-item {
     position: relative;
     margin: 0;
@@ -85,22 +84,22 @@
   }
 
   .nav-select {
-    
-      user-select: none;
-      cursor: inherit;
-      align-items: baseline;
-      vertical-align: middle;
-      display: inline-flex;
-      white-space: nowrap;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: inherit;
+    align-items: baseline;
+    vertical-align: middle;
+    display: inline-flex;
+    white-space: nowrap;
 
-      .nav-checkbox {
-        position: relative;
-        margin-right: 14px;
-        
-        .div {
-          margin-left: 0px;
-        }
+    .nav-checkbox {
+      position: relative;
+      margin-right: 14px;
+
+      .div {
+        margin-left: 0px;
       }
+    }
   }
 
   .nav {
@@ -110,22 +109,21 @@
     padding: 0px;
 
     li > .nav-select a.nav-link {
-        margin-bottom: 1rem;
-        background: #fff;
-        border-radius: 4px;
-        position: relative;
-        z-index: 1;
-        transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
-        box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+      margin-bottom: 1rem;
+      background: #fff;
+      border-radius: 4px;
+      position: relative;
+      z-index: 1;
+      transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
+      box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 
-        &> span.title {
-          margin-right: 20px;
-        }
+      & > span.title {
+        margin-right: 20px;
+      }
     }
   }
 
   .nav-link {
-
     display: block;
     padding: $sidebar-nav-link-padding-y 0.7rem;
     color: #867979 !important;
@@ -139,7 +137,7 @@
     i {
       display: inline-block;
       width: 20px;
-      margin: 0 ($sidebar-nav-link-padding-x*0 / 2) 0 0;
+      margin: 0 math.div($sidebar-nav-link-padding-x * 0, 2) 0 0;
       font-size: 14px;
       color: $sidebar-nav-link-icon-color;
       text-align: center;
@@ -171,11 +169,11 @@
       @include borders($sidebar-nav-link-hover-borders);
 
       i {
-          color: #5a8ba5;
+        color: #5a8ba5;
       }
 
       &.nav-dropdown-toggle::before {
-        /* background-image: $sidebar-nav-dropdown-indicator-hover; */
+        background-image: $sidebar-nav-dropdown-indicator-hover;
       }
     }
 
@@ -183,17 +181,16 @@
       &.nav-link-#{$color} {
         background: $value;
         i {
-          color: rgba(255,255,255,.7);
+          color: rgba(255, 255, 255, 0.7);
         }
         &:hover {
-          background: darken($value,5%) !important;
+          background: darken($value, 5%) !important;
           i {
             color: #fff;
           }
         }
       }
     }
-    
   }
 }
 .sidebar {
@@ -203,9 +200,9 @@
   color: $sidebar-color;
   background: $sidebar-lg;
 
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   box-shadow: 1px 0 3px 0 #3f4d67;
-  @include borders($sidebar-borders);  
+  @include borders($sidebar-borders);
 
   .sidebar-close {
     position: absolute;
@@ -218,7 +215,7 @@
     color: $sidebar-color;
     background: 0;
     border: 0;
-    opacity: .8;
+    opacity: 0.8;
 
     &:hover {
       opacity: 1;
@@ -246,12 +243,11 @@
   }
 
   .ps {
-    
     overflow-y: hidden;
     -ms-touch-action: auto;
     touch-action: auto;
     -ms-overflow-style: none;
-    overflow-anchor: none;
+    /* overflow-anchor: none; */
   }
 
   .sidebar-nav {
@@ -267,7 +263,7 @@
       -ms-touch-action: auto;
       touch-action: auto;
       -ms-overflow-style: none;
-      overflow-anchor: none;
+      /* overflow-anchor: none; */
     }
 
     &::-webkit-scrollbar:hover {
@@ -277,11 +273,10 @@
       margin-left: -10px;
       -webkit-appearance: none;
       display: block;
-      transition: width .2s linear;
+      transition: width 0.2s linear;
     }
-    
-    &::-webkit-scrollbar {
 
+    &::-webkit-scrollbar {
       position: absolute;
       width: 10px;
       height: 10px;
@@ -298,7 +293,7 @@
       opacity: 0;
       height: 15px;
       bottom: 0;
-      transition: background-color .2s linear, opacity .2s linear;
+      transition: background-color 0.2s linear, opacity 0.2s linear;
       display: inline-block;
       width: 13px;
     }
@@ -311,26 +306,28 @@
       opacity: 0;
       height: 15px;
       bottom: 0;
-      transition: background-color .2s linear, opacity .2s linear;
+      transition: background-color 0.2s linear, opacity 0.2s linear;
       display: none;
     }
-  
+
     &::-webkit-scrollbar-thumb:hover {
       height: 20px;
+      -webkit-background-clip: padding-box;
       background-clip: padding-box;
       border-style: solid;
       border-width: 1px 1px;
       right: 2px;
       width: 6px;
       border-radius: 6px;
-      transition: background-color .2s linear,width .2s ease-in-out;
+      transition: background-color 0.2s linear, width 0.2s ease-in-out;
       border-color: transparent;
       background-color: #999;
-      opacity: .9;
+      opacity: 0.9;
     }
 
     &::-webkit-scrollbar-thumb {
       height: 20px;
+      -webkit-background-clip: padding-box;
       background-clip: padding-box;
       border-style: solid;
       border-width: 1px 2px;
@@ -338,12 +335,13 @@
       width: 6px;
       background-color: #aaa;
       border-radius: 6px;
-      transition: background-color .2s linear,width .2s ease-in-out;
+      transition: background-color 0.2s linear, width 0.2s ease-in-out;
       border-color: transparent;
 
-      &:hover, &:focus {
-          background-color: #999;
-          opacity: .9;
+      &:hover,
+      &:focus {
+        background-color: #999;
+        opacity: 0.9;
       }
     }
   }
@@ -365,7 +363,8 @@
     font-weight: 700;
   }
 
-  .nav-divider, .divider {
+  .nav-divider,
+  .divider {
     height: 1px;
     background: #576680;
   }
@@ -373,7 +372,7 @@
   .nav-item {
     position: relative;
     margin: 0;
-    transition: background .3s ease-in-out;
+    transition: background 0.3s ease-in-out;
 
     a.nav-link.active:after {
       content: "";
@@ -387,7 +386,6 @@
     }
 
     .nav-dropdown-items {
-      
       opacity: 0;
       -webkit-transform: rotateX(-90deg);
       transform: rotateX(-90deg);
@@ -399,7 +397,7 @@
     padding: 0;
     margin: 0;
     overflow-y: hidden;
-    transition: max-height .3s ease-in-out;
+    transition: max-height 0.3s ease-in-out;
 
     .nav-item {
       padding: 0;
@@ -421,7 +419,7 @@
     i {
       display: inline-block;
       width: 20px;
-      margin: 0 ($sidebar-nav-link-padding-x / 2) 0 0;
+      margin: 0 math.div($sidebar-nav-link-padding-x, 2) 0 0;
       font-size: 18px;
       color: $sidebar-nav-link-icon-color;
       text-align: center;
@@ -462,10 +460,10 @@
       &.nav-link-#{$color} {
         background: $value;
         i {
-          color: rgba(255,255,255,.7);
+          color: rgba(255, 255, 255, 0.7);
         }
         &:hover {
-          background: darken($value,5%) !important;
+          background: darken($value, 5%) !important;
           i {
             color: #fff;
           }
@@ -491,12 +489,11 @@
       background-image: $sidebar-nav-dropdown-indicator;
       background-repeat: no-repeat;
       background-position: center;
-      transition: transform .3s;
+      transition: transform 0.3s;
     }
   }
 
   li.nav-dropdown.open:after {
-
     content: "";
     background-color: #1dc4e9;
     z-index: 1027;
@@ -508,8 +505,6 @@
   }
   // ex.  <li class="nav-item nav-dropdown">
   .nav-dropdown.open {
-
-    
     background: $sidebar-nav-dropdown-bg;
     @include borders($sidebar-nav-dropdown-borders);
     @if $enable-sidebar-nav-rounded {
@@ -520,9 +515,9 @@
       opacity: 1;
       -webkit-transform-origin: 50% 50%;
       transform-origin: 50% 50%;
-      transition: opacity .3s,-webkit-transform .3s;
-      transition: transform .3s,opacity .3s;
-      transition: transform .3s,opacity .3s,-webkit-transform .3s;
+      transition: opacity 0.3s, -webkit-transform 0.3s;
+      transition: transform 0.3s, opacity 0.3s;
+      transition: transform 0.3s, opacity 0.3s, -webkit-transform 0.3s;
       -webkit-transform-style: preserve-3d;
       transform-style: preserve-3d;
       -webkit-transform: rotateX(0deg);
@@ -543,7 +538,7 @@
 
   .nav-label {
     display: block;
-    padding: ($sidebar-nav-link-padding-y / 8) $sidebar-nav-link-padding-x;
+    padding: math.div($sidebar-nav-link-padding-y, 8) $sidebar-nav-link-padding-x;
     color: $sidebar-nav-title-color;
 
     &:hover {
@@ -553,7 +548,7 @@
 
     i {
       width: 20px;
-      margin: -3px ($sidebar-nav-link-padding-x / 2) 0 0;
+      margin: -3px math.div($sidebar-nav-link-padding-x, 2) 0 0;
       font-size: 10px;
       color: $sidebar-nav-link-icon-color;
       text-align: center;
@@ -561,7 +556,7 @@
     }
   }
 
-  @if (lightness( $sidebar-bg ) < 40) {
+  @if (lightness($sidebar-bg) < 40) {
     .progress {
       background-color: lighten($sidebar-bg, 15%) !important;
     }
@@ -592,8 +587,8 @@
       background-image: $sidebar-minimizer-indicator;
       background-repeat: no-repeat;
       background-position: center;
-      background-size: $sidebar-minimizer-height / 4;
-      transition: .3s;
+      background-size: math.div($sidebar-minimizer-height, 4);
+      transition: 0.3s;
     }
 
     &:focus,
@@ -634,7 +629,7 @@
             i {
               display: block;
               width: 100%;
-              margin: $spacer / 4 0;
+              margin: math.div($spacer, 4) 0;
               font-size: 24px;
             }
 
@@ -645,7 +640,6 @@
             }
 
             &.nav-dropdown-toggle {
-
               &::before {
                 top: 30px;
               }
@@ -673,7 +667,8 @@
         @include sidebar-width($sidebar-borders, $sidebar-minimized-width);
       }
 
-      .nav-divider, .divider,
+      .nav-divider,
+      .divider,
       .nav-title,
       .sidebar-footer,
       .sidebar-form,

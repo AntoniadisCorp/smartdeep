@@ -51,6 +51,7 @@
     &::-webkit-scrollbar-thumb {
       height: 50px;
       background-color: darken($aside-menu-bg, 10%);
+      -webkit-background-clip: content-box;
       background-clip: content-box;
       border-color: transparent;
       border-style: solid;

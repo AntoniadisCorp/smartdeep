@@ -139,10 +139,10 @@
 <div mat-dialog-actions class="justify-content-center">
     <button mat-button (click)="onNoClick()">Πίσω</button>
     <button mat-button
-        [disabled]="(!name.valid && root.value===0) || (root.value===1 && (!name.valid || checklistSelection.isEmpty()))"
+        [disabled]="(name && !name.valid && root.value===0) || (root.value===1 && (!name.valid || checklistSelection.isEmpty()))"
         (click)="onSave()">Αποθήκευση</button><!-- cdkFocusInitial -->
     <!-- Action Progress Data Bar -->
-    <mat-progress-spinner *ngIf="progressActionDataBar>0" [diameter]="20" mode="Indeterminate"
+    <mat-progress-spinner *ngIf="progressActionDataBar>0" [diameter]="20" mode="indeterminate"
         [value]="progressActionDataBar"></mat-progress-spinner>
     <!-- [mat-dialog-close]="data" -->
 </div>

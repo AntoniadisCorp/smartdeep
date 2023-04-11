@@ -45,6 +45,23 @@
     border-radius: 50em;
   }
 }
+@mixin border-radius($pixel...) {
+  border-radius: $pixel;
+}
+@mixin hover-focus() {
+  &:hover,
+  &:focus {
+    @content;
+  }
+}
+
+@mixin plain-hover-focus() {
+  &:hover,
+  &:focus,
+  &:active {
+    @content;
+  }
+}
 
 @mixin borders($borders) {
   @each $border in $borders {
@@ -107,25 +124,26 @@
 ///   @include scrollbars(.5em, slategray);
 @mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white, 50%)) {
   &::-webkit-scrollbar {
-      width:  $size;
-      height: $size;
+    width: $size;
+    height: $size;
   }
 
   &::-webkit-scrollbar-thumb {
-      background: $foreground-color;
-      background-color: lighten($sidebar-bg, 5%);
-      border-right: 1px solid darken($sidebar-bg, 5%);
-      border-left: 1px solid darken($sidebar-bg, 5%);
+    background: $foreground-color;
+    background-color: lighten($sidebar-bg, 5%);
+    border-right: 1px solid darken($sidebar-bg, 5%);
+    border-left: 1px solid darken($sidebar-bg, 5%);
   }
 
   &::-webkit-scrollbar-track {
-      background: $background-color;
-      height: 50px;
-      background-color: darken($sidebar-bg, 10%);
-      background-clip: content-box;
-      border-color: transparent;
-      border-style: solid;
-      border-width: 1px 2px;
+    background: $background-color;
+    height: 50px;
+    background-color: darken($sidebar-bg, 10%);
+    -webkit-background-clip: content-box;
+    background-clip: content-box;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 1px 2px;
   }
 
   // For Internet Explorer
@@ -137,7 +155,9 @@
 
 @mixin bg-variant($parent, $color) {
   #{$parent} {
-    @include border-radius($card-border-radius-inner $card-border-radius-inner $card-border-radius-inner $card-border-radius-inner);
+    @include border-radius(
+      $card-border-radius-inner $card-border-radius-inner $card-border-radius-inner $card-border-radius-inner
+    );
     color: #fff !important;
     background-color: $color !important;
   }

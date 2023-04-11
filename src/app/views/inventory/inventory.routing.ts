@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { InventoryComponent } from './inventory.component';
+import { NgModule } from '@angular/core'
+import { RouterModule, Routes } from '@angular/router'
+import { InventoryComponent } from './inventory.component'
 import { /* ItemComponent, */ KitComponent, WarehouseComponent,
     TransferOrderComponent, CycleCountComponent, ReceiveComponent,
     DeductComponent, WizardComponent
-} from './components';
+} from './components'
+
 
 const routes: Routes = [
     {
@@ -22,7 +23,7 @@ const routes: Routes = [
             { path: 'wizard', component: WizardComponent, data: { title: 'Wizard', animation: 'wizard' } },
         ],
     }
-];
+]
 
 
 
@@ -45,4 +46,4 @@ export const routedComponents = {
         DeductComponent,
         WizardComponent,
     ]
-};
+}

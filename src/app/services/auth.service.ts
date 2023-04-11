@@ -190,6 +190,7 @@ export class AuthService {
 
       return localStorage.getItem(this.REFRESH_TOKEN);
     }
+    return undefined
     // return this.localStorage.getItem(this.REFRESH_TOKEN);
   }
 

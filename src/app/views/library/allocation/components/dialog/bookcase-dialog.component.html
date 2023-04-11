@@ -148,7 +148,7 @@
     <button mat-button (click)="onNoClick()">Πίσω</button>
     <button mat-button (click)="onSave()" [disabled]='!BookCaseForm.valid'>προσθήκη</button><!-- cdkFocusInitial -->
     <!-- Action Progress Data Bar -->
-    <mat-progress-spinner *ngIf="this.progressAction.progressActionDataBar>0" [diameter]="20" mode="Indeterminate"
+    <mat-progress-spinner *ngIf="this.progressAction.progressActionDataBar>0" [diameter]="20" mode="indeterminate"
         [value]="this.progressAction.progressActionDataBar"></mat-progress-spinner>
     <!-- [mat-dialog-close]="data" -->
 </div>

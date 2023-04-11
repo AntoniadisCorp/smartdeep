@@ -1,19 +1,21 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ModalModule } from 'ngx-bootstrap/modal';
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+// import { ModalModule } from 'ngx-bootstrap/modal';
 
 /* Start Routing Module */
-import { DashboardRoutingModule
-, routedComponents } from './dashboard.routing';
+import {
+    DashboardRoutingModule
+    , routedComponents
+} from './dashboard.routing'
 
 /* Angular Materials Components */
-import { MaterialsModule, DropdownModule } from '../../modules';
+import { MaterialsModule, DropdownModule } from '../../modules'
 
 /* Custom Components of current Route */
-import { APP_CATEGORY_COMPONENT } from '../../components/app-components';
+import { APP_CATEGORY_COMPONENT } from '../../components/app-components'
 
-import { ReeDirective } from '../../directives';
+import { ReeDirective } from '../../directives'
 
 @NgModule({
 
@@ -23,7 +25,7 @@ import { ReeDirective } from '../../directives';
         MaterialsModule,
         FormsModule,
         ReactiveFormsModule,
-        ModalModule.forRoot(),
+        // ModalModule.forRoot(),
         DropdownModule
     ],
     declarations: [
@@ -40,4 +42,4 @@ import { ReeDirective } from '../../directives';
     ],
     providers: [],
 })
-export class DashboardModule {}
+export class DashboardModule { }

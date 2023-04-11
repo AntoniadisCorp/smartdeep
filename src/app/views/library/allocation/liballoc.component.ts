@@ -53,6 +53,6 @@ export class LibAllocComponent implements OnInit {
       } */
 
     getAnimationData(outlet: RouterOutlet) {
-        return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
+        return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
     }
 }

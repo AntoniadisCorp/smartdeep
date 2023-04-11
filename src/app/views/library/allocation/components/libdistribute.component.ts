@@ -305,8 +305,7 @@ export class LibDistributeComponent implements OnInit {
         if (!row) {
             return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
         }
-        return `${
-            this.selection.isSelected(row) ? 'deselect' : 'select'
+        return `${this.selection.isSelected(row) ? 'deselect' : 'select'
             } row ${row.name + 1}`;
     }
 }
@@ -314,7 +313,7 @@ export class LibDistributeComponent implements OnInit {
 interface ProgressLoader {
     isthemeProcessing: boolean
     isProcessing: boolean
-    progressActionDataBar: Number
+    progressActionDataBar: number
 }
 
 
@@ -343,7 +342,7 @@ export class BookCaseDialogComponent {
 
 
     libSpace: Observable<LibrarySpace[]>
-    filteredCategories: Observable<Category[]>
+    filteredCategories: Observable<string[]>
     // nameObservable: Observable<any>
 
     private libSpaceSelected: LibrarySpace[]
@@ -637,7 +636,7 @@ export class BookCaseDialogComponent {
     }
 
 
-    categoryRemove(shelf: { _id: string, name: string }) {
+    categoryRemove(shelf: { _id: string | ObjectID, name: string }) {
         this.removeElement(this.categories, shelf)
         // push to AllShelves
         // this.allShelves.push(shelf)
@@ -675,7 +674,7 @@ export class BookCaseDialogComponent {
         return build.hasError(key) ? 'Not a valid ' + key : '';
     }
 
-    private removeElement(arr: any, shelf: { _id: string, name: string }): void {
+    private removeElement(arr: any, shelf: { _id: string | ObjectID, name: string }): void {
 
         let shelves = arr
         const index = shelves.findIndex((search => search._id = shelf._id))

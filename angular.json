@@ -12,6 +12,9 @@
           "inlineStyle": true,
           "skipTests": true
         },
+        "@schematics/angular:application": {
+          "strict": true
+        },
         "@schematics/angular:class": {
           "skipTests": true
         },
@@ -45,6 +48,8 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
+            "inlineStyleLanguage": "scss",
+            "allowedCommonJsDependencies": ["chart.js"],
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -53,10 +58,11 @@
               "src/styles.scss",
               "node_modules/font-awesome/scss/font-awesome.scss",
               "node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css",
-              "node_modules/simple-line-icons/scss/simple-line-icons.scss"
+              "src/assets/script/loading-bar.min.css"
             ],
             "scripts": [
-              "node_modules/chart.js/dist/Chart.min.js"
+              "node_modules/chart.js/dist/Chart.min.js",
+              "src/assets/script/loading-bar.min.js"
             ]
           },
           "configurations": {
@@ -96,7 +102,8 @@
               "vendorChunk": true,
               "optimization": false
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -126,6 +133,19 @@
             }
           }
         },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "smartdeep:build:production",
+            "serverTarget": "smartdeep:server:production",
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
@@ -139,6 +159,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
+            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -151,6 +172,7 @@
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.bundle.min.js",
+              "./node_modules/popper.js/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
               "node_modules/jquery/dist/jquery.slim.min.js"
             ]
@@ -165,6 +187,7 @@
           },
           "configurations": {
             "production": {
+              "outputHashing": "media",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

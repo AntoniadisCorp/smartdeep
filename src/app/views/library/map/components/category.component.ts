@@ -1,21 +1,21 @@
-import { Component, OnInit, ElementRef, ViewChild, Inject, ChangeDetectionStrategy, Injectable, AfterViewInit } from '@angular/core';
-import { SelectionModel } from '@angular/cdk/collections';
-import { Item, Category, OptionEntry, BodyObj, Iconfonts, IDropDownMenu, InventoryTableColumns } from '../../../../interfaces';
-import { SmartEngineService, Logger } from '../../../../services';
-import { ActivatedRoute, Router } from '@angular/router';
-import { middlebar, config, MENUBTN_ITEM, GRLETTERS } from '../../../../variables';
-import { Observable, of, merge, fromEvent, BehaviorSubject } from 'rxjs';
-import { distinctUntilChanged, catchError, map, tap, debounceTime, startWith, switchMap } from 'rxjs/operators';
-import { openMatDialog, addObjAttr, saveByHttpwithProgress, toResponseBody, uploadProgress } from '../../../../routines';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { FlatTreeControl } from '@angular/cdk/tree';
-import { _fonts } from '../../../../datafiles';
-import { DeleteitemListDialogConfirm } from '../../../../views/smartengine/components';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
-import { MatAutocomplete } from '@angular/material/autocomplete';
+import { Component, OnInit, ElementRef, ViewChild, Inject, ChangeDetectionStrategy, Injectable, AfterViewInit } from '@angular/core'
+import { SelectionModel } from '@angular/cdk/collections'
+import { Item, Category, OptionEntry, BodyObj, Iconfonts, IDropDownMenu, InventoryTableColumns } from '../../../../interfaces'
+import { SmartEngineService, Logger } from '../../../../services'
+import { ActivatedRoute, Router } from '@angular/router'
+import { middlebar, config, MENUBTN_ITEM, GRLETTERS } from '../../../../variables'
+import { Observable, of, merge, fromEvent, BehaviorSubject } from 'rxjs'
+import { distinctUntilChanged, catchError, map, tap, debounceTime, startWith, switchMap } from 'rxjs/operators'
+import { openMatDialog, addObjAttr, saveByHttpwithProgress, toResponseBody, uploadProgress } from '../../../../routines'
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
+import { FlatTreeControl } from '@angular/cdk/tree'
+import { _FONTS } from '../../../../datafiles'
+import { DeleteitemListDialogConfirm } from '../../../../views/smartengine/components'
+import { MatPaginator } from '@angular/material/paginator'
+import { MatSort } from '@angular/material/sort'
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree'
+import { MatAutocomplete } from '@angular/material/autocomplete'
 
 @Component({
     selector: 'app-library-category',
@@ -25,37 +25,37 @@ import { MatAutocomplete } from '@angular/material/autocomplete';
 export class CategoryThemeComponent implements OnInit {
 
 
-    @ViewChild('search', { static: false }) search: ElementRef;
-    @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-    @ViewChild(MatSort, { static: false }) sort: MatSort;
+    @ViewChild('search', { static: false }) search: ElementRef
+    @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator
+    @ViewChild(MatSort, { static: false }) sort: MatSort
 
     displayedColumns: string[] = ['_id',
         'name', 'icon', 'tree', 'root', 'desc', 'disabled', 'date_added', 'date_modified',
-        'operations'];
+        'operations']
 
 
     selection = new SelectionModel<Category>(true, [])
 
-    data: any;
-    resultsLength: any;
-    progressActionDataBar: number;
-    protected isRateLimitReached: boolean = false;
-    isLoadingResults: boolean = true
+    data: any
+    resultsLength: any
+    progressActionDataBar: number
+    protected isRateLimitReached = false
+    isLoadingResults = true
     protected extraFilters: Array<{ [x: string]: any }>
-    private tableAction: boolean = false
-    private apiUrl: { searchUrl: string, deleteUrl: (col: string, id: string | number) => string, deleteManyUrl: string };
+    private tableAction = false
+    private apiUrl: { searchUrl: string, deleteUrl: (col: string, id: string | number) => string, deleteManyUrl: string }
 
 
-    MenuTools: IDropDownMenu[];
-    btnCheckboxCol: InventoryTableColumns[];
-    menuOperation: boolean = false
-    clearMenu: boolean = true
+    MenuTools: IDropDownMenu[]
+    btnCheckboxCol: InventoryTableColumns[]
+    menuOperation = false
+    clearMenu = true
 
     // Filter list
-    selectable: boolean = true
-    removable: boolean = true
+    selectable = true
+    removable = true
     filters: { id: number, name: string }[] = []
-    allFilters: string[] = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'ς'];
+    allFilters: string[] = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'ς']
 
     sortLetters = GRLETTERS
     // private libSpace: any[];
@@ -81,35 +81,35 @@ export class CategoryThemeComponent implements OnInit {
     }
 
     ngAfterViewInit(): void {
-        this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+        this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0))
 
         fromEvent(this.search.nativeElement, 'keyup')
             .pipe(
                 debounceTime(200),
                 distinctUntilChanged(),
                 tap(() => {
-                    this.paginator.pageIndex = 0;
+                    this.paginator.pageIndex = 0
                 }),
                 switchMap(() => {
-                    this.isLoadingResults = true;
-                    return this.loadPage();
+                    this.isLoadingResults = true
+                    return this.loadPage()
                 }),
                 map((data: any) => {
                     // Flip flag to show that loading has finished.
-                    this.isLoadingResults = false;
-                    this.isRateLimitReached = false;
-                    this.resultsLength = data.count;
+                    this.isLoadingResults = false
+                    this.isRateLimitReached = false
+                    this.resultsLength = data.count
 
-                    return data.result;
+                    return data.result
                 }),
                 catchError(() => {
-                    this.isLoadingResults = false;
+                    this.isLoadingResults = false
                     // Catch if the GitHub API has reached its rate limit. Return empty data.
-                    this.isRateLimitReached = true;
-                    return of([]);
+                    this.isRateLimitReached = true
+                    return of([])
                 })
             )
-            .subscribe(data => (this.data = data));
+            .subscribe(data => (this.data = data))
 
         // setup table paginator - sort
         merge(this.sort.sortChange, this.paginator.page)
@@ -117,25 +117,25 @@ export class CategoryThemeComponent implements OnInit {
                 startWith({}),
                 switchMap(() => {
 
-                    this.isLoadingResults = true;
-                    return this.loadPage();
+                    this.isLoadingResults = true
+                    return this.loadPage()
                 }),
                 map((data: any) => {
                     // Flip flag to show that loading has finished.
-                    this.isLoadingResults = false;
-                    this.isRateLimitReached = false;
-                    this.resultsLength = data.count;
+                    this.isLoadingResults = false
+                    this.isRateLimitReached = false
+                    this.resultsLength = data.count
 
-                    return data.result;
+                    return data.result
                 }),
                 catchError(() => {
-                    this.isLoadingResults = false;
+                    this.isLoadingResults = false
                     // Catch if the GitHub API has reached its rate limit. Return empty data.
-                    this.isRateLimitReached = true;
-                    return of([]);
+                    this.isRateLimitReached = true
+                    return of([])
                 })
             )
-            .subscribe(data => (this.data = data));
+            .subscribe(data => (this.data = data))
 
     }
 
@@ -146,12 +146,12 @@ export class CategoryThemeComponent implements OnInit {
         const routeSnapId: string | null = this.route.snapshot.paramMap.get('id')
         this.extraFilters = []
 
-        this.MenuTools = MENUBTN_ITEM;
+        this.MenuTools = MENUBTN_ITEM
     }
 
     private addCategoryModal(editRowData?: Category): void {
 
-        let data = {
+        const data = {
 
             title: `Προσθήκη Θεματολογίας χώρου`,
             subtitle: ``, /* ${this.libraryName.value} */
@@ -164,16 +164,16 @@ export class CategoryThemeComponent implements OnInit {
             body: editRowData ? editRowData : null,
             editable: false
         },
-            width = '400px';
+            width = '400px'
 
         openMatDialog(this.dialog, data, AddCategoryDialogComponent, width)
             .afterClosed()
             .subscribe((result: any) => {
-                console.log('The dialog was closed', result);
-                if (!result) return
+                console.log('The dialog was closed', result)
+                if (!result) { return }
                 this.clearSearch()
                 this.progressActionDataBar = 0
-            });
+            })
 
     }
 
@@ -191,16 +191,17 @@ export class CategoryThemeComponent implements OnInit {
             this.apiUrl.searchUrl,
             this.sort.active,
             JSON.stringify(this.extraFilters)
-        );
+        )
     }
 
     // ------------------------ Table Row Acts ----------------------------
     onRowClicked(Row: { _id: string }) {
         console.log('Row clicked: ', Row)
 
-        if (!this.tableAction)
-            console.log(Row._id)// this.router.navigate(['/library/book/view', Row._id])
-        else this.tableAction = false
+        if (!this.tableAction) {
+            console.log(Row._id)
+        }// this.router.navigate(['/library/book/view', Row._id])
+        else { this.tableAction = false }
     }
 
     addRow(): void {
@@ -233,7 +234,7 @@ export class CategoryThemeComponent implements OnInit {
 
         this.tableAction = true
 
-        let data = {
+        const data = {
             title: `Διαγραφή Θεματολογίας`,
             subtitle: `Τίτλος ${Row.name}`,
             image: {
@@ -245,17 +246,18 @@ export class CategoryThemeComponent implements OnInit {
             action: 'Διαγραφή',
             status: false
         },
-            width = '400px';
+            width = '400px'
 
         openMatDialog(this.dialog, data, DeleteitemListDialogConfirm, width)
             .afterClosed()
             .subscribe((result: any) => {
-                console.log('The dialog was closed', result);
+                console.log('The dialog was closed', result)
 
-                if (result && Row._id)
+                if (result && Row._id) {
                     this.httpService.deleteOneTask(this.apiUrl.deleteUrl('category', Row._id))
                         .subscribe((res) => { console.log('deleteOneTask: ', res), this.clearSearch() })
-            });
+                }
+            })
     }
 
     // ------------------------ On Table Filtering -----------------------------
@@ -263,11 +265,11 @@ export class CategoryThemeComponent implements OnInit {
     remove(id: number) {
         // this.removeElement(this.shelves, this.getBookShelves(shelf))
 
-        if (id < 1) return
+        if (id < 1) { return }
 
-        const index: number = this.filters.findIndex((v) => v.id == id)
+        const index: number = this.filters.findIndex((v) => v.id === id)
 
-        if (index > -1) this.filters.splice(index, 1)
+        if (index > -1) { this.filters.splice(index, 1) }
 
 
         // pushh to AllShelves
@@ -277,7 +279,7 @@ export class CategoryThemeComponent implements OnInit {
 
     filterByLetter(letter: { id: number, name: string }) {
 
-        if (letter.id < 1) return
+        if (letter.id < 1) { return }
 
         // double push
         const index: number = this.filters.findIndex((v) => v.id == letter.id)
@@ -293,9 +295,9 @@ export class CategoryThemeComponent implements OnInit {
     // Toogle selectors
     /** Whether the number of selected elements matches the total number of rows. */
     isAllSelected() {
-        const numSelected = this.selection.selected.length;
-        const numRows = this.data ? this.data.length : 0;
-        return numSelected === numRows;
+        const numSelected = this.selection.selected.length
+        const numRows = this.data ? this.data.length : 0
+        return numSelected === numRows
     }
 
     // Toogle selectors
@@ -322,17 +324,17 @@ export class CategoryThemeComponent implements OnInit {
     /** The label for the checkbox on the passed row */
     checkboxLabel(row?: Category): string {
         if (!row) {
-            return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+            return `${this.isAllSelected() ? 'select' : 'deselect'} all`
         }
         return `${this.selection.isSelected(row) ? 'deselect' : 'select'
-            } row ${row.name + 1}`;
+            } row ${row.name + 1}`
     }
 
     // Toggle Table Columns
     setTableColumns(item?: InventoryTableColumns): void {
 
-        const colindex = this.displayedColumns.indexOf('select', 0);
-        const colExistance = colindex > -1;
+        const colindex = this.displayedColumns.indexOf('select', 0)
+        const colExistance = colindex > -1
 
         this.clearMenu = !this.clearMenu
 
@@ -348,31 +350,31 @@ export class CategoryThemeComponent implements OnInit {
 
     // ------------------------ On Clear Search Table ----------------------------
     clearSearch() {
-        this.search.nativeElement.value = '';
+        this.search.nativeElement.value = ''
         this.loadPage()
             .pipe(
                 debounceTime(300),
                 distinctUntilChanged(),
                 tap(() => {
-                    this.paginator.pageIndex = 0;
-                    this.isLoadingResults = true;
+                    this.paginator.pageIndex = 0
+                    this.isLoadingResults = true
                 }),
 
                 map((data: any) => {
                     // Flip flag to show that loading has finished.
-                    this.isLoadingResults = false;
-                    this.isRateLimitReached = false;
-                    this.resultsLength = data.count;
+                    this.isLoadingResults = false
+                    this.isRateLimitReached = false
+                    this.resultsLength = data.count
 
-                    return data.result;
+                    return data.result
                 }),
                 catchError(() => {
-                    this.isLoadingResults = false;
+                    this.isLoadingResults = false
                     // Catch if the GitHub API has reached its rate limit. Return empty data.
-                    this.isRateLimitReached = true;
-                    return of([]);
+                    this.isRateLimitReached = true
+                    return of([])
                 })
-            ).subscribe(data => (this.data = data));
+            ).subscribe(data => (this.data = data))
     }
 }
 
@@ -383,17 +385,17 @@ export class CategoryThemeComponent implements OnInit {
  */
 interface ItemNode {
     _id?: string
-    name: string;
-    slug?: string;
-    children?: ItemNode[];
+    name: string
+    slug?: string
+    children?: ItemNode[]
 }
 
 
 /** Flat to-do item node with expandable and level information */
 export class ItemFlatNode {
-    name: string;
-    level: number;
-    expandable: boolean;
+    name: string
+    level: number
+    expandable: boolean
     // checked?: boolean;
 }
 
@@ -439,12 +441,12 @@ export class ItemFlatNode {
  */
 @Injectable()
 export class ChecklistDatabase {
-    dataChange = new BehaviorSubject<ItemNode[]>([]);
+    dataChange = new BehaviorSubject<ItemNode[]>([])
 
-    get data(): ItemNode[] { return this.dataChange.value; }
+    get data(): ItemNode[] { return this.dataChange.value }
 
     constructor(private httpService: SmartEngineService) {
-        this.initialize();
+        this.initialize()
     }
 
     initialize(): void {
@@ -480,7 +482,7 @@ export class ChecklistDatabase {
             )
             .subscribe((data: ItemNode[]) => {
                 // console.log(data)
-                this.dataChange.next(data);
+                this.dataChange.next(data)
             })
     }
 
@@ -520,24 +522,24 @@ export class ChecklistDatabase {
             .pipe(map((res: OptionEntry) => res.data.result))
             .subscribe((data: any) => {
                 console.log(data)
-                this.dataChange.next(data);
+                this.dataChange.next(data)
             })
     }
 
     /** Add an item to to-do list */
     insertItem(parent: ItemNode, name: string) {
         if (parent.children) {
-            parent.children.push({ name } as ItemNode);
+            parent.children.push({ name } as ItemNode)
         } else {
-            parent.children = [{ name } as ItemNode];
+            parent.children = [{ name } as ItemNode]
         }
 
-        this.dataChange.next(this.data);
+        this.dataChange.next(this.data)
     }
 
     removeItem(parent: ItemNode, name: string): boolean {
 
-        let removed: boolean = false
+        let removed = false
 
         if (parent.children) {
             // const index = parent.children.indexOf({ name } as ItemNode)
@@ -547,8 +549,8 @@ export class ChecklistDatabase {
     }
 
     updateItem(node: ItemNode, name: string) {
-        node.name = name;
-        this.dataChange.next(this.data);
+        node.name = name
+        this.dataChange.next(this.data)
     }
 }
 
@@ -560,7 +562,7 @@ export class ChecklistDatabase {
     selector: 'app-library-addcategory-dialog',
     templateUrl: 'dialog/addcategory-dialog.component.html',
     styles: [`
-    
+
         .bookcase .mat-form-field {
             width: 100%;
         }
@@ -575,7 +577,7 @@ export class ChecklistDatabase {
             /* flex-direction: column; */
             /* margin: 15px 0; */
         }
-        
+
         .radio-button {
             margin: 5px;
         }
@@ -605,15 +607,15 @@ export class ChecklistDatabase {
         .mat-tree-parent label {
             margin-bottom: auto;
         }
-          
+
         .tree ul,
         .tree li {
             margin-top: 0;
             margin-bottom: 0;
             list-style-type: none;
         }
-          
-    
+
+
     `],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [ChecklistDatabase]
@@ -625,10 +627,10 @@ export class AddCategoryDialogComponent {
     Categorytypes: Array<{ id: number, value: string }> = []
 
     /** Map from flat node to nested node. This helps us finding the nested node to be modified */
-    flatNodeMap = new Map<ItemFlatNode, ItemNode>();
+    flatNodeMap = new Map<ItemFlatNode, ItemNode>()
 
     /** Map from nested node to flattened node. This helps us to keep the same object for selection */
-    nestedNodeMap = new Map<ItemNode, ItemFlatNode>();
+    nestedNodeMap = new Map<ItemNode, ItemFlatNode>()
 
     /** A selected parent node to be inserted */
     // selectedParent: ItemFlatNode | null = null;
@@ -636,21 +638,21 @@ export class AddCategoryDialogComponent {
     /** The new item's name */
     // newItemName = '';
 
-    treeControl: FlatTreeControl<ItemFlatNode>;
+    treeControl: FlatTreeControl<ItemFlatNode>
 
-    treeFlattener: MatTreeFlattener<ItemNode, ItemFlatNode>;
+    treeFlattener: MatTreeFlattener<ItemNode, ItemFlatNode>
 
-    dataSource: MatTreeFlatDataSource<ItemNode, ItemFlatNode>;
+    dataSource: MatTreeFlatDataSource<ItemNode, ItemFlatNode>
 
     /** The selection for checklist */
-    checklistSelection = new SelectionModel<ItemFlatNode>(false /* multiple */);
+    checklistSelection = new SelectionModel<ItemFlatNode>(false /* multiple */)
 
-    @ViewChild('autoIcon', { static: false }) autoIcon: MatAutocomplete;
+    @ViewChild('autoIcon', { static: false }) autoIcon: MatAutocomplete
     // @ViewChild('itemValue', { static: false }) itemValue: ElementRef;
 
-    progressActionDataBar: number = 0;
-    iFonts: Array<Iconfonts> = [];
-    filteredFonts: Observable<Iconfonts[]>;
+    progressActionDataBar = 0
+    iFonts: Array<Iconfonts> = []
+    filteredFonts: Observable<Iconfonts[]>
 
 
     constructor(
@@ -678,46 +680,50 @@ export class AddCategoryDialogComponent {
         })
 
         // Create Tree Node Controller and Data Source
-        this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel, this.isExpandable, this.getChildren);
-        this.treeControl = new FlatTreeControl<ItemFlatNode>(this.getLevel, this.isExpandable);
-        this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+        this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel, this.isExpandable, this.getChildren)
+        this.treeControl = new FlatTreeControl<ItemFlatNode>(this.getLevel, this.isExpandable)
+        this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener)
 
-        _database.dataChange.subscribe(data => {
+        _database.dataChange.subscribe((data: ItemNode[]) => {
             this.dataSource.data = data
             // console.log(data)
-            if (this.data.body)
+            if (this.data.body) {
                 this.treeInitialization()
+            }
         })
 
-        if (this.data.body) this.OnInit()
+        if (this.data.body) { this.OnInit() }
 
 
 
-        this.iFonts = _fonts;
+        this.iFonts = _FONTS
 
         // Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-        if (this.icon)
+        if (this.icon) {
             this.filteredFonts = this.icon.valueChanges.pipe(
                 startWith(''),
                 map(state => state ? this._filterStatesFonts(state) : this.iFonts.slice())
             )
+        }
     }
 
     private treeInitialization(): void {
 
         const RowData: Category = this.data.body
-        let node: ItemNode = { name: RowData.name, _id: RowData._id, slug: RowData.slug }
+        const node: ItemNode = { name: RowData.name, _id: RowData._id, slug: RowData.slug }
 
-        if (!RowData.tree)
+        if (!RowData.tree) {
             return
+        }
         // get Flatted Node
         const fnode: ItemFlatNode = this.transformer(node, RowData.tree.length)
 
         // get Parent of Checked Node
         const parentNode: ItemFlatNode | null = this.getParentNode(fnode)
 
-        if (!parentNode)
+        if (!parentNode) {
             return
+        }
 
         // Select Parent
         this.checklistSelection.select(parentNode)
@@ -735,7 +741,7 @@ export class AddCategoryDialogComponent {
             name: RowData.name && RowData.name.length ? RowData.name : '',
             root: RowData.root !== undefined && RowData.root ? 0 : 1,
             tree: RowData.tree && RowData.tree.length ? RowData.tree : [],
-            icon: RowData.icon ? RowData.icon.slice(_fonts[0].iconclass.length) : '',
+            icon: RowData.icon ? RowData.icon.slice(_FONTS[0].iconclass.length) : '',
             desc: RowData.desc && RowData.desc.length ? RowData.desc : '',
             date_added: (RowData.date_added ? RowData.date_added : ''),
             date_modified: (RowData.date_modified ? RowData.date_modified : ''),
@@ -755,18 +761,18 @@ export class AddCategoryDialogComponent {
  */
     }
 
-    getLevel = (node: ItemFlatNode) => node.level;
+    getLevel = (node: ItemFlatNode) => node.level
 
-    isExpandable = (node: ItemFlatNode) => node.expandable;
+    isExpandable = (node: ItemFlatNode) => node.expandable
 
-    getChildren = (node: ItemNode): ItemNode[] => node.children;
+    getChildren = (node: ItemNode): ItemNode[] => node.children
 
-    hasChild = (_: number, _nodeData: ItemFlatNode) => _nodeData.expandable;
+    hasChild = (_: number, _nodeData: ItemFlatNode) => _nodeData.expandable
 
     hasNoContent = (_: number, _nodeData: ItemFlatNode) => this.name.valid && _nodeData.name === this.name.value
 
     onNoClick(): void {
-        this.dialogRef.close();
+        this.dialogRef.close()
     }
 
     onSave(): void {
@@ -777,13 +783,13 @@ export class AddCategoryDialogComponent {
 
 
 
-        const obj2 = this.iFonts.find(o => o.name === this.icon.value);
+        const obj2 = this.iFonts.find(o => o.name === this.icon.value)
         const root: boolean = this.root.value > 0 ? false : true
-        if (root) this.checklistSelection.clear()
+        if (root) { this.checklistSelection.clear() }
 
         // Map flat Node to item Node Data for ParentId
         const itemflatNode: ItemFlatNode = this.checklistSelection.hasValue() ? this.checklistSelection.selected[0] : null
-        const itemNode = this.flatNodeMap.get(itemflatNode);
+        const itemNode = this.flatNodeMap.get(itemflatNode)
         const newParentId = (!root && itemNode && itemNode._id ? itemNode._id : null)
         const parentId = this.data.body ? (this.data.body.parentId !== newParentId ? newParentId : undefined) : newParentId
 
@@ -813,14 +819,14 @@ export class AddCategoryDialogComponent {
         // this.data.body ? edit mode
         const _id: string = this.data.body ? this.data.body._id : null
 
-        let result = {
+        const result = {
             category,
             editable: this.data.body ? true : false,
         }
 
         // contain _id to run Mongo db method as update function
-        if (result.editable) addObjAttr(result.category, '_id', _id)
-        if (!result.editable) addObjAttr(result.category, 'recyclebin', false)
+        if (result.editable) { addObjAttr(result.category, '_id', _id) }
+        if (!result.editable) { addObjAttr(result.category, 'recyclebin', false) }
 
 
         console.log('result: ', result)
@@ -836,7 +842,7 @@ export class AddCategoryDialogComponent {
 
                 // Close Dialog Box
                 this.progressActionDataBar = 0
-                if (res && res.code == 200) this.dialogRef.close(res.code)
+                if (res && res.code == 200) { this.dialogRef.close(res.code) }
                 else {
 
                     console.error(res.error.status)
@@ -856,21 +862,21 @@ export class AddCategoryDialogComponent {
                 toResponseBody(),
                 debounceTime(500),
                 tap((result) => {
-                    console.log('Saved results -->', result);
+                    console.log('Saved results -->', result)
 
-                    return result;
+                    return result
                 }),
                 catchError(this.httpService.handleError<any>('saveByHttpwithProgress'))
-            );
+            )
     }
 
     /** Select the category so we can insert the new item. */
     addNewItem(node: ItemFlatNode) {
 
-        if (!this.name.valid) return
+        if (!this.name.valid) { return }
 
-        // Map flat Node to item Node Data 
-        const parentNode = this.flatNodeMap.get(node);
+        // Map flat Node to item Node Data
+        const parentNode = this.flatNodeMap.get(node)
 
 
 
@@ -881,13 +887,14 @@ export class AddCategoryDialogComponent {
         // else this._database.insertItem(parentNode!, this.name.value);
 
         // refresh treeController
-        const parent = this.getParentNode(node);
-        if (parent)
+        const parent = this.getParentNode(node)
+        if (parent) {
             this.treeControl.collapse(parent),
-                this.treeControl.expand(parent);
+                this.treeControl.expand(parent)
+        }
 
         // expand tree chevron_right of node
-        this.treeControl.expand(node);
+        this.treeControl.expand(node)
 
         // console.log(parentNode, this.itemValue)
         // if (this.itemValue) this.itemValue.nativeElement.value = this.name.value.trim()
@@ -896,28 +903,30 @@ export class AddCategoryDialogComponent {
 
     remItem(node: ItemFlatNode) {
 
-        // Get Json Data of parent of node 
-        const parentNode = this.flatNodeMap.get(node);
+        // Get Json Data of parent of node
+        const parentNode = this.flatNodeMap.get(node)
 
         // Cache Insert data to Database
-        if (this._database.removeItem(parentNode!, this.name.value))
+        if (this._database.removeItem(parentNode!, this.name.value)) {
             console.log('removed')
+        }
 
         // refresh treeController
-        const parent = this.getParentNode(node);
-        if (parent)
+        const parent = this.getParentNode(node)
+        if (parent) {
             this.treeControl.collapse(parent),
-                this.treeControl.expand(parent);
+                this.treeControl.expand(parent)
+        }
 
         // expand tree chevron_right of node
-        this.treeControl.collapse(node);
+        this.treeControl.collapse(node)
 
     }
 
     /** Save the node to database */
     saveNode(node: ItemFlatNode, itemValue: string) {
-        const nestedNode = this.flatNodeMap.get(node);
-        this._database.updateItem(nestedNode!, itemValue);
+        const nestedNode = this.flatNodeMap.get(node)
+        this._database.updateItem(nestedNode!, itemValue)
     }
 
     /** Whether all the descendants of the node are selected. */
@@ -926,19 +935,19 @@ export class AddCategoryDialogComponent {
         const descAllSelected = descendants.every(child =>
             this.checklistSelection.isSelected(child)
         ); */
-        return false; // descAllSelected
+        return false // descAllSelected
     }
 
     /** Whether part of the descendants are selected */
     descendantsPartiallySelected(node: ItemFlatNode): boolean {
-        const descendants = this.treeControl.getDescendants(node);
-        const result = descendants.some(child => this.checklistSelection.isSelected(child));
-        return result && !this.descendantsAllSelected(node);
+        const descendants = this.treeControl.getDescendants(node)
+        const result = descendants.some(child => this.checklistSelection.isSelected(child))
+        return result && !this.descendantsAllSelected(node)
     }
 
     /** Toggle the to-do item selection. Select/deselect all the descendants node */
     todoItemSelectionToggle(node: ItemFlatNode): void {
-        this.checklistSelection.toggle(node);
+        this.checklistSelection.toggle(node)
         // console.log(this.checklistSelection.selected, node)
         // const descendants = this.treeControl.getDescendants(node);
         /* this.checklistSelection.isSelected(node)
@@ -959,50 +968,51 @@ export class AddCategoryDialogComponent {
 
     /** Toggle a leaf to-do item selection. Check all the parents to see if they changed */
     todoLeafItemSelectionToggle(node: ItemFlatNode): void {
-        this.checklistSelection.toggle(node);
+        this.checklistSelection.toggle(node)
         // console.log(`todoLeafItemSelectionToggle:  ${this.checklistSelection.isSelected(node)}`, node)
         // this.checkAllParentsSelection(node);
     }
 
     /* Checks all the parents when a leaf node is selected/unselected */
     checkAllParentsSelection(node: ItemFlatNode): void {
-        let parent: ItemFlatNode | null = this.getParentNode(node);
+        let parent: ItemFlatNode | null = this.getParentNode(node)
         // console.log(parent, this.checklistSelection)
         while (parent) {
-            this.checkRootNodeSelection(parent);
-            parent = this.getParentNode(parent);
+            this.checkRootNodeSelection(parent)
+            parent = this.getParentNode(parent)
         }
     }
 
     /* Expand all the parents when a leaf node is selected/unselected */
     expandAllParentsSelection(node: ItemFlatNode): void {
-        let parent: ItemFlatNode | null = this.getParentNode(node);
+        let parent: ItemFlatNode | null = this.getParentNode(node)
 
         while (parent) {
-            if (parent.level < 1)
-                this.expandRootNodeSelection(parent);
-            parent = this.getParentNode(parent);
+            if (parent.level < 1) {
+                this.expandRootNodeSelection(parent)
+            }
+            parent = this.getParentNode(parent)
         }
     }
 
     /** Check root node checked state and change it accordingly */
     checkRootNodeSelection(node: ItemFlatNode): void {
-        const nodeSelected = this.checklistSelection.isSelected(node);
-        const descendants = this.treeControl.getDescendants(node);
+        const nodeSelected = this.checklistSelection.isSelected(node)
+        const descendants = this.treeControl.getDescendants(node)
         const descAllSelected = descendants.every(child =>
             this.checklistSelection.isSelected(child)
-        );
+        )
         if (nodeSelected && !descAllSelected) {
-            this.checklistSelection.deselect(node);
+            this.checklistSelection.deselect(node)
         } else if (!nodeSelected && descAllSelected) {
-            this.checklistSelection.select(node);
+            this.checklistSelection.select(node)
         }
     }
 
     /** Check root node checked state and change it accordingly */
     expandRootNodeSelection(node: ItemFlatNode): void {
         // const nodeSelected = this.checklistSelection.isSelected(node);
-        const descendants = this.treeControl.getDescendants(node);
+        const descendants = this.treeControl.getDescendants(node)
         this.treeControl.expand(node)
         descendants.every(child => {
             this.treeControl.expand(child); return true
@@ -1013,40 +1023,40 @@ export class AddCategoryDialogComponent {
 
     /* Get the parent node of a node */
     getParentNode(node: ItemFlatNode): ItemFlatNode | null {
-        const currentLevel = this.getLevel(node);
+        const currentLevel = this.getLevel(node)
 
         if (currentLevel < 1) {
-            return null;
+            return null
         }
 
         const index = this.treeControl.dataNodes.map(i => i.name).indexOf(node.name)
         const startIndex = index > -1 ? index - 1 : index
 
         for (let i = startIndex; i >= 0; i--) {
-            const currentNode = this.treeControl.dataNodes[i];
+            const currentNode = this.treeControl.dataNodes[i]
 
             if (this.getLevel(currentNode) < currentLevel) {
-                return currentNode;
+                return currentNode
             }
         }
-        return null;
+        return null
     }
 
     /**
      * Transformer to convert nested node to flat node. Record the nodes in maps for later use.
      */
     transformer = (node: ItemNode, level: number) => {
-        const existingNode = this.nestedNodeMap.get(node);
+        const existingNode = this.nestedNodeMap.get(node)
         const flatNode = existingNode && existingNode.name === node.name
             ? existingNode
-            : new ItemFlatNode();
-        flatNode.name = node.name;
-        flatNode.level = level;
-        flatNode.expandable = !!node.children && !!node.children.length;
+            : new ItemFlatNode()
+        flatNode.name = node.name
+        flatNode.level = level
+        flatNode.expandable = !!node.children && !!node.children.length
         // flatNode.checked = false
-        this.flatNodeMap.set(flatNode, node);
-        this.nestedNodeMap.set(node, flatNode);
-        return flatNode;
+        this.flatNodeMap.set(flatNode, node)
+        this.nestedNodeMap.set(node, flatNode)
+        return flatNode
     }
 
     get name() {
@@ -1088,8 +1098,8 @@ export class AddCategoryDialogComponent {
 
     private _filterStatesFonts(value: string): Iconfonts[] {
 
-        const filterValue = value.toLowerCase();
-        return this.iFonts.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
+        const filterValue = value.toLowerCase()
+        return this.iFonts.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0)
     }
 
     private _filterFontsIncludes(value: string): Iconfonts[] {

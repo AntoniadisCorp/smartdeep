@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { LibraryComponent } from './library.component';
+import { NgModule } from '@angular/core'
+import { RouterModule, Routes } from '@angular/router'
+import { LibraryComponent } from './library.component'
 
 const routes: Routes = [
   {
     path: '',
     data: { title: 'Βιβλιοθήκη' },
-    
+
     children: [
       {
         path: '',
@@ -15,16 +15,16 @@ const routes: Routes = [
       },
       {
         path: 'map',
-        loadChildren: () => import('./map/libmap.module').then( mod => mod.LibMapModule)
+        loadChildren: () => import('./map/libmap.module').then(mod => mod.LibMapModule)
       },
       {
         path: 'book',
-        loadChildren: () => import('./book/book.module').then( mod => mod.BookModule)
+        loadChildren: () => import('./book/book.module').then(mod => mod.BookModule)
       },
       {
         path: 'allocation', // distribution
-        loadChildren: () => import('./allocation/liballoc.module').then( mod => mod.LibAllocModule)
-      },/*{
+        loadChildren: () => import('./allocation/liballoc.module').then(mod => mod.LibAllocModule)
+      }, /*{
         path: 'contributors', //  συνεργάτης συνεισφέρων εισφορέας, φορείς // operators εκδότες - συγγραφεις - δανειστές
         loadChildren: () => import()
       }, */
@@ -34,7 +34,7 @@ const routes: Routes = [
     ]
   },
 
-];
+]
 
 
 
@@ -48,4 +48,4 @@ export const routedComponents = {
   app: [],
 
   others: [LibraryComponent]
-};
+}

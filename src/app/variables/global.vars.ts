@@ -3,9 +3,9 @@ import {
   TransferOrder, CycleCount, Receiving, Kit,
   IDropDownMenu,
   Item
-} from '../interfaces';
+} from '../interfaces'
 
-export const EMAIL_REGEX = "[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*";
+export const EMAIL_REGEX = '[a-z0-9!#$%&\'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*'
 // Const values for URLs
 // tslint:disable-next-line: one-variable-per-declaration
 export let middlebar = '/',
@@ -13,7 +13,7 @@ export let middlebar = '/',
   firstbar = '://',
   serHost = 'localhost',
   qport = ':',
-  port = 8080;
+  port = 8080
 
 export const DEFAULT_SESSION = {
 
@@ -28,34 +28,35 @@ export const DEFAULT_SESSION = {
   afterZoneRun: true
 
 }
+
 export const config = {
   apiUrl: 'http://localhost:8080',
-  // serverUrl: 
-};
+  // serverUrl:
+}
 
-export const DEFAULT_IMAGE: string = 'assets/img/codepics/book.jpg'
+export const DEFAULT_IMAGE = 'assets/img/codepics/book.jpg'
 
 export const WAREHOUSES_DATA: Warehouse[] = [
   { name: 'Store1', type: 'Store' },
   { name: 'Warehouse1', type: 'local' },
-];
+]
 
 export const TRANSFORMORDER_DATA: TransferOrder[] = [
   {
     order_id: '34', source: 'Shop', destination: 'Store1',
     created: new Date('3-3-2003'), status: 'closed', creator: { name: 'John Doe' }
   },
-];
+]
 
 export const CYCLECOUNT_DATA: CycleCount[] = [
   {
     cycleNo: 1030, created: new Date('2-3-2004'), warehouse: { name: 'Shop' },
     location: 1, status: 'saved', creator: { name: 'John Doe' }
   },
-];
+]
 
-const f = '//a.scdn.gr/images/sku_main_images/018206/18206417/medium_20190416164501_hp_255_g7_9125_4gb_1tb_no_os.jpeg';
-const t = 'HP 255 G7 (9125/4GB/1TB/No OS)';
+const f = '//a.scdn.gr/images/sku_main_images/018206/18206417/medium_20190416164501_hp_255_g7_9125_4gb_1tb_no_os.jpeg'
+const t = 'HP 255 G7 (9125/4GB/1TB/No OS)'
 export const RECEIVING_DATA: Receiving[] = [
   {
     item: {
@@ -64,21 +65,21 @@ export const RECEIVING_DATA: Receiving[] = [
     }, location: 1, quantity: 1
   },
 
-];
+]
 
 export const KIT_DATA: Kit[] = [
   {
     photos: { title: t, main: f }, name: 'Purple Bundle', SKU: 'pplbundle',
     fullfillmentSKU: '', items: { count: 3 }, tags: '', status: 'active'
   },
-];
+]
 
 export const ITEM_DATA: Item[] = [
   {
     photos: { title: t, main: f }, name: 'Purple Spoon', sku: 'pplspoon', barcode: 1000001, location: [{ id: 1 }, { id: 2 }],
     tags: ['Pointy'], distributors: ['Cutlery Direct'], state: { onhand: 110 }, status: true, fullfillmentSKU: ''
   },
-];
+]
 
 export const INVENTORY_DATA_TABS: InventoryTabs[] = [
   // inventory tabs
@@ -90,7 +91,7 @@ export const INVENTORY_DATA_TABS: InventoryTabs[] = [
   { icon: 'arrow_right_alt', name: 'Receive', id: 'receive' },
   { icon: 'arrow_right_alt', name: 'Deduct', id: 'deduct' },
   { icon: 'brush', name: 'Wizard', id: 'wizard' },
-];
+]
 
 export const LIBRARY_LIBMAP_TABS: InventoryTabs[] = [
   // library tabs
@@ -99,7 +100,7 @@ export const LIBRARY_LIBMAP_TABS: InventoryTabs[] = [
   { svg: 'category', icon: '', name: 'Θεματολογία', id: 'category' },
   // { svg: 'contents', icon: '', name: 'Περιεχόμενα', id: 'contents' },
   /* { svg: 'viewbook', icon: 'swatchbook', name: 'Ρυθμίσεις Βιβλιοθήκης', id: 'ρυθμίσεις' }, */
-];
+]
 
 export const LIBRARY_BOOK_TABS: InventoryTabs[] = [
   // library tabs
@@ -109,14 +110,14 @@ export const LIBRARY_BOOK_TABS: InventoryTabs[] = [
   { svg: 'viewbook', icon: 'book-reader', name: 'Άνοιγμα Βιβλίου', id: 'view' },
   { svg: 'contents', icon: '', name: 'Περιεχόμενα', id: 'contents' },
   /* { svg: 'viewbook', icon: 'swatchbook', name: 'Ρυθμίσεις Βιβλιοθήκης', id: 'ρυθμίσεις' }, */
-];
+]
 
 export const LIBRARY_LIBALLOC_TABS: InventoryTabs[] = [
   // library tabs
   { svg: 'distribute', icon: '', name: 'Βιβλιοθέτηση', id: 'distribute' },
   // { svg: 'contents', icon: '', name: 'Περιεχόμενα', id: 'contents' },
   /* { svg: 'viewbook', icon: 'swatchbook', name: 'Ρυθμίσεις Βιβλιοθήκης', id: 'ρυθμίσεις' }, */
-];
+]
 
 
 export const LIBRARY_ITEMS: InventoryTabs[] = [
@@ -126,7 +127,7 @@ export const LIBRARY_ITEMS: InventoryTabs[] = [
   { svg: 'layer1', icon: '', name: 'Κατανομή', id: 'allocation' },
   { svg: 'lending', icon: '', name: 'Δανεισμός', id: 'lending' },
 
-];
+]
 
 // input name, m-selector icon,
 export const CATEGORIES: Category[] = [
@@ -147,7 +148,7 @@ export const CATEGORIES: Category[] = [
   { _id: '20', name: 'Sports & Outdoors', icon: 'icon-social-instagram' },
   { _id: '21', name: 'Beauty & Health, Hair', icon: 'icon-social-instagram' },
   { _id: '22', name: 'Auto & Motorcycles', icon: 'icon-social-instagram' } */
-];
+]
 
 export const MENUBTN_ITEM: IDropDownMenu[] = [
   {
@@ -187,7 +188,7 @@ export const MENUBTN_ITEM: IDropDownMenu[] = [
   for your items at a glance. You can also import or export custom fields and information
   via CSV spreadsheets.`, cmd: () => { }
   },
-];
+]
 
 export const ACTIONBTN_ITEMS: IDropDownMenu[] = [
   {
@@ -206,7 +207,7 @@ export const ACTIONBTN_ITEMS: IDropDownMenu[] = [
     title: 'Print summary', desc: `This allows you to print a simple inventory summary, breaking down data like
   the on-hand count and recently sold amounts for each selected item.`, cmd: () => { }
   },
-];
+]
 
 /**
  * This menu contains a couple of tools that can help
@@ -240,7 +241,7 @@ export const MENUBTN_ORDER_PROCESS: IDropDownMenu[] = [
   you can scan items to build the order and capture the payment with one simple tool.
   All you need is the payment information and the catalog items being ordered.`, cmd: () => { }
   },
-];
+]
 
 /**
  * This menu contains a couple of tools that
@@ -314,7 +315,7 @@ export const ACTIONBTN_ORDER_PROCESS: IDropDownMenu[] = [
   SKULabs can not delete or modify orders placed in your sales channels,
   so those orders will return in SKULabs on the next order sync.`, cmd: () => { }
   },
-];
+]
 
 
 export const GRLETTERS = [{ id: 1, name: 'Α', enName: 'A' },
@@ -340,4 +341,4 @@ export const GRLETTERS = [{ id: 1, name: 'Α', enName: 'A' },
 { id: 21, name: 'Φ', enName: 'U' },
 { id: 22, name: 'Χ', enName: 'V' },
 { id: 23, name: 'Ψ', enName: 'W' },
-{ id: 24, name: 'Ω', enName: 'X' },]
+{ id: 24, name: 'Ω', enName: 'X' }, ]

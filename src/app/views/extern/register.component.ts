@@ -26,14 +26,14 @@ export class RegisterComponent implements OnInit {
 
   signup() {
 
-    if (this.f.password.value !== this.f.repeatpassword.value) {
+    if (this.f['password'].value !== this.f['repeatpassword'].value) {
      return;
     }
 
     this.authService.signup(
       {
-        username: this.f.username.value,
-        password: this.f.password.value
+        username: this.f['username'].value,
+        password: this.f['password'].value
       }
     )
     .subscribe(success => {

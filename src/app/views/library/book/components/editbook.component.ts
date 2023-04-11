@@ -21,6 +21,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 export interface StateGroup {
   letter: string;
   name: string[];
+  SKU?: string;
+  avatar?: any;
+  pages?: number;
 }
 
 @Component({
@@ -29,7 +32,7 @@ export interface StateGroup {
   styleUrls: ['editbook.component.scss']
 })
 export class EditbookComponent implements OnInit {
-  stateGroupOptions!: Observable<StateGroup[]>;
+  stateGroupOptions!: Observable<Book[]>;
   entranceForm!: FormGroup;
   avatarFile!: ImageSnippet;
 
@@ -170,10 +173,10 @@ export class EditbookComponent implements OnInit {
         );
 
     if (
-      this.route.snapshot.data._id &&
-      this.route.snapshot.data._id.code === 200
+      this.route.snapshot.data['_id'] &&
+      this.route.snapshot.data['_id'].code === 200
     ) {
-      this.booksState.push(this.route.snapshot.data._id.data.result);
+      this.booksState.push(this.route.snapshot.data['_id'].data.result);
       this.createBook({ id: '0' }); // get fifo book
       this.openBook();
     }

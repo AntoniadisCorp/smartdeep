@@ -1,7 +1,10 @@
-import { Routes, RouterModule } from '@angular/router';
-import { LibMapComponent } from './libmap.component';
-import { AddLibraryComponent, SettingsComponent, LibrarySpaceComponent, CategoryThemeComponent, LibrarySpaceDialogComponent, AddCategoryDialogComponent } from './components';
-import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router'
+import { LibMapComponent } from './libmap.component'
+import {
+    AddLibraryComponent, SettingsComponent,
+    LibrarySpaceComponent, CategoryThemeComponent, LibrarySpaceDialogComponent, AddCategoryDialogComponent
+} from './components'
+import { NgModule } from '@angular/core'
 
 
 const routes: Routes = [
@@ -37,11 +40,11 @@ const routes: Routes = [
             },
         ]
     },
-];
+]
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+    exports: [RouterModule],
 })
 export class LibMapRoutingModule { }
 
@@ -49,4 +52,4 @@ export const routedComponents = {
     app: [LibrarySpaceDialogComponent, AddCategoryDialogComponent],
 
     others: [LibMapComponent, AddLibraryComponent, LibrarySpaceComponent, CategoryThemeComponent, SettingsComponent]
-};
+}

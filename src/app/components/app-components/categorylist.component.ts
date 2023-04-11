@@ -116,7 +116,7 @@ export class InnerCategoryComponent implements OnInit {
           [(ngModel)]="selection"
           (ngModelChange)="onChange($event)"
           [(indeterminate)]="indeterminate"
-          [labelPosition]="labelPosition"
+          labelPosition="before"
           [disabled]="disabled">
 
       </mat-checkbox>
@@ -153,7 +153,6 @@ export class CategoryLinkComponent implements OnInit {
 
   selection: boolean = false;
   indeterminate = false;
-  labelPosition: string = 'before';
   disabled = false;
 
   onChange(event: any): void {
@@ -210,7 +209,7 @@ export class CategoryLinkComponent implements OnInit {
           [(ngModel)]="selection"
           (ngModelChange)="onChange($event)"
           [(indeterminate)]="indeterminate"
-          [labelPosition]="labelPosition"
+          labelPosition="before"
           [disabled]="disabled">
       </mat-checkbox>
       <a class="nav-link nav-dropdown-toggle" appNavDropdownToggle>
@@ -240,7 +239,6 @@ export class CategoryDropdownComponent implements OnInit {
 
   selection: boolean = false;
   indeterminate = false;
-  labelPosition: string = 'before';
   disabled = false;
 
   public isBadge() {

@@ -94,6 +94,6 @@
     <button mat-button [disabled]="!LibtypesCntr.valid || !whatnot.valid || !shelves.length"
         (click)="onSave()">προσθήκη</button><!-- cdkFocusInitial -->
     <!-- Action Progress Data Bar -->
-    <mat-progress-spinner *ngIf="progressActionDataBar>0" [diameter]="20" mode="Indeterminate" [value]="progressActionDataBar"></mat-progress-spinner>
+    <mat-progress-spinner *ngIf="progressActionDataBar>0" [diameter]="20" mode="indeterminate" [value]="progressActionDataBar"></mat-progress-spinner>
     <!-- [mat-dialog-close]="data" -->
 </div>

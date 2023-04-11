@@ -14,6 +14,6 @@ import { ItemListModule } from '../../../modules/list.module';
     // entryComponents: [ routedComponents.app ],
     exports: [],
     providers: [],
-    schemas: []
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class BookModule {}

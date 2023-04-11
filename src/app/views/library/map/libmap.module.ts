@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { MaterialsModule, NgBootstrapModule, ItemListModule, UploadFileModule } from '../../../modules';
@@ -17,6 +17,6 @@ registerLocaleData(localeEl, 'el');
     // entryComponents: [routedComponents.app],
     exports: [/* FileUploadComponent */],
     providers: [],
-    schemas: []
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class LibMapModule { }

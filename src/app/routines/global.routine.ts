@@ -117,7 +117,7 @@ export const requiredFileType = (type: string[], required?: boolean) => {
           return {
             requiredFileType: required || false
           }
-        }
+        } return false
       });
 
 

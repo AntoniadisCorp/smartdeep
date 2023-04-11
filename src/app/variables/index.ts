@@ -1,1 +1,1 @@
-export * from './global.vars';
+export * from './global.vars'

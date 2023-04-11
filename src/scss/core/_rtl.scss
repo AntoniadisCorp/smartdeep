@@ -1,3 +1,6 @@
+// Math core
+@use "sass:math";
+
 //
 // RTL Support
 //
@@ -141,7 +144,7 @@
           .nav-link {
             direction: rtl;
             i {
-              margin: 0 0 0 ($sidebar-nav-link-padding-x / 2);
+              margin: 0 0 0 math.div($sidebar-nav-link-padding-x, 2);
             }
             .badge {
               float: left;

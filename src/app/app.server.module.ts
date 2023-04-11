@@ -1,16 +1,16 @@
-import { NgModule } from '@angular/core';
+import { NgModule } from '@angular/core'
 import {
     ServerModule,
     ServerTransferStateModule, // <--- Added
-} from '@angular/platform-server';
+} from '@angular/platform-server'
 
 /* Import Noop Animations Module Js */
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader';
-import {FlexLayoutServerModule} from '@angular/flex-layout/server';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+// import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader';
+import {FlexLayoutServerModule} from '@angular/flex-layout/server'
 
-import { AppModule } from './app.module';
-import { AppComponent } from './app.component';
+import { AppModule } from './app.module'
+import { AppComponent } from './app.component'
 
 @NgModule({
     declarations: [],
