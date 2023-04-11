@@ -15,7 +15,6 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    // "allowSyntheticDefaultImports": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
@@ -25,7 +24,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "importHelpers": true,
-    "target": "es2017",
+    "target": "ES2022",
     "module": "es2020",
     "typeRoots": [
       "node_modules/@types"
@@ -34,6 +33,7 @@
       "es2020",
       "dom"
     ],
+    "useDefineForClassFields": false
   },
   "no-import-side-effect": [
     true,
