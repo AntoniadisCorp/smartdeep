@@ -16,7 +16,8 @@ const routes: Routes = [
             {
                 path: '',
                 redirectTo: 'library/map/addlib',
-                data: { title: 'Δημιουργία Βιβλιοθήκης' }
+                data: { title: 'Δημιουργία Βιβλιοθήκης', },
+                pathMatch: 'full'
             },
             {
                 path: 'addlib',

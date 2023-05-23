@@ -1430,13 +1430,13 @@ export const _FONTS = [
   {
     iconclass: 'fa fa-',
     link: 'content',
-    name: 'external-link',
+    name: 'serviceal-link',
     type: 'FontAwesome'
   },
   {
     iconclass: 'fa fa-',
     link: 'content',
-    name: 'external-link-square',
+    name: 'serviceal-link-square',
     type: 'FontAwesome'
   },
   {

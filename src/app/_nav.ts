@@ -2,7 +2,7 @@ export const navigation = [
   {
     name: 'Αρχική Σελίδα',
     url: '/dashboard',
-    icon: 'icon-speedometer',
+    icon: 'speedometer',
   },
   {
     divider: true,
@@ -10,35 +10,35 @@ export const navigation = [
   {
     name: 'Βιβλιοθήκη',
     url: '/library',
-    icon: 'icon-notebook',
+    icon: 'library',
 
     children: [
       {
         name: 'Χωροθέτηση',
         url: '/library/map', // bookcase, categories
-        icon: 'icon-map'
+        icon: 'map' // fa-light fa-
       },
       {
         name: 'Βιβλία',
         url: '/library/book',
-        icon: 'icon-book-open'
+        icon: 'books'
       },
       {
         name: 'Κατανομή',
         url: '/library/allocation', // authors, publishers, book contents
-        icon: 'icon-layers'
+        icon: 'layer1'
       },
       {
         name: 'Δανεισμός',
         url: '/library/lending', // authors, publishers, book contents
-        icon: 'icon-note'
+        icon: 'lending'
       },
     ]
   },
   {
     name: 'Αναζήτηση',
     url: '/smartengine',
-    icon: 'icon-magnifier',
+    icon: 'searchbook',
     badge: {
       variant: 'info',
       text: 'NEW'
@@ -47,7 +47,7 @@ export const navigation = [
   {
     name: 'Αναλυτικά',
     url: '/charts',
-    icon: 'icon-pie-chart'
+    icon: 'pie-chart'
   },
 
   /* {
@@ -151,22 +151,22 @@ export const navigation = [
   {
     name: 'Ρυθμίσεις',
     url: '/settings',
-    icon: 'fas fa-tools',
+    icon: 'tools',
   },
   {
     name: 'Σελίδες',
-    url: '/extern',
-    icon: 'fa fa-sticky-note',
+    url: '/service',
+    icon: 'contents',
     children: [
       /* {
         name: 'Σύνδεση Χρήστη',
-        url: '/extern/login',
+        url: '/service/login',
         icon: 'icon-lock'
       }, */
       {
         name: 'Εγγραφή Χρήστη',
-        url: '/extern/register',
-        icon: 'icon-people'
+        url: '/service/register',
+        icon: 'signup'
       }
     ]
   },

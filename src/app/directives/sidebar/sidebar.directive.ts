@@ -70,16 +70,16 @@ export class SidebarOffCanvasCloseDirective {
   constructor() { }
 
   // Check if element has class
-  private hasClass(target: any, elementClassName: string) {
+  protected hasClass(target: any, elementClassName: string) {
     return new RegExp('(\\s|^)' + elementClassName + '(\\s|$)').test(target.className);
   }
 
   // Toggle element class
-  private toggleClass(elem: any, elementClassName: string) {
-    let newClass = ' ' + elem.className.replace( /[\t\r\n]/g, ' ' ) + ' ';
+  protected toggleClass(elem: any, elementClassName: string) {
+    let newClass = ' ' + elem.className.replace(/[\t\r\n]/g, ' ') + ' ';
     if (this.hasClass(elem, elementClassName)) {
-      while (newClass.indexOf(' ' + elementClassName + ' ') >= 0 ) {
-        newClass = newClass.replace( ' ' + elementClassName + ' ' , ' ' );
+      while (newClass.indexOf(' ' + elementClassName + ' ') >= 0) {
+        newClass = newClass.replace(' ' + elementClassName + ' ', ' ');
       }
       elem.className = newClass.replace(/^\s+|\s+$/g, '');
     } else {
@@ -92,15 +92,15 @@ export class SidebarOffCanvasCloseDirective {
     $event.preventDefault();
 
     if (this.hasClass(document.querySelector('body'), 'sidebar-off-canvas')) {
-      this.toggleClass(document.querySelector('body'), 'sidebar-opened');
+      this.toggleClass(document.querySelector('body'), 'sidebar-opened')
     }
   }
 }
 
 export const SIDEBAR_TOGGLE_DIRECTIVES = [
-    SidebarToggleDirective,
-    SidebarMinimizeDirective,
-    BrandMinimizeDirective,
-    SidebarOffCanvasCloseDirective,
-    MobileSidebarToggleDirective
+  SidebarToggleDirective,
+  SidebarMinimizeDirective,
+  BrandMinimizeDirective,
+  SidebarOffCanvasCloseDirective,
+  MobileSidebarToggleDirective
 ];

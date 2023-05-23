@@ -4,7 +4,7 @@
 @import "mat-custom-theme";
 
 $mdi-font-path: "~@mdi/font/fonts";
-@import "~@mdi/font/scss/materialdesignicons.scss";
+@import "../../node_modules/@mdi/font/scss/materialdesignicons.scss";
 
 @import '~perfect-scrollbar/css/perfect-scrollbar.css';
 

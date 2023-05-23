@@ -9,13 +9,13 @@
             </a>
 
 
-            <mat-chip-list #chipList class="justify-content-start">
-                <mat-chip *ngFor="let flt of filters" [selectable]="selectable" [removable]="removable"
+            <mat-chip-listbox #chipList class="justify-content-start">
+                <mat-chip-option *ngFor="let flt of filters" [selectable]="selectable" [removable]="removable"
                     (removed)="remove(flt.id)">
                     {{flt.name}}
                     <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                </mat-chip>
-            </mat-chip-list>
+                </mat-chip-option>
+            </mat-chip-listbox>
         </div>
 
         <div class="card-toolbar-justify col-md-2">

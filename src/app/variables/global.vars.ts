@@ -30,7 +30,14 @@ export const DEFAULT_SESSION = {
 }
 
 export const config = {
-  apiUrl: 'http://localhost:8080',
+  apiUrl: 'https://localhost:8080',
+  createApiUrl: (tag?: string | string[] | undefined): string => {
+    let address = ''
+    for (const iterator of tag) {
+      address = '/' + iterator
+    }
+    return 'https://localhost:8080' + address
+  }
   // serverUrl:
 }
 
@@ -306,7 +313,7 @@ export const ACTIONBTN_ORDER_PROCESS: IDropDownMenu[] = [
   },
   {
     title: 'Bulk inventory deduction', desc: `This will quickly deduct the inventory for the items in the selected orders.
-  This is handy if those orders are being fulfilled through an external method.`, cmd: () => { }
+  This is handy if those orders are being fulfilled through an serviceal method.`, cmd: () => { }
   },
   {
     title: 'Bulk delete orders', desc: `This will quickly delete the selected orders,
@@ -341,4 +348,4 @@ export const GRLETTERS = [{ id: 1, name: 'Α', enName: 'A' },
 { id: 21, name: 'Φ', enName: 'U' },
 { id: 22, name: 'Χ', enName: 'V' },
 { id: 23, name: 'Ψ', enName: 'W' },
-{ id: 24, name: 'Ω', enName: 'X' }, ]
+{ id: 24, name: 'Ω', enName: 'X' },]

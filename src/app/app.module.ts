@@ -2,7 +2,7 @@ import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, Inject, APP_ID, PLA
 
 /* Import Noop Animations Module Js */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { ChartsModule } from 'ng2-charts'
+import { NgChartsModule } from 'ng2-charts'
 /* Import Hammer Js */
 // import * as Hammer from 'hammerjs';
 
@@ -21,7 +21,14 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap'
 /* Import and configure SocketIoModule */
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io'
 
-const socketConfig: SocketIoConfig = { url: config.apiUrl, options: {} }
+const socketConfig: SocketIoConfig = {
+  url: config.apiUrl, options: {
+    withCredentials: true,
+    extraHeaders: {
+      secretHeader: 'secret value'
+    }
+  }
+}
 
 // Import Modules
 const APP_MODULES = [
@@ -32,7 +39,7 @@ const APP_MODULES = [
   AppNgModules,
   HttpClientModule,
   DropdownModule,
-  ChartsModule,
+  NgChartsModule,
   AuthModule.forRoot(),
   // MDBBootstrapModule.forRoot()
   NgbDropdownModule,
@@ -42,15 +49,17 @@ const APP_MODULES = [
 // Import containers
 import {
 
+  LandingLayoutComponent,
   FullLayoutComponent,
-  ExternLayoutComponent
+  ServiceLayoutComponent
 
 } from './containers'
 
 const APP_CONTAINERS = [
 
+  LandingLayoutComponent,
   FullLayoutComponent,
-  ExternLayoutComponent,
+  ServiceLayoutComponent,
   routedComponents.others
 ]
 
@@ -149,12 +158,12 @@ export class AppModule {
   }
 }
 
-//Stub for localStorage
-let localStorage = {
-  getItem: function (key: any) {
+// Stub for localStorage
+const localStorage = {
+  getItem(key: any) {
     return this[key]
   },
-  setItem: function (key: any, value: any) {
+  setItem(key: any, value: any) {
     this[key] = value
   }
 }

@@ -151,6 +151,7 @@ export class CategoryThemeComponent implements OnInit {
 
     private addCategoryModal(editRowData?: Category): void {
 
+        // tslint:disable-next-line: one-variable-per-declaration
         const data = {
 
             title: `Προσθήκη Θεματολογίας χώρου`,
@@ -181,6 +182,7 @@ export class CategoryThemeComponent implements OnInit {
     protected loadPage(): Observable<OptionEntry[]> { // protected functions
         // this.sort.sortables.forEach( (v,k) => console.log(v, k))
 
+        console.log(`apiUrl library map category`, this.apiUrl.searchUrl, this.paginator.pageSize)
         return this.httpService.find(
             '',
             this.search.nativeElement.value.trim().toLowerCase(),
@@ -563,7 +565,7 @@ export class ChecklistDatabase {
     templateUrl: 'dialog/addcategory-dialog.component.html',
     styles: [`
 
-        .bookcase .mat-form-field {
+        .bookcase .mat-mdc-form-field {
             width: 100%;
         }
 

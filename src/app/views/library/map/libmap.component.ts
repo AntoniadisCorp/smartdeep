@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { InventoryService, SvgIconService } from '../../../services';
-import {  } from 'express-serve-static-core';
+import { } from 'express-serve-static-core';
 import { Router, ActivatedRoute, ParamMap, RouterOutlet } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { LIBRARY_LIBMAP_TABS } from '../../../variables';
@@ -18,8 +18,8 @@ import { slideInAnimation } from '../../../animations';
 export class LibMapComponent implements OnInit {
 
 
-    InvTabs$!: Observable<InventoryTabs[]>;
-    activeLink!: string;
+    InvTabs$!: Observable<InventoryTabs[]>
+    activeLink!: string
 
     constructor(private invService: InventoryService, private router: Router,
         private route: ActivatedRoute, matIconRegistry: SvgIconService) {
@@ -56,6 +56,7 @@ export class LibMapComponent implements OnInit {
       } */
 
     getAnimationData(outlet: RouterOutlet) {
+        // tslint:disable-next-line: no-string-literal
         return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
     }
 }

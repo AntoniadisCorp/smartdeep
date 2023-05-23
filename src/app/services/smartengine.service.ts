@@ -147,6 +147,8 @@ export class SmartEngineService {
 
     this.taskUrl = this.setTaskUrl(apiURL)
 
+    console.log(`Find Task url:`, this.taskUrl, collection)
+
     return this.http.get(this.taskUrl, {
       params: new HttpParams()
         .set('_id', String(_id))
@@ -163,6 +165,7 @@ export class SmartEngineService {
         return result
       }),
       map((res: OptionEntry) => res.data),
+      catchError(this.handleError<string[]>('findByCollection'))
     )
   }
 
@@ -193,8 +196,10 @@ export class SmartEngineService {
           `body was: ${JSON.stringify(returnedErr)}`)
       }
       // TODO: better job of transforming error for user consumption
-      if (returnedErr.error.error)
+      if (returnedErr.error.error) {
+
         this.log(`${operation} failed: ${returnedErr.error.status} ${returnedErr.error.error.message}`, 5000)
+      }
 
       result = returnedErr
 

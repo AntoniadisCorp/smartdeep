@@ -139,7 +139,7 @@ export class AuthService {
     headers.append('Content-Type', 'application/X-www-form-urlencoded');
 
     const tokendata = 'code=' + this.ourcode +
-      '&grant_type=authorization_code&redirect_uri=http://localhost:4200/extern/login';
+      '&grant_type=authorization_code&redirect_uri=http://localhost:4200/service/login';
 
     this.http.post(
       `${this.apiUrl}/v2/token`,

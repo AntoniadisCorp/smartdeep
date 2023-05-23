@@ -1,5 +1,4 @@
 <div class="animated fadeIn">
-
   <div class="row">
     <div class="col-sm-9">
       <form class="add-category-form" [@toggleHeight]="isShowSettings">
@@ -7,7 +6,6 @@
           <input matInput placeholder="Τίτλος θεματολογίας" [(ngModel)]="catInput.name"
             [ngModelOptions]="{standalone: true}">
         </mat-form-field>
-
         <mat-form-field class="pick-category-icon">
           <i class="obs-no-matches fa fa-{{iconCtrl.value}}"></i>
           <input type="text" placeholder="Επιλογή εικόνας" aria-label="Number" matInput [formControl]="iconCtrl"
@@ -19,7 +17,6 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-
         <mat-form-field class="add-category-parent">
           <mat-spinner class="obs-mat-spinner" *ngIf="isProcessing" [diameter]="20" [strokeWidth]="3"></mat-spinner>
           <!-- <i class="obs-no-matches" *ngIf="emptyText && isEmpty(emptyText) | async">{{emptyText}}</i> -->
@@ -34,7 +31,6 @@
         </mat-form-field>
       </form>
     </div>
-
     <div class="col-sm-3">
       <mat-menu #appMenu="matMenu">
         <button mat-menu-item (click)="edit()">
@@ -53,26 +49,14 @@
             class="fa fa-{{act.iconclass}}" aria-hidden="true"></i></a></div>
     </div>
   </div>
-
-
   <br>
-
   <!-- <p>Qeury results: {{ cateCtrl.value | json}}, loading: {{ isProcessing }} </p> -->
-
-
-
   <mat-spinner class="category-buffer" *ngIf="refreshing; else droplist" [diameter]="70" [strokeWidth]="5">
   </mat-spinner>
   <br>
   <ng-template #droplist>
     <app-prodcategory-list [action]='act' [categories]="cateObj"></app-prodcategory-list>
   </ng-template>
-
-
-
-
-
-
   <!-- /.row -->
   <!-- <div class="row">
      <div class="col-lg-12">

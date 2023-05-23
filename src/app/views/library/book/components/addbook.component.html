@@ -66,12 +66,12 @@
                             <span class="text-dark font-weight-bold mr-4">Δημιουργία Βιβλίου</span>
                             <i class="fas fa-database fa-lg text-dark mr-3 ml-4"></i>
                             <span class="text-dark mr-4">Βιβλιοθήκη:
-                                <mat-chip-list aria-label="Book Selection">
-                                    <mat-chip class="text-white" color="primary" selected>
-                                        {{ libraryName.value }}</mat-chip>
-                                </mat-chip-list>
+                                <mat-chip-listbox aria-label="Book Selection">
+                                    <mat-chip-option class="text-white" color="primary" selected>
+                                        {{ libraryName.value }}</mat-chip-option>
+                                </mat-chip-listbox>
                             </span>
-                            <mat-chip class="text-dark mr-4">Κατάσταση: </mat-chip>
+                            <mat-chip-option class="text-dark mr-4">Κατάσταση: </mat-chip-option>
                             <label class="switch switch-text switch-pill switch-success mt-2">
 
                                 <input type="checkbox" placeholder="κατάσταση.." checked
@@ -103,7 +103,7 @@
                 <div class="divider-right col-8">
                     <div class="form-row">
                         <div class="form-group col-md-10">
-                            <mat-chip class="text-dark mr-2" for="typeahead-config">Θεματολογία</mat-chip>
+                            <mat-chip-option class="text-dark mr-2" for="typeahead-config">Θεματολογία</mat-chip-option>
                             <mat-form-field class="wfield" hintLabel="* Το πεδίο δεν μπορεί να είναι κενό">
                                 <mat-spinner matSuffix *ngIf="isProcessing" [diameter]="20" [strokeWidth]="3">
                                 </mat-spinner>
@@ -135,7 +135,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-2">
-                            <mat-chip class="text-dark" for="id">Kωδικός</mat-chip>
+                            <mat-chip-option class="text-dark" for="id">Kωδικός</mat-chip-option>
                             <mat-form-field class="wfield">
                                 <input matInput required formControlName="SKU"
                                     class="text-primary ng-untouched ng-pristine ng-valid" id="SKU" min="0"
@@ -143,7 +143,7 @@
                             </mat-form-field>
                         </div>
                         <div class="form-group col-md-8">
-                            <mat-chip class="text-dark font-weight-bold mr-4" for="title">Τίτλος Βιβλίου</mat-chip>
+                            <mat-chip-option class="text-dark font-weight-bold mr-4" for="title">Τίτλος Βιβλίου</mat-chip-option>
                             <mat-form-field style="width:100%" class="wfield">
                                 <input matInput required
                                     class="text-primary  font-weight-bold ng-pristine ng-valid ng-touched"
@@ -152,7 +152,7 @@
                             </mat-form-field>
                         </div>
                         <div class="form-group col-md-2">
-                            <mat-chip class="text-dark font-weight-bold" for="bookcase">Θέση</mat-chip>
+                            <mat-chip-option class="text-dark font-weight-bold" for="bookcase">Θέση</mat-chip-option>
                             <mat-form-field class="wfield" formGroupName="bookcase">
                                 <input matInput required
                                     class="text-primary font-weight-bold ng-pristine ng-valid ng-touched"
@@ -167,7 +167,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <mat-chip class="text-dark mr-5" for="author">Συγγραφέας</mat-chip>
+                            <mat-chip-option class="text-dark mr-5" for="author">Συγγραφέας</mat-chip-option>
                             <mat-form-field class="wfield">
                                 <input matInput class=" text-primary" formControlName="author" id="author"
                                     placeholder="Παπαδιαμάντης.." type="text" />
@@ -175,7 +175,7 @@
 
                         </div>
                         <div class="form-group col-md-6">
-                            <mat-chip class="text-dark mr-5" for="author">Εκδότης</mat-chip>
+                            <mat-chip-option class="text-dark mr-5" for="author">Εκδότης</mat-chip-option>
                             <mat-form-field class="wfield">
                                 <input matInput class=" text-primary" formControlName="publisher" id="publisher"
                                     placeholder="Αστήρ.." type="text" />
@@ -185,28 +185,28 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-2">
-                            <mat-chip class="text-dark" for="year">Έκδ. Έτος</mat-chip>
+                            <mat-chip-option class="text-dark" for="year">Έκδ. Έτος</mat-chip-option>
                             <mat-form-field class="wfield">
                                 <input matInput class=" text-primary" formControlName="year" id="year"
                                     placeholder="1993.." type="number" min="0" />
                             </mat-form-field>
                         </div>
                         <div class="form-group col-md-2">
-                            <mat-chip class="text-dark" for="pages">Σελίδες</mat-chip>
+                            <mat-chip-option class="text-dark" for="pages">Σελίδες</mat-chip-option>
                             <mat-form-field class="wfield">
                                 <input matInput class=" text-primary" formControlName="pages" id="pages"
                                     placeholder="888.." min="0" type="number" />
                             </mat-form-field>
                         </div>
                         <div class="form-group col-md-2">
-                            <mat-chip class="text-dark" for="pages">Τόμος</mat-chip>
+                            <mat-chip-option class="text-dark" for="pages">Τόμος</mat-chip-option>
                             <mat-form-field class="wfield">
                                 <input matInput class=" text-primary" formControlName="volume" id="volume"
                                     placeholder="1.." min="0" type="number" />
                             </mat-form-field>
                         </div>
                         <div class="form-group col-md-2">
-                            <mat-chip class="text-dark" for="pages">Έκδοση</mat-chip>
+                            <mat-chip-option class="text-dark" for="pages">Έκδοση</mat-chip-option>
                             <mat-form-field class="wfield">
                                 <input matInput class=" text-primary" formControlName="version" id="version"
                                     placeholder="1.." min="0" type="number" />
@@ -214,7 +214,7 @@
                         </div>
                         <div formGroupName="dimensions" class="row col-md-8">
                             <div class="form-group col-md-6">
-                                <mat-chip class="text-dark" for="dimensionsx">Διάσταση X</mat-chip>
+                                <mat-chip-option class="text-dark" for="dimensionsx">Διάσταση X</mat-chip-option>
                                 <mat-form-field class="wfield">
                                     <input matInput class=" text-primary" formControlName="x" id="dimensionsx"
                                         placeholder="37.." type="number" min="0" />
@@ -222,7 +222,7 @@
                                 </mat-form-field>
                             </div>
                             <div class="form-group col-md-6">
-                                <mat-chip class="text-dark mr-3" for="dimensionsy">Διάσταση Y</mat-chip>
+                                <mat-chip-option class="text-dark mr-3" for="dimensionsy">Διάσταση Y</mat-chip-option>
                                 <mat-form-field class="wfield">
                                     <span matPrefix>x &nbsp;</span>
                                     <input matInput class=" text-primary" formControlName="y" id="dimensionsy"
@@ -237,14 +237,14 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <mat-chip class="text-dark mr-4" for="isbn10">ISBN-10</mat-chip>
+                            <mat-chip-option class="text-dark mr-4" for="isbn10">ISBN-10</mat-chip-option>
                             <mat-form-field class="wfield">
                                 <input matInput class=" text-primary" formControlName="isbn10" id="isbn10"
                                     placeholder="ISBN-10: 9604188143.." type="text" maxlength="10" />
                             </mat-form-field>
                         </div>
                         <div class="form-group col-md-6">
-                            <mat-chip class="text-dark mr-4" for="isbn13">ISBN-13</mat-chip>
+                            <mat-chip-option class="text-dark mr-4" for="isbn13">ISBN-13</mat-chip-option>
                             <mat-form-field class="wfield">
                                 <input matInput class=" text-primary" formControlName="isbn13" id="isbn13"
                                     placeholder="ISBN-13: 9789604188147.." type="text" maxlength="13" />
@@ -253,7 +253,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-12">
-                            <mat-chip class="text-warning font-weight-bold" selected for="NotesArea">Υπόμνημα</mat-chip>
+                            <mat-chip-option class="text-warning font-weight-bold" selected for="NotesArea">Υπόμνημα</mat-chip-option>
                             <mat-form-field style="width: 100%;">
 
                                 <textarea matInput placeholder="σημείωση" aria-label="Notes"

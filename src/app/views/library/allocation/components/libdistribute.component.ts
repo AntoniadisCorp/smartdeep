@@ -1,23 +1,23 @@
-import { Component, OnInit, ElementRef, ViewChild, Inject, ChangeDetectorRef, AfterViewInit, SimpleChanges, OnChanges } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { SmartEngineService, Logger } from '../../../../services';
-import { middlebar, config } from '../../../../variables';
-import { SelectionModel } from '@angular/cdk/collections';
-import { Item, OptionEntry, BookCase, LibrarySpace, Category, BodyObj, ObjectId, BookShelf } from '../../../../interfaces';
-import { debounceTime, distinctUntilChanged, tap, switchMap, map, catchError, startWith, finalize } from 'rxjs/operators';
-import { fromEvent, of, merge, Observable } from 'rxjs';
-import { openMatDialog, _filter, saveByHttpwithProgress, addObjAttr, uid, MongoId, uploadProgress, toResponseBody } from '../../../../routines';
-import { LibrarySpaceDialogComponent } from '../../map/components';
-import { DeleteitemListDialogConfirm } from '../../../../views/smartengine/components';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { ObjectID } from 'bson';
-import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatOption } from '@angular/material/core';
+import { Component, OnInit, ElementRef, ViewChild, Inject, ChangeDetectorRef, AfterViewInit, SimpleChanges, OnChanges } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
+import { SmartEngineService, Logger } from '../../../../services'
+import { middlebar, config } from '../../../../variables'
+import { SelectionModel } from '@angular/cdk/collections'
+import { Item, OptionEntry, BookCase, LibrarySpace, Category, BodyObj, ObjectId, BookShelf } from '../../../../interfaces'
+import { debounceTime, distinctUntilChanged, tap, switchMap, map, catchError, startWith, finalize } from 'rxjs/operators'
+import { fromEvent, of, merge, Observable } from 'rxjs'
+import { openMatDialog, _filter, saveByHttpwithProgress, addObjAttr, uid, MongoId, uploadProgress, toResponseBody } from '../../../../routines'
+import { LibrarySpaceDialogComponent } from '../../map/components'
+import { DeleteitemListDialogConfirm } from '../../../../views/smartengine/components'
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
+import { COMMA, ENTER } from '@angular/cdk/keycodes'
+import { ObjectID } from 'bson'
+import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete'
+import { MatChipInputEvent } from '@angular/material/chips'
+import { MatPaginator } from '@angular/material/paginator'
+import { MatSort } from '@angular/material/sort'
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { MatOption } from '@angular/material/core'
 
 @Component({
     selector: 'app-library-libdistribute',
@@ -28,26 +28,26 @@ import { MatOption } from '@angular/material/core';
 export class LibDistributeComponent implements OnInit {
 
 
-    @ViewChild('search', { static: false }) search: ElementRef;
-    @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-    @ViewChild(MatSort, { static: false }) sort: MatSort;
+    @ViewChild('search', { static: false }) search: ElementRef
+    @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator
+    @ViewChild(MatSort, { static: false }) sort: MatSort
 
     displayedColumns: string[] = ['select', '_id', 'skuid',
         'name', 'whatnot', 'type', 'bookshelf', 'categoryCount',
         'bookCount', 'desc', 'disabled', 'date_added', 'date_modified',
-        'operations'];
+        'operations']
 
-    selection = new SelectionModel<Item>(true, []);
+    selection = new SelectionModel<Item>(true, [])
 
-    resultsLength: any;
-    progressActionDataBar: number;
-    isLoadingResults: boolean = true
-    protected isRateLimitReached: boolean = false;
-    data: any;
+    resultsLength: any
+    progressActionDataBar: number
+    isLoadingResults = true
+    protected isRateLimitReached = false
+    data: any
     protected extraFilters: Array<{ [x: string]: any }>
 
-    private tableAction: boolean = false
-    private apiUrl: { searchUrl: string, deleteUrl: (col: string, id: string | number) => string, deleteManyUrl: string };
+    private tableAction = false
+    private apiUrl: { searchUrl: string, deleteUrl: (col: string, id: string | number) => string, deleteManyUrl: string }
 
 
     constructor(/* private router: Router, */
@@ -77,25 +77,25 @@ export class LibDistributeComponent implements OnInit {
                 debounceTime(200),
                 distinctUntilChanged(),
                 tap(() => {
-                    this.paginator.pageIndex = 0;
+                    this.paginator.pageIndex = 0
                 }),
                 switchMap(() => {
-                    this.isLoadingResults = true;
-                    return this.loadPage();
+                    this.isLoadingResults = true
+                    return this.loadPage()
                 }),
                 map((data: any) => {
                     // Flip flag to show that loading has finished.
-                    this.isLoadingResults = false;
-                    this.isRateLimitReached = false;
-                    this.resultsLength = data.count;
+                    this.isLoadingResults = false
+                    this.isRateLimitReached = false
+                    this.resultsLength = data.count
 
-                    return data.result;
+                    return data.result
                 }),
                 catchError(() => {
-                    this.isLoadingResults = false;
+                    this.isLoadingResults = false
                     // Catch if the GitHub API has reached its rate limit. Return empty data.
-                    this.isRateLimitReached = true;
-                    return of([]);
+                    this.isRateLimitReached = true
+                    return of([])
                 })
             )
             .subscribe(data => (this.data = data))
@@ -106,22 +106,22 @@ export class LibDistributeComponent implements OnInit {
                 startWith({}),
                 switchMap(() => {
 
-                    this.isLoadingResults = true;
-                    return this.loadPage();
+                    this.isLoadingResults = true
+                    return this.loadPage()
                 }),
                 map((data: any) => {
                     // Flip flag to show that loading has finished.
-                    this.isLoadingResults = false;
-                    this.isRateLimitReached = false;
-                    this.resultsLength = data.count;
+                    this.isLoadingResults = false
+                    this.isRateLimitReached = false
+                    this.resultsLength = data.count
 
-                    return data.result;
+                    return data.result
                 }),
                 catchError(() => {
-                    this.isLoadingResults = false;
+                    this.isLoadingResults = false
                     // Catch if the GitHub API has reached its rate limit. Return empty data.
-                    this.isRateLimitReached = true;
-                    return of([]);
+                    this.isRateLimitReached = true
+                    return of([])
                 })
             )
             .subscribe(data => (this.data = data))
@@ -141,7 +141,8 @@ export class LibDistributeComponent implements OnInit {
 
     private addBookDistributeModal(editRowData?: BookCase): void {
 
-        let data = {
+        // tslint:disable-next-line: one-variable-per-declaration
+        const data = {
 
             title: `Προσθήκη Βιβλιοθέσης`,
             subtitle: ``, /* ${this.libraryName.value} */
@@ -154,46 +155,46 @@ export class LibDistributeComponent implements OnInit {
             body: editRowData ? editRowData : null,
             editable: false
         },
-            width = '400px';
+            width = '400px'
 
         openMatDialog(this.dialog, data, BookCaseDialogComponent, width)
             .afterClosed()
             .subscribe((result: any) => {
-                console.log('The dialog was closed', result);
-                if (!result) return
+                console.log('The dialog was closed', result)
+                if (!result) { return }
                 this.clearSearch()
                 this.progressActionDataBar = 0
-            });
+            })
 
     }
 
     /* ------------------------ On Clear Search Table ---------------------------- */
     clearSearch() {
-        this.search.nativeElement.value = '';
+        this.search.nativeElement.value = ''
         this.loadPage()
             .pipe(
                 debounceTime(300),
                 distinctUntilChanged(),
                 tap(() => {
-                    this.paginator.pageIndex = 0;
-                    this.isLoadingResults = true;
+                    this.paginator.pageIndex = 0
+                    this.isLoadingResults = true
                 }),
 
                 map((data: any) => {
                     // Flip flag to show that loading has finished.
-                    this.isLoadingResults = false;
-                    this.isRateLimitReached = false;
-                    this.resultsLength = data.count;
+                    this.isLoadingResults = false
+                    this.isRateLimitReached = false
+                    this.resultsLength = data.count
 
-                    return data.result;
+                    return data.result
                 }),
                 catchError(() => {
-                    this.isLoadingResults = false;
+                    this.isLoadingResults = false
                     // Catch if the GitHub API has reached its rate limit. Return empty data.
-                    this.isRateLimitReached = true;
-                    return of([]);
+                    this.isRateLimitReached = true
+                    return of([])
                 })
-            ).subscribe(data => (this.data = data));
+            ).subscribe(data => (this.data = data))
     }
 
     // protected Functions
@@ -203,7 +204,7 @@ export class LibDistributeComponent implements OnInit {
     /* ------------------------ Οn Table Load ---------------------------- */
     protected loadPage(): Observable<OptionEntry[]> {
         // this.sort.sortables.forEach( (v,k) => console.log(v, k))
-
+        console.log(`Allocation distribute apiUrl: ${this.apiUrl.searchUrl}`)
         return this.httpService.find(
             '',
             this.search.nativeElement.value.trim().toLowerCase(),
@@ -214,16 +215,17 @@ export class LibDistributeComponent implements OnInit {
             this.apiUrl.searchUrl,
             this.sort.active,
             JSON.stringify(this.extraFilters)
-        );
+        )
     }
 
     /* ------------------------ Table Row Acts ---------------------------- */
     onRowClicked(Row: { _id: string }) {
         console.log('Row clicked: ', Row)
 
-        if (!this.tableAction)
-            console.log(Row._id)// this.router.navigate(['/library/book/view', Row._id])
-        else this.tableAction = false
+        if (!this.tableAction) {
+            console.log(Row._id)
+        }// this.router.navigate(['/library/book/view', Row._id])
+        else { this.tableAction = false }
     }
 
     addRow(): void {
@@ -257,7 +259,8 @@ export class LibDistributeComponent implements OnInit {
 
         this.tableAction = true
 
-        let data = {
+        // tslint:disable-next-line: one-variable-per-declaration
+        const data = {
             title: `Διαγραφή Bιβλιοθέσης`,
             subtitle: `Τίτλος ${Row.name}`,
             image: {
@@ -269,33 +272,37 @@ export class LibDistributeComponent implements OnInit {
             action: 'Διαγραφή',
             status: false
         },
-            width = '400px';
+            width = '400px'
 
         openMatDialog(this.dialog, data, DeleteitemListDialogConfirm, width)
             .afterClosed()
             .subscribe((result: any) => {
-                console.log('The dialog was closed', result);
+                console.log('The dialog was closed', result)
 
-                if (result)
-                    this.httpService.saveTasks({ data: { whatnot: Row.whatnot, bookshelf: Row.bookshelf }, col: 'libraryspace' }, this.apiUrl.deleteUrl('bookcase', Row._id))
+                if (result) {
+                    this.httpService.saveTasks({
+                        data: { whatnot: Row.whatnot, bookshelf: Row.bookshelf }, col: 'libraryspace'
+                    },
+                        this.apiUrl.deleteUrl('bookcase', Row._id))
                         .subscribe((res) => { console.log('deleteOneTask: ', res), this.clearSearch() })
-            });
+                }
+            })
     }
 
     // ------------------------ On Table Selections ----------------------------
     // Toogle selectors
     /** Whether the number of selected elements matches the total number of rows. */
     isAllSelected() {
-        const numSelected = this.selection.selected.length;
-        const numRows = 0 /* this.dataSource.data.length */;
-        return numSelected === numRows;
+        const numSelected = this.selection.selected.length
+        const numRows = 0 /* this.dataSource.data.length */
+        return numSelected === numRows
     }
 
     // Toogle selectors
     /** Selects all rows if they are not all selected; otherwise clear selection. */
     masterToggle() {
 
-        this.isAllSelected() ? this.selection.clear() : '';
+        this.isAllSelected() ? this.selection.clear() : ''
         /* this.dataSource.data.forEach(row => this.selection.select(row)) */
     }
 
@@ -303,10 +310,10 @@ export class LibDistributeComponent implements OnInit {
     /** The label for the checkbox on the passed row */
     checkboxLabel(row?: Item): string {
         if (!row) {
-            return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+            return `${this.isAllSelected() ? 'select' : 'deselect'} all`
         }
         return `${this.selection.isSelected(row) ? 'deselect' : 'select'
-            } row ${row.name + 1}`;
+            } row ${row.name + 1}`
     }
 }
 
@@ -321,15 +328,15 @@ interface ProgressLoader {
     selector: 'app-library-libdistribute-bookcase-dialog',
     templateUrl: 'dialog/bookcase-dialog.component.html',
     styles: [`
-    
-        .bookcase .mat-form-field {
+
+        .bookcase .mat-mdc-form-field {
             width: 100%;
         }
 
         p {
             text-align: center;
         }
-    
+
     `]
 })
 export class BookCaseDialogComponent {
@@ -337,8 +344,8 @@ export class BookCaseDialogComponent {
     BookCaseForm: FormGroup
 
 
-    @ViewChild('autoChip', { static: false }) matCategoryAutocomplete: MatAutocomplete;
-    @ViewChild('categoryInput', { static: false }) categoryInput: ElementRef<HTMLInputElement>;
+    @ViewChild('autoChip', { static: false }) matCategoryAutocomplete: MatAutocomplete
+    @ViewChild('categoryInput', { static: false }) categoryInput: ElementRef<HTMLInputElement>
 
 
     libSpace: Observable<LibrarySpace[]>
@@ -350,16 +357,16 @@ export class BookCaseDialogComponent {
     private cindex: number
     private stateGroupSelected: boolean
 
-    categories: { _id: string | ObjectID, name: string }[] = [];
+    categories: { _id: string | ObjectID, name: string }[] = []
     bookshelves: BookShelf[] = []
 
 
     fontSize = '18px'
-    visible = true;
-    selectable = true;
-    removable = true;
-    addOnBlur = true;
-    separatorKeysCodes: number[] = [ENTER, COMMA];
+    visible = true
+    selectable = true
+    removable = true
+    addOnBlur = true
+    separatorKeysCodes: number[] = [ENTER, COMMA]
 
     progressAction: ProgressLoader
 
@@ -384,7 +391,7 @@ export class BookCaseDialogComponent {
         })
 
 
-        this.stateGroupSelected = false;
+        this.stateGroupSelected = false
         this.cindex = -1
 
         this.progressAction = {
@@ -395,7 +402,7 @@ export class BookCaseDialogComponent {
 
         const RowData: BookCase = this.data.body
         let firstTime = true
-        if (RowData) this.patchValues()
+        if (RowData) { this.patchValues() }
 
 
         // Alphabetic Group Autocomplete Suggestions of Library
@@ -409,23 +416,23 @@ export class BookCaseDialogComponent {
             switchMap(value => {
                 if (value && (value === '' || value.length < 1) || this.stateGroupSelected) { // remove double crud requests
                     // if no value is present, return null
-                    return of(null);
+                    return of(null)
                 } else {
 
                     // lookup from smartdeep isense
                     return this.searchHttp(value, 'libraryspace')
                         .pipe(
                             map((space: LibrarySpace[]) => {
-                                if (!space) return []
-                                this.libSpaceSelected = space; // .map<any>((item: LibrarySpace) => ({ whatnot: item.whatnot, type: item.type }))
+                                if (!space) { return [] }
+                                this.libSpaceSelected = space // .map<any>((item: LibrarySpace) => ({ whatnot: item.whatnot, type: item.type }))
                                 return space
                                     .filter(option => option.whatnot.toLowerCase().includes(value.toLowerCase()))
                             }),
                             finalize(() => firstTime = this.progressAction.isProcessing = this.stateGroupSelected = false)
-                        );
+                        )
                 }
             }),
-            tap(() => { if (RowData && firstTime) this.OnInit() }),
+            tap(() => { if (RowData && firstTime) { this.OnInit() } }),
             tap(() => firstTime = this.progressAction.isProcessing = this.stateGroupSelected = false)
         )
 
@@ -440,7 +447,7 @@ export class BookCaseDialogComponent {
             switchMap(value => {
                 if (!value && (value === null || value === '' || value.length < 1) || this.stateGroupSelected) { // remove double crud requests
                     // if no value is present, return null
-                    return of(null);
+                    return of(null)
                 } else {
                     // lookup in database
                     return this.searchHttp(value, 'category').pipe(
@@ -449,15 +456,15 @@ export class BookCaseDialogComponent {
                             return cat
                                 .filter((item: Category) => item.name.toLowerCase().includes(value.toLocaleLowerCase()))
                                 .sort((a: Category, b: Category) => {
-                                    if (a.name < b.name) { return -1; }
-                                    if (a.name > b.name) { return 1; }
-                                    return 0;
+                                    if (a.name < b.name) { return -1 }
+                                    if (a.name > b.name) { return 1 }
+                                    return 0
                                 })
                                 .map<string>((item: Category) => item.name)
 
                         }),
                         finalize(() => this.progressAction.isthemeProcessing = this.stateGroupSelected = false)
-                    );
+                    )
                 }
             }),
             tap(() => this.progressAction.isthemeProcessing = this.stateGroupSelected = false)
@@ -465,8 +472,8 @@ export class BookCaseDialogComponent {
 
     }
     private OnInit(): void {
-        //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-        //Add 'implements OnInit' to the class.
+        // Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+        // Add 'implements OnInit' to the class.
         const RowData: BookCase = this.data.body
 
         this.libSpaceSelect({ selected: this.whatnot.value } as MatOption, RowData.bookshelf)
@@ -498,7 +505,7 @@ export class BookCaseDialogComponent {
     }
 
     onNoClick(): void {
-        this.dialogRef.close();
+        this.dialogRef.close()
     }
 
     onSave(): void {
@@ -517,7 +524,7 @@ export class BookCaseDialogComponent {
 
             this.skuid.setValue(`${this.whatnot.value}${this.bookshelves[this.bookshelf.value].name}-${!editable ? uid(5) : this.skuid.value.substring(this.skuid.value.indexOf('-') + 1)}`)
 
-            let data: BookCase = {
+            const data: BookCase = {
 
                 skuid: this.skuid.value,
                 name: this.name.value,
@@ -538,23 +545,24 @@ export class BookCaseDialogComponent {
             }
 
             // contain _id to run Mongo db method as update function
-            if (editable) addObjAttr(data, '_id', _id)
+            if (editable) { addObjAttr(data, '_id', _id) }
 
             let dataPlus = null
 
-            if (editable)
+            if (editable) {
                 dataPlus = { // update old bookshelf us unused
                     whatnot: RowData.whatnot,
                     bookshelf: RowData.bookshelf,
                 }
+            }
 
-            let dialogObj: BodyObj = {
+            const dialogObj: BodyObj = {
                 col: 'bookcase',
                 data,
                 dataPlus
             }
 
-            if (!editable) addObjAttr(dialogObj, 'uniqueId', [{ 'whatnot': data.whatnot, 'bookshelf': data.bookshelf }])
+            if (!editable) { addObjAttr(dialogObj, 'uniqueId', [{ 'whatnot': data.whatnot, 'bookshelf': data.bookshelf }]) }
 
 
             // save data to DB
@@ -562,7 +570,7 @@ export class BookCaseDialogComponent {
                 .subscribe((res: OptionEntry) => {
 
                     // Close Dialog Box
-                    if (res && res.code == 200) this.dialogRef.close(res.code)
+                    if (res && res.code == 200) { this.dialogRef.close(res.code) }
                     else {
 
                         console.error(res.error.status)
@@ -584,12 +592,12 @@ export class BookCaseDialogComponent {
                 toResponseBody(),
                 debounceTime(500),
                 tap((result) => {
-                    console.log('Saved results -->', result);
+                    console.log('Saved results -->', result)
 
-                    return result;
+                    return result
                 }),
                 catchError(this.httpService.handleError<any>('saveByHttpwithProgress'))
-            );
+            )
     }
 
     libSpaceSelect(option: MatOption, bs?: string): void {
@@ -615,23 +623,25 @@ export class BookCaseDialogComponent {
         // Add fruit only when MatAutocomplete is not open
         // To make sure this does not conflict with OptionSelected Event
         if (!this.matCategoryAutocomplete.isOpen) {
-            const input = event.input;
-            const value = event.value;
+            const input = event.input
+            const value = event.value
 
-            if (this.categorySelected && this.categorySelected.length)
+            if (this.categorySelected && this.categorySelected.length) {
                 this.cindex = this.categorySelected.findIndex((search) => search.name === value.trim())
+            }
 
             // Add our fruit
-            if (this.cindex !== -1 && this.categories && this.categories.findIndex(sa => sa.name === value.trim()) === -1 && (value || '').trim())
+            if (this.cindex !== -1 && this.categories && this.categories.findIndex(sa => sa.name === value.trim()) === -1 && (value || '').trim()) {
                 this.categories.push({ _id: MongoId(this.categorySelected[this.cindex]._id), name: value.trim() })
+            }
 
 
             // Reset the input value
             if (input) {
-                input.value = "";
+                input.value = '';
             }
 
-            this.categoryCtrl.setValue(null);
+            this.categoryCtrl.setValue(null)
         }
     }
 
@@ -649,37 +659,40 @@ export class BookCaseDialogComponent {
 
         const value = event.option.viewValue
 
-        if (this.categorySelected && this.categorySelected.length)
+        if (this.categorySelected && this.categorySelected.length) {
             this.cindex = this.categorySelected.findIndex((search) => search.slug === value.trim().toLowerCase())
+        }
 
 
         // remove from allShelves
         // this.removeElement(this.allShelves, event.option.viewValue)
 
-        if (this.cindex !== -1 && this.categories && this.categories.findIndex(sa => sa.name === value.trim()) === -1)
+        if (this.cindex !== -1 && this.categories && this.categories.findIndex(sa => sa.name === value.trim()) === -1) {
             this.categories.push({ _id: MongoId(this.categorySelected[this.cindex]._id), name: value.trim() })
+        }
 
         // console.log()
-        this.categoryInput.nativeElement.value = '';
-        this.categoryCtrl.setValue(null);
+        this.categoryInput.nativeElement.value = ''
+        this.categoryCtrl.setValue(null)
     }
 
 
     // <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
     protected getErrorMessage(build: FormControl, key: string) {
         if (build.hasError('required')) {
-            return 'You must enter a value';
+            return 'You must enter a value'
         }
 
-        return build.hasError(key) ? 'Not a valid ' + key : '';
+        return build.hasError(key) ? 'Not a valid ' + key : ''
     }
 
     private removeElement(arr: any, shelf: { _id: string | ObjectID, name: string }): void {
 
-        let shelves = arr
+        const shelves = arr
         const index = shelves.findIndex((search => search._id = shelf._id))
-        if (index >= 0)
+        if (index >= 0) {
             shelves.splice(index, 1)
+        }
     }
 
 
@@ -687,7 +700,7 @@ export class BookCaseDialogComponent {
 
         return this.httpService.searchTasks(filteredValue.toLowerCase(),
             config.apiUrl + middlebar + 'task' +
-            middlebar + 'library' + middlebar + 'search', collectionName);
+            middlebar + 'library' + middlebar + 'search', collectionName)
     }
 
     get skuid() {

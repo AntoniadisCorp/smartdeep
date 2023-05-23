@@ -33,7 +33,7 @@ export class RandomNumberComponent implements OnInit, OnDestroy {
     this.authService.logout()
       .subscribe(success => {
         if (success) {
-          this.router.navigate(['/extern/login']);
+          this.router.navigate(['/service/login']);
         }
       });
   }

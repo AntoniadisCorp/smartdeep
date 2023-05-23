@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core'
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core'
 import { HttpClientModule } from '@angular/common/http'
 import { NgBootstrapModule, ItemListModule } from '../../../modules'
 import { ReactiveFormsModule } from '@angular/forms'
@@ -12,6 +12,6 @@ import { LibAllocRoutingModule, routedComponents } from './liballoc.routing'
     // entryComponents: [routedComponents.app],
     exports: [/* FileUploadComponent */],
     providers: [],
-    schemas: []
+    schemas: [NO_ERRORS_SCHEMA]
 })
 export class LibAllocModule { }

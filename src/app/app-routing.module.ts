@@ -3,19 +3,20 @@ import { Routes, RouterModule } from '@angular/router'
 
 import { PageNotFoundComponent } from './containers'
 
-import { HomeRoutes, ExternRoutes } from './routes'
+import { LandingRoutes, UserPanelRoutes, ServiceRoutes } from './routes'
 
 const routes: Routes = [
 
-  ...HomeRoutes,
-  ...ExternRoutes,
+  ...LandingRoutes,
+  ...UserPanelRoutes,
+  ...ServiceRoutes,
 
   { path: '**', pathMatch: 'full', component: PageNotFoundComponent }
 ]
 
 @NgModule({
 
-  imports: [RouterModule.forRoot(routes, {})],
+  imports: [RouterModule.forRoot(routes, { initialNavigation: 'enabledBlocking' })],
   exports: [RouterModule],
 })
 

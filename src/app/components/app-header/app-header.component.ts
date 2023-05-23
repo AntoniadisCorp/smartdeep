@@ -19,8 +19,9 @@ export class AppHeaderComponent implements AfterViewInit {
     private router: Router,
     private randService: RandomNumberService, matIconRegistry: SvgIconService, private cdr: ChangeDetectorRef) {
 
-    if (DEFAULT_SESSION.afterZoneRun && this.authService.isLoggedIn()) this.getlibrary(), DEFAULT_SESSION.afterZoneRun = false
-    else this.userlibName = DEFAULT_SESSION.user._session.library
+    if (DEFAULT_SESSION.afterZoneRun && this.authService.isLoggedIn()) { this.getlibrary(), DEFAULT_SESSION.afterZoneRun = false }
+    else { this.userlibName = DEFAULT_SESSION.user._session.library }
+
     matIconRegistry.setSvg('userlib', 'assets/img/svg/userlib.svg')
   }
 
@@ -35,7 +36,7 @@ export class AppHeaderComponent implements AfterViewInit {
     this.authService.logout()
       .subscribe(success => {
         if (success) {
-          this.router.navigate(['/extern/login']);
+          this.router.navigate(['/service/login']);
         }
       });
   }
@@ -45,8 +46,9 @@ export class AppHeaderComponent implements AfterViewInit {
   getlibrary(): void {
 
     this.randService.getLibrary().subscribe((res: any) => {
-      if (res && res._session && res._session.library)
+      if (res && res._session && res._session.library) {
         this.userlibName = DEFAULT_SESSION.user._session.library = res._session.library as Library
+      }
     })
   }
 }

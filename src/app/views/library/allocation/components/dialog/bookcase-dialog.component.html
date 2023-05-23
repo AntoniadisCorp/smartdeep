@@ -9,13 +9,13 @@
 
     <p *ngIf="data.body && date_added.value.length>0">
 
-        <mat-chip style="height: unset;">* Ημ/νία Δημ/γιας {{ date_added.value | date }}</mat-chip>
+        <mat-chip-option style="height: unset;">* Ημ/νία Δημ/γιας {{ date_added.value | date }}</mat-chip-option>
 
         <!-- <mat-chip style="height: unset;">{{data.subtitle}}</mat-chip> -->
     </p>
 
     <p *ngIf="data.body && date_modified.value.length>0">
-        <mat-chip style="height: unset;">* Ημ/νία Τροπ/σης {{ date_modified.value | date }}</mat-chip>
+        <mat-chip-option style="height: unset;">* Ημ/νία Τροπ/σης {{ date_modified.value | date }}</mat-chip-option>
     </p>
 </div>
 
@@ -82,13 +82,13 @@
                     <mat-spinner matSuffix *ngIf="this.progressAction.isthemeProcessing" [diameter]="20"
                         [strokeWidth]="3">
                     </mat-spinner>
-                    <mat-chip-list #chipList>
-                        <mat-chip *ngFor="let shelf of categories" [selectable]="selectable" [removable]="removable"
+                    <mat-chip-grid #chipList>
+                        <mat-chip-row *ngFor="let shelf of categories" [selectable]="selectable" [removable]="removable"
                             (removed)="categoryRemove(shelf)">
                             {{shelf.name}}
                             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                        </mat-chip>
-                    </mat-chip-list>
+                        </mat-chip-row>
+                    </mat-chip-grid>
                     <input matInput formControlName="categoryCtrl" maxlength="20" placeholder="πληκτρολογήστε.."
                         [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                         [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="categoryAdd($event)"

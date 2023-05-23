@@ -15,7 +15,8 @@ const routes: Routes = [
             {
                 path: '',
                 redirectTo: 'library/book/list',
-                data: { title: 'Όλα' }
+                data: { title: 'Όλα' },
+                pathMatch: 'full'
             },
             {
                 path: 'list',

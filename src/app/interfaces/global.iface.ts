@@ -16,11 +16,11 @@ export interface OptionEntry {
 
   code: number;
   status: string;
-  data?: entryData | any;
+  data?: EntryData | any;
   error?: any;
 }
 
-export interface entryData {
+export interface EntryData {
 
   result?: Array<any>
   message?: string

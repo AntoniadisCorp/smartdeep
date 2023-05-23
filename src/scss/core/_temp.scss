@@ -1,10 +1,10 @@
 .pagination-datatables,
 .pagination {
   li {
-    @extend .page-item;
+    @extend .page-item !optional;
 
     a {
-      @extend .page-link;
+      @extend .page-link !optional;
     }
   }
 }
@@ -88,9 +88,9 @@ button:focus {
   stroke: $BrandGreenTransLightColor !important;
 }
 
-.custom-file-input:lang(en) ~ .custom-file-label::after {
+/* .custom-file-input:lang(en) ~ .custom-file-label::after {
   content: "αναζήτηση";
-}
+} */
 
 span.availability.instock:before {
   background: #8dc84d;

@@ -1,23 +1,27 @@
 <app-header></app-header>
-<div class="app-body">
-  <app-sidebar></app-sidebar>
-  <!-- Main content -->
-  <main class="main">
-    <!-- Breadcrumb -->
-    <ol class="breadcrumb">
+<!-- Breadcrumb -->
+<nav class="sticky top-16 h-10 w-full z-[1019] dark:bg-gray-800 space-y-2">
+  <div class="mx-auto pt-2 px-6 sm:px-6 lg:px-8">
+    <ol class="breadcrumb mb-0 flex flex-nowrap items-center justify-start overflow-x-auto bg-neutral-100  text-neutral-500 shadow-lg hover:text-neutral-700
+  focus:text-neutral-700 dark:bg-neutral-600 ml-2 text-sm leading-6 whitespace-nowrap min-w-0 ">
       <!-- Breadcrumb Menu-->
       <app-breadcrumbs></app-breadcrumbs>
-      <li class="breadcrumb-menu d-md-down-none">
+      <li class="breadcrumb-menu d-md-down-none justify-end">
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
           <a class="btn" [routerLink]="['/']"><i class="icon-graph"></i> &nbsp; Home </a>
           <a class="btn"><i class="icon-settings"></i> &nbsp;Settings</a>
         </div>
       </li>
     </ol>
-    <div class="container-fluid">
+  </div>
+</nav>
+<div class="app-body">
+  <app-sidebar></app-sidebar>
+  <!-- Main content -->
+  <main class="main">
+    <div class="container-fluid mx-auto px-7 pt-7">
       <router-outlet></router-outlet>
     </div><!-- /.conainer-fluid -->
   </main>
   <app-aside></app-aside>
 </div>
-<app-footer></app-footer>

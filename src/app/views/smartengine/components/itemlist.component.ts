@@ -50,7 +50,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dial
       <h1 mat-dialog-title>
         {{data.title}} <i [ngClass]="data.image.color + ' fa-lg fas fa-' + data.image.icon"></i>
       </h1>
-      <p> <mat-chip-list><mat-chip style="height: unset;">{{data.subtitle}}</mat-chip></mat-chip-list></p>
+      <p> <mat-chip-listbox><mat-chip-option style="height: unset;">{{data.subtitle}}</mat-chip-option></mat-chip-listbox></p>
       <div mat-dialog-content>
           <p>{{data.text}}</p>
       </div>

@@ -1,6 +1,6 @@
-import { DomSanitizer } from "@angular/platform-browser";
-import { MatIconRegistry } from "@angular/material/icon";
-import { Injectable } from "@angular/core";
+import { DomSanitizer } from '@angular/platform-browser'
+import { MatIconRegistry } from '@angular/material/icon'
+import { Injectable } from '@angular/core'
 
 @Injectable()
 export class SvgIconService {
@@ -12,7 +12,7 @@ export class SvgIconService {
         this.matIconRegistry.addSvgIcon(
             iconName,
             this.domSanitizer.bypassSecurityTrustResourceUrl(svgIurl)
-        );
+        )
     }
 
     getSvg(iconName: string) {

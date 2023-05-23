@@ -12,10 +12,10 @@ export class AuthGuard implements CanActivate {
 
   canActivate() {
 
-    let isLoggedIn: boolean = this.authService.isLoggedIn()
+    const isLoggedIn: boolean = this.authService.isLoggedIn()
 
     if (isLoggedIn) {
-      this.router.navigate(['/extern/secret-random-number']);
+      this.router.navigate(['/service/secret-random-number']);
     }
 
     return !isLoggedIn

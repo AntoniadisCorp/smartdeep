@@ -61,7 +61,7 @@ export interface PeriodicElement {
             width: 100%;
         }
 
-        .mat-form-field {
+        .mat-mdc-form-field {
             font-size: 14px;
             width: 100%;
         }
@@ -125,8 +125,9 @@ export class AddBookCaseDialogComponent implements AfterViewInit {
 
 
         // if any value selected trully
-        if (!this.selection.hasValue())
+        if (!this.selection.hasValue()) {
             return
+        }
 
         /*  this.data.status = true; */
 
@@ -160,7 +161,7 @@ export class AddBookCaseDialogComponent implements AfterViewInit {
 
         this.bookshelfNo = new FormControl(null)
 
-        if (this.RowData) this.OnInit()
+        if (this.RowData) { this.OnInit() }
     }
 
     private OnInit(): void {
@@ -253,18 +254,20 @@ export class AddBookCaseDialogComponent implements AfterViewInit {
 
         const { slHasValue, index, arrIndex } = this.arrIndexNoisSelected()
 
-        if (!slHasValue)
+        if (!slHasValue) {
             return
+        }
 
-        if (index > -1) this.bookshelfNo.setValue(arrIndex[index].bookshelfNo - 1)
+        if (index > -1) { this.bookshelfNo.setValue(arrIndex[index].bookshelfNo - 1) }
 
-        if (this.RowData && !this.RowData.bookshelfNo) this.RowData.bookshelfNo = this.bookshelfNo.value
+        if (this.RowData && !this.RowData.bookshelfNo) { this.RowData.bookshelfNo = this.bookshelfNo.value }
     }
 
     private arrIndexNoisSelected(): any {
 
-        if (!this.selection.hasValue() || !this.isEditing())
+        if (!this.selection.hasValue() || !this.isEditing()) {
             return { slHasValue: false }
+        }
 
         const arrIndex = this.selection.selected[0].books.arrIndex
 
@@ -297,9 +300,10 @@ export class AddBookCaseDialogComponent implements AfterViewInit {
     onRowClicked(Row: PeriodicElement) {
 
 
-        if (!this.tableAction)
+        if (!this.tableAction) {
             this.switchCheckbox(!this.selection.isSelected(Row), Row)
-        else this.tableAction = false
+        }
+        else { this.tableAction = false }
         // this.router.navigate(['/library/book/view', Row._id])
     }
 
@@ -495,7 +499,7 @@ export class AddbookComponent implements OnInit, AfterViewInit {
 
         this.libraryState = []
 
-        if (!currLib._id)
+        if (!currLib._id) {
             this.randService.getLibrary()
                 .subscribe((res: any) => {
                     currLib = DEFAULT_SESSION.user._session.library = res._session.library as Library
@@ -505,6 +509,7 @@ export class AddbookComponent implements OnInit, AfterViewInit {
 
 
                 })
+        }
         this.libraryName.setValue(currLib.name ? currLib.name : '', { emitEvent: false })
         this.libraryState.push(currLib) // refresh library state
     }
@@ -516,13 +521,14 @@ export class AddbookComponent implements OnInit, AfterViewInit {
             middlebar + 'library' + middlebar + 'book' + middlebar + 'sku'
 
         // http SKU Service
-        if (!this.SKU.value)
+        if (!this.SKU.value) {
             this.httpService.getTask(sUrl)
                 .pipe(map((res: OptionEntry) => res.data ? res.data.result : res))
                 .subscribe(res => {
                     // console.log('SKU: ', res)
                     this.SKU.setValue(res)
                 })
+        }
     }
 
     private createBookForm(): void {
@@ -580,7 +586,7 @@ export class AddbookComponent implements OnInit, AfterViewInit {
                 .pipe(map((res: OptionEntry) => res.data.result))
                 .subscribe((item: Category) => {
 
-                    if (!item) return
+                    if (!item) { return }
 
                     this.categorySate.push(item)
                     this.catlen = 1
@@ -656,7 +662,7 @@ export class AddbookComponent implements OnInit, AfterViewInit {
                         // lookup from smartdeep isense
                         return this.searchHttp(value, sUrl, 'library').pipe(
                             map((lib: Library[]) => {
-                                if (!lib) return []
+                                if (!lib) { return [] }
                                 this.libraryState = lib;
                                 const k = lib.map<string>((item: Library) => item.name);
                                 return this._filterGroup(value, k);
@@ -754,11 +760,13 @@ export class AddbookComponent implements OnInit, AfterViewInit {
             }
         }
         // ADD FORM
-        else this.createFormByHttp(formData)
-            .subscribe(
-                (result: OptionEntry) => this.onBookResult(result),
-                (err: HttpErrorResponse) => this.onBookCreationCatchErr(err)
-            )
+        else {
+            this.createFormByHttp(formData)
+                .subscribe(
+                    (result: OptionEntry) => this.onBookResult(result),
+                    (err: HttpErrorResponse) => this.onBookCreationCatchErr(err)
+                )
+        }
     }
 
     private onBookResult(result: OptionEntry): void {
@@ -798,10 +806,12 @@ export class AddbookComponent implements OnInit, AfterViewInit {
             .afterClosed()
             .subscribe(res => {
                 console.log('The dialog was closed', res);
-                if (!res)
+                if (!res) {
                     return
-                if (res.status)
+                }
+                if (res.status) {
                     this.router.navigate(['' + this.route.snapshot.url.join(''), result.data.result._id])
+                }
             })
     }
 
@@ -845,7 +855,7 @@ export class AddbookComponent implements OnInit, AfterViewInit {
             .get('avatar').valueChanges
             .subscribe(file => {
 
-                if (file) this.avatarFile.showPreviewPic(file)
+                if (file) { this.avatarFile.showPreviewPic(file) }
                 // console.log('addbookImageFile: ', this.avatarFile.file)
             }, (err: any) => { console.log(err) })
     }
@@ -866,7 +876,7 @@ export class AddbookComponent implements OnInit, AfterViewInit {
         this.avatarOnChange()
 
         this.categoryObserv()
-        //    
+        //
     }
 
     private formater2 = (s: { _id: string, name: string }) => ({ _id: s._id, name: s.name })
@@ -939,7 +949,8 @@ export class AddbookComponent implements OnInit, AfterViewInit {
 
     private openBookCaseModal(editBookcase?: BookCase): void {
 
-        let data = {
+        // tslint:disable-next-line: one-variable-per-declaration
+        const data = {
             title: `Αρίθμηση θέσεων στη βιβλιοθήκη`,
             subtitle: `${this.libraryName.value}`,
             image: {
@@ -952,13 +963,13 @@ export class AddbookComponent implements OnInit, AfterViewInit {
             status: false
         }
             , width = '600px'
-            , height = '550px';
+            , height = '550px'
 
         openMatDialog(this.dialog, data, AddBookCaseDialogComponent, width, height)
             .afterClosed()
             .subscribe((result: any) => {
                 console.log('The dialog was closed:', result);
-                if (!result) return
+                if (!result) { return }
                 this.bookcase.setValue({
 
                     bookcaseId: result._id,

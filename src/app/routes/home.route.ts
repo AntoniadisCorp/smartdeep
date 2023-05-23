@@ -3,7 +3,7 @@ import { Routes } from '@angular/router'
 import { FullLayoutComponent } from '../containers'
 import { GlobalGuard } from '../auth/guard'
 
-export const HomeRoutes: Routes = [
+export const UserPanelRoutes: Routes = [
   {
     path: 'dashboard', // dashboard
     // pathMatch: 'full',

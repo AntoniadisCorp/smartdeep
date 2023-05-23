@@ -12,7 +12,7 @@ export class RegisterComponent implements OnInit {
   response: {};
 
   constructor(private authService: AuthService,
-              private formBuilder: FormBuilder, private router: Router) { }
+    private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit() {
     this.signupForm = this.formBuilder.group({
@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
   signup() {
 
     if (this.f['password'].value !== this.f['repeatpassword'].value) {
-     return;
+      return;
     }
 
     this.authService.signup(
@@ -36,12 +36,12 @@ export class RegisterComponent implements OnInit {
         password: this.f['password'].value
       }
     )
-    .subscribe(success => {
-      if (success) {
-        this.response = success;
-        this.router.navigate(['/extern/login']);
-      } else { this.response = success; }
-    });
+      .subscribe(success => {
+        if (success) {
+          this.response = success;
+          this.router.navigate(['/service/login']);
+        } else { this.response = success; }
+      });
   }
 
 }

@@ -1,6 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
-@import 'scss/main.scss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
 
-@import '~@fortawesome/fontawesome-free/css/fontawesome.css';
-@import '~@fortawesome/fontawesome-free/css/brands.css';
-@import '~@fortawesome/fontawesome-free/css/solid.css';
+@import "animate.css";
+/* You can add global styles to this file, and also import other style files */
+@import "scss/main.scss";
+
+/* @import "@fortawesome/fontawesome-free/scss/fontawesome.css";
+@import "@fortawesome/fontawesome-free/css/brands.css";
+@import "@fortawesome/fontawesome-free/css/solid.css";
+ */

@@ -95,7 +95,7 @@ app-root {
     position: fixed;
     z-index: $zindex-sticky - 1;
     width: $sidebar-width;
-    height: calc(100vh - #{$navbar-height} + 15px);
+    height: calc(100vh - #{$navbar-height} - 49px);
     // margin-top: - $navbar-height;
 
     // .sidebar-nav {

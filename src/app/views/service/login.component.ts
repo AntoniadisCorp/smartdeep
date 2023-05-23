@@ -31,16 +31,16 @@ export class LoginComponent implements OnInit {
         password: this.f['password'].value
       }
     )
-    .subscribe(success => {
-      if (success) {
-        
-        this.router.navigate(['/extern/secret-random-number']);
-      }
-    });
+      .subscribe(success => {
+        if (success) {
+
+          this.router.navigate(['/service/secret-random-number']);
+        }
+      });
   }
 
   private authorizeclient() {
-    this.authService.authorizeuser('http://localhost:4200/extern/login');
+    this.authService.authorizeuser('http://localhost:4200/service/login');
   }
 
 }

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ChartsModule } from 'ng2-charts';
+import { NgChartsModule } from 'ng2-charts';
 
 import { ChartJSComponent } from './chartjs.component';
 import { ChartJSRoutingModule } from './chartjs.routing';
@@ -7,7 +7,7 @@ import { ChartJSRoutingModule } from './chartjs.routing';
 @NgModule({
   imports: [
     ChartJSRoutingModule,
-    ChartsModule
+    NgChartsModule
   ],
   declarations: [ChartJSComponent]
 })

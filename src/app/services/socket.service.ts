@@ -5,12 +5,12 @@ import { Socket } from 'ngx-socket-io';
 @Injectable()
 export class SocketService {
 
-    currentDocument = this.socket.fromEvent<Document>('priceUpdate');
-    documents = this.socket.fromEvent<string>('priceUpdate');
-    
+    currentDocument = this.socket.fromEvent<Document>('priceUpdate')
+    documents = this.socket.fromEvent<string>('priceUpdate')
+
     constructor(private socket: Socket) { }
 
     getDocument(id: number) {
-        this.socket.emit('bid', id);
+        this.socket.emit('bid', id)
     }
 }

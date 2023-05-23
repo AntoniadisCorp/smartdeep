@@ -17,9 +17,9 @@ export class RandomNumberService {
   };
   private apiUrl: string;
 
-  constructor(private http: HttpClient, private httpService: SmartEngineService, private authService: AuthService ) {
-    this.apiUrl = `${config.apiUrl}/task`;
-    this.httpOptions.headers.append('Access-Control-Allow-Origin', '*');
+  constructor(private http: HttpClient, private httpService: SmartEngineService, private authService: AuthService) {
+    this.apiUrl = `${config.apiUrl}/task`
+    this.httpOptions.headers.append('Access-Control-Allow-Origin', '*')
   }
 
 
@@ -44,9 +44,9 @@ export class RandomNumberService {
     /// get data from user/library/:id/cache/:hash
 
 
-    return userId? this.httpService.getTasks(config.apiUrl + middlebar + 'task' + middlebar + 'user' + middlebar +
-        'library' + middlebar + userId + middlebar + 'cache' + middlebar + hash, dbCollection)
-        .pipe(map((res: OptionEntry) => res ? res.data.result : res))
-      : of(false)      
+    return userId ? this.httpService.getTasks(config.apiUrl + middlebar + 'task' + middlebar + 'user' + middlebar +
+      'library' + middlebar + userId + middlebar + 'cache' + middlebar + hash, dbCollection)
+      .pipe(map((res: OptionEntry) => res ? res.data.result : res))
+      : of(false)
   }
 }

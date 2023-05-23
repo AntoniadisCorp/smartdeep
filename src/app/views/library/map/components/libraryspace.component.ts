@@ -320,7 +320,7 @@ export class LibrarySpaceComponent implements OnInit {
     templateUrl: 'dialog/addbookcase-dialog.component.html',
     styles: [`
     
-        .bookcase .mat-form-field {
+        .bookcase .mat-mdc-form-field {
             width: 100%;
         }
 

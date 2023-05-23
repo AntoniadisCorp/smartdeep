@@ -9,13 +9,13 @@
 
     <p *ngIf="data.body && date_added.value.length">
 
-        <mat-chip style="height: unset;">* Ημ/νία Δημ/γιας {{ date_added.value | date }}</mat-chip>
+        <mat-chip-option style="height: unset;">* Ημ/νία Δημ/γιας {{ date_added.value | date }}</mat-chip-option>
 
         <!-- <mat-chip style="height: unset;">{{data.subtitle}}</mat-chip> -->
     </p>
 
     <p *ngIf="data.body && date_modified.value.length">
-        <mat-chip style="height: unset;">* Ημ/νία Τροπ/σης {{ date_modified.value | date }}</mat-chip>
+        <mat-chip-option style="height: unset;">* Ημ/νία Τροπ/σης {{ date_modified.value | date }}</mat-chip-option>
     </p>
 </div>
 
@@ -46,13 +46,13 @@
             <div class="form-group row">
                 <mat-form-field hintLabel="πχ. Α,Β,α,β,a,b.. ή 1,2,3">
                     <mat-label>Αρίθμηση Ράφιου</mat-label>
-                    <mat-chip-list #chipList>
-                        <mat-chip *ngFor="let shelf of shelves" [selectable]="selectable" [removable]="removable"
+                    <mat-chip-grid #chipList>
+                        <mat-chip-row *ngFor="let shelf of shelves" [selectable]="selectable" [removable]="removable"
                             (removed)="remove(shelf.name)">
                             {{shelf.name}}
                             <mat-icon matChipRemove *ngIf="!shelf.used? removable : false">cancel</mat-icon>
-                        </mat-chip>
-                    </mat-chip-list>
+                        </mat-chip-row>
+                    </mat-chip-grid>
                     <input matInput formControlName="bookshelf" required maxlength="5" placeholder="Α.."
                         [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                         [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)"
