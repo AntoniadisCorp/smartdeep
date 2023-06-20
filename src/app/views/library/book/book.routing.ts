@@ -45,11 +45,11 @@ const routes: Routes = [
                 data: { title: 'Προβολή', col: 'book', redirectTo: '/library/book/view', animation: 'editbook' },
                 resolve: { _id: SmartResolveService }
             },
-            {
+            /* {
                 path: 'contents',
-                /* component: ContentsBookComponent, */
+                component: ContentsBookComponent,
                 data: { title: 'Περιεχόμενα', animation: 'editbook' }
-            },
+            }, */
         ]
     },
 ];

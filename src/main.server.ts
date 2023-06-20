@@ -1,17 +1,17 @@
 /***************************************************************************************************
  * Load `$localize` onto the global scope - used if i18n tags appear in Angular templates.
  */
-import '@angular/localize/init';
+import '@angular/localize/init'
 
-import { enableProdMode } from '@angular/core';
+import { enableProdMode } from '@angular/core'
 
-import { environment } from './environments/environment';
+import { environment } from './environments/environment'
 
 if (environment.production) {
-    enableProdMode();
+    enableProdMode()
 }
 
-export { AppServerModule } from './app/app.server.module';
+export { AppServerModule } from './app/app.server.module'
 // export { AppServerModuleNgFactory } from './app/app.server.module.ngfactory';
 
-export { renderModuleFactory } from '@angular/platform-server';
+export { renderModuleFactory } from '@angular/platform-server'
