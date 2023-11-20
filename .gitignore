@@ -37,6 +37,8 @@ speed-measure-plugin.json
 *.sublime-workspace
 
 # IDE - VSCode
+
+.angular/**/**/**/**/**
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
